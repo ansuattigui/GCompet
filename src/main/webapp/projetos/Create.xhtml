@@ -12,12 +12,10 @@
             <h:form id="ProjetosCreateForm">
                 <h:panelGroup id="display">
                     <p:panelGrid columns="2" rendered="#{projetosController.selected != null}">
-                        <p:outputLabel value="#{bundle.CreateProjetosLabel_id}" for="id" />
-                        <p:inputText id="id" value="#{projetosController.selected.id}" title="#{bundle.CreateProjetosTitle_id}" required="true" requiredMessage="#{bundle.CreateProjetosRequiredMessage_id}"/>
-                        <p:outputLabel value="#{bundle.CreateProjetosLabel_descricao}" for="descricao" />
-                        <p:inputTextarea rows="4" cols="30" id="descricao" value="#{projetosController.selected.descricao}" title="#{bundle.CreateProjetosTitle_descricao}" />
                         <p:outputLabel value="#{bundle.CreateProjetosLabel_nome}" for="nome" />
                         <p:inputText id="nome" value="#{projetosController.selected.nome}" title="#{bundle.CreateProjetosTitle_nome}" />
+                        <p:outputLabel value="#{bundle.CreateProjetosLabel_descricao}" for="descricao" />
+                        <p:inputTextarea rows="4" cols="30" id="descricao" value="#{projetosController.selected.descricao}" title="#{bundle.CreateProjetosTitle_descricao}" />
                     </p:panelGrid>
                     <p:commandButton actionListener="#{projetosController.create}" value="#{bundle.Save}" update="display,:ProjetosListForm:datalist,:growl" oncomplete="handleSubmit(args,'ProjetosCreateDialog');"/>
                     <p:commandButton value="#{bundle.Cancel}" onclick="ProjetosCreateDialog.hide()"/>

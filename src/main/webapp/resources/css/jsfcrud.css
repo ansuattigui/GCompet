@@ -1,5 +1,5 @@
 .ui-widget {
-    font-size: 12px !important;
+    font-size: 14px !important;
 }
 .ui-layout-north {
     z-index: 20 !important;
@@ -14,4 +14,47 @@
 }
 .ui-button {
     margin-top: 10px !important;
+}
+
+.ui-button-menu {
+    width: 110px;
+}
+
+.ui-panel-cabecalho {
+    background-image: url(http://localhost:8080/GCompet/faces/resources/img/banner.png);
+    background-position: center; 
+    background-repeat: no-repeat; 
+    border-style: none;
+    height: 78px;
+}
+
+.ui-panel-rodape {
+    background-image:url(http://localhost:8080/GCompet/faces/resources/img/rodape.png); 
+    background-position: center; 
+    background-repeat: no-repeat; 
+    border-style: none;
+    height:25px; 
+}
+
+.ui-panel-centro {
+    background-image:url(http://localhost:8080/GCompet/faces/resources/img/splash.png); 
+    background-position: center; 
+    background-repeat: no-repeat; 
+    border-style: none;
+    height: 99%;
+    width: auto;
+}
+
+.ui-panel-login {
+    background-image:url(http://localhost:8080/GCompet/faces/resources/img/login.fw.png); 
+    background-position: center; 
+    background-repeat: no-repeat; 
+    background-size: contain;
+    border-style: none;
+    height: 80px;
+}
+
+
+.ui-sem-borda {
+    border: none;
 }

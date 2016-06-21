@@ -7,13 +7,10 @@
       xmlns:p="http://primefaces.org/ui">
 
     <ui:composition>
-
         <p:dialog id="CapacidadesCreateDlg" widgetVar="CapacidadesCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.CreateCapacidadesTitle}">
             <h:form id="CapacidadesCreateForm">
                 <h:panelGroup id="display">
                     <p:panelGrid columns="2" rendered="#{capacidadesController.selected != null}">
-                        <p:outputLabel value="#{bundle.CreateCapacidadesLabel_id}" for="id" />
-                        <p:inputText id="id" value="#{capacidadesController.selected.id}" title="#{bundle.CreateCapacidadesTitle_id}" required="true" requiredMessage="#{bundle.CreateCapacidadesRequiredMessage_id}"/>
                         <p:outputLabel value="#{bundle.CreateCapacidadesLabel_nome}" for="nome" />
                         <p:inputText id="nome" value="#{capacidadesController.selected.nome}" title="#{bundle.CreateCapacidadesTitle_nome}" />
                     </p:panelGrid>

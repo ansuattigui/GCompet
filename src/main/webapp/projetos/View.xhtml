@@ -14,10 +14,10 @@
                     <p:panelGrid columns="2" rendered="#{projetosController.selected != null}">
                         <h:outputText value="#{bundle.ViewProjetosLabel_id}"/>
                         <h:outputText value="#{projetosController.selected.id}" title="#{bundle.ViewProjetosTitle_id}"/>
-                        <h:outputText value="#{bundle.ViewProjetosLabel_descricao}"/>
-                        <h:outputText value="#{projetosController.selected.descricao}" title="#{bundle.ViewProjetosTitle_descricao}"/>
                         <h:outputText value="#{bundle.ViewProjetosLabel_nome}"/>
                         <h:outputText value="#{projetosController.selected.nome}" title="#{bundle.ViewProjetosTitle_nome}"/>
+                        <h:outputText value="#{bundle.ViewProjetosLabel_descricao}"/>
+                        <h:outputText value="#{projetosController.selected.descricao}" title="#{bundle.ViewProjetosTitle_descricao}"/>
                     </p:panelGrid>
                     <p:commandButton value="#{bundle.Close}" onclick="ProjetosViewDialog.hide()"/>
                 </h:panelGroup>

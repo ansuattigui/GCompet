@@ -7,13 +7,10 @@
       xmlns:p="http://primefaces.org/ui">
 
     <ui:composition>
-
         <p:dialog id="AreasCreateDlg" widgetVar="AreasCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.CreateAreasTitle}">
             <h:form id="AreasCreateForm">
                 <h:panelGroup id="display">
                     <p:panelGrid columns="2" rendered="#{areasController.selected != null}">
-                        <p:outputLabel value="#{bundle.CreateAreasLabel_id}" for="id" />
-                        <p:inputText id="id" value="#{areasController.selected.id}" title="#{bundle.CreateAreasTitle_id}" required="true" requiredMessage="#{bundle.CreateAreasRequiredMessage_id}"/>
                         <p:outputLabel value="#{bundle.CreateAreasLabel_nome}" for="nome" />
                         <p:inputText id="nome" value="#{areasController.selected.nome}" title="#{bundle.CreateAreasTitle_nome}" />
                     </p:panelGrid>
