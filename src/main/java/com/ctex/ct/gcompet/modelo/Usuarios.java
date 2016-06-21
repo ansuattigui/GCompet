@@ -15,13 +15,12 @@ import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
-import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
- * @author ralfh
+ * @author Ralfh
  */
 @Entity
 @Table(name = "usuarios")
@@ -33,20 +32,17 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Usuarios.findByNomeUsuario", query = "SELECT u FROM Usuarios u WHERE u.nomeUsuario = :nomeUsuario"),
     @NamedQuery(name = "Usuarios.findBySenha", query = "SELECT u FROM Usuarios u WHERE u.senha = :senha")})
 public class Usuarios implements Serializable {
+
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(name = "id")
     private Integer id;
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 100)
+    @Size(max = 255)
     @Column(name = "nomeCompleto")
     private String nomeCompleto;
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 45)
+    @Size(max = 255)
     @Column(name = "nomeUsuario")
     private String nomeUsuario;
     @Size(max = 255)
@@ -58,12 +54,6 @@ public class Usuarios implements Serializable {
 
     public Usuarios(Integer id) {
         this.id = id;
-    }
-
-    public Usuarios(Integer id, String nomeCompleto, String nomeUsuario) {
-        this.id = id;
-        this.nomeCompleto = nomeCompleto;
-        this.nomeUsuario = nomeUsuario;
     }
 
     public Integer getId() {

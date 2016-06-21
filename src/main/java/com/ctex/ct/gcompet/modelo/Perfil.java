@@ -15,13 +15,12 @@ import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
-import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
- * @author ralfh
+ * @author Ralfh
  */
 @Entity
 @Table(name = "perfil")
@@ -31,15 +30,14 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Perfil.findById", query = "SELECT p FROM Perfil p WHERE p.id = :id"),
     @NamedQuery(name = "Perfil.findByNome", query = "SELECT p FROM Perfil p WHERE p.nome = :nome")})
 public class Perfil implements Serializable {
+
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(name = "id")
     private Integer id;
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 45)
+    @Size(max = 255)
     @Column(name = "nome")
     private String nome;
 
@@ -48,11 +46,6 @@ public class Perfil implements Serializable {
 
     public Perfil(Integer id) {
         this.id = id;
-    }
-
-    public Perfil(Integer id, String nome) {
-        this.id = id;
-        this.nome = nome;
     }
 
     public Integer getId() {

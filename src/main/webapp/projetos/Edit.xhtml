@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="ProjetosEditDlg" widgetVar="ProjetosEditDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.EditProjetosTitle}">
+            <h:form id="ProjetosEditForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{projetosController.selected != null}">
+                        <p:outputLabel value="#{bundle.EditProjetosLabel_id}" for="id" />
+                        <p:inputText id="id" value="#{projetosController.selected.id}" title="#{bundle.EditProjetosTitle_id}" required="true" requiredMessage="#{bundle.EditProjetosRequiredMessage_id}"/>
+                        <p:outputLabel value="#{bundle.EditProjetosLabel_descricao}" for="descricao" />
+                        <p:inputTextarea rows="4" cols="30" id="descricao" value="#{projetosController.selected.descricao}" title="#{bundle.EditProjetosTitle_descricao}" />
+                        <p:outputLabel value="#{bundle.EditProjetosLabel_nome}" for="nome" />
+                        <p:inputText id="nome" value="#{projetosController.selected.nome}" title="#{bundle.EditProjetosTitle_nome}" />
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{projetosController.update}" value="#{bundle.Save}" update="display,:ProjetosListForm:datalist,:growl" oncomplete="handleSubmit(args, 'ProjetosEditDialog');"/>
+                    <p:commandButton value="#{bundle.Cancel}" onclick="ProjetosEditDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

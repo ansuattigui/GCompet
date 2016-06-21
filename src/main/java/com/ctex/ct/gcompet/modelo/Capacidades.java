@@ -6,44 +6,50 @@
 package com.ctex.ct.gcompet.modelo;
 
 import java.io.Serializable;
+import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author ralfh
+ * @author Ralfh
  */
 @Entity
-@Table(name = "atribuicoes")
+@Table(name = "capacidades")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Atribuicoes.findAll", query = "SELECT a FROM Atribuicoes a"),
-    @NamedQuery(name = "Atribuicoes.findById", query = "SELECT a FROM Atribuicoes a WHERE a.id = :id"),
-    @NamedQuery(name = "Atribuicoes.findByNome", query = "SELECT a FROM Atribuicoes a WHERE a.nome = :nome")})
-public class Atribuicoes implements Serializable {
+    @NamedQuery(name = "Capacidades.findAll", query = "SELECT c FROM Capacidades c"),
+    @NamedQuery(name = "Capacidades.findById", query = "SELECT c FROM Capacidades c WHERE c.id = :id"),
+    @NamedQuery(name = "Capacidades.findByNome", query = "SELECT c FROM Capacidades c WHERE c.nome = :nome")})
+public class Capacidades implements Serializable {
+
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(name = "id")
     private Integer id;
-    @Size(max = 120)
+    @Size(max = 255)
     @Column(name = "nome")
     private String nome;
+    @ManyToMany(mappedBy = "capacidadesList")
+    private List<Areas> areasList;
 
-    public Atribuicoes() {
+    public Capacidades() {
     }
 
-    public Atribuicoes(Integer id) {
+    public Capacidades(Integer id) {
         this.id = id;
     }
 
@@ -63,6 +69,15 @@ public class Atribuicoes implements Serializable {
         this.nome = nome;
     }
 
+    @XmlTransient
+    public List<Areas> getAreasList() {
+        return areasList;
+    }
+
+    public void setAreasList(List<Areas> areasList) {
+        this.areasList = areasList;
+    }
+
     @Override
     public int hashCode() {
         int hash = 0;
@@ -73,10 +88,10 @@ public class Atribuicoes implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Atribuicoes)) {
+        if (!(object instanceof Capacidades)) {
             return false;
         }
-        Atribuicoes other = (Atribuicoes) object;
+        Capacidades other = (Capacidades) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
@@ -85,7 +100,7 @@ public class Atribuicoes implements Serializable {
 
     @Override
     public String toString() {
-        return "com.ctex.ct.gcompet.modelo.Atribuicoes[ id=" + id + " ]";
+        return "com.ctex.ct.gcompet.modelo.Capacidades[ id=" + id + " ]";
     }
     
 }
