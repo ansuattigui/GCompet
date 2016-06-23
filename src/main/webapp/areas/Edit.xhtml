@@ -14,7 +14,7 @@
                         <p:outputLabel value="#{bundle.EditAreasLabel_nome}" for="nome" />
                         <p:inputText id="nome" value="#{areasController.selected.nome}" title="#{bundle.EditAreasTitle_nome}" />
                     </p:panelGrid>
-                    <p:commandButton actionListener="#{areasController.update}" value="#{bundle.Save}" update="display,:AreasListForm:datalist,:growl" oncomplete="handleSubmit(args, 'AreasEditDialog');"/>
+                    <p:commandButton actionListener="#{areasController.update}" value="#{bundle.Save}" update="@all" oncomplete="handleSubmit(args, 'AreasEditDialog');"/>
                     <p:commandButton value="#{bundle.Cancel}" onclick="AreasEditDialog.hide()"/>
                 </h:panelGroup>
             </h:form>

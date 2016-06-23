@@ -8,10 +8,9 @@
 
     <ui:composition>
 
-        <p:dialog id="ViewAreasAfinsDlg" widgetVar="ViewAreasAfinsDialog" modal="true" resizable="false" appendTo="@(body)" 
-                  header="Áreas Afins - #{capacidadesController.selected.nome}">
+        <p:dialog id="ViewAreasAfinsDlg" widgetVar="ViewAreasAfinsDialog" modal="true" resizable="false" appendTo="@(body)" >
             <h:form id="ViewAreasAfinsForm">
-                <p:panel style="width: 500px;">
+                <p:panel style="width: 500px;" header="Áreas Afins - #{capacidadesController.selected.nome}">
                     <p:dataTable id="datalist" value="#{capacidadesController.selected.areasList}" var="item"
                         paginator="true" 
                         paginatorPosition="bottom"
@@ -26,9 +25,28 @@
                             </f:facet>
                             <h:outputText value="#{item.nome}"/>
                         </p:column>
+                        
+                        <f:facet name="footer">
+                            <p:commandButton id="createButton" icon="ui-icon-plus"   value="#{bundle.Create}" actionListener="#{areasController.prepareCreate}" update=":CapacidadesCreateForm" oncomplete="PF('CapacidadesCreateDialog').show()"/>
+                            <p:commandButton id="viewButton"   icon="ui-icon-search" value="#{bundle.View}" update=":CapacidadesViewForm" oncomplete="PF('CapacidadesViewDialog').show()" disabled="#{empty capacidadesController.selected}"/>
+                            <p:commandButton id="editButton"   icon="ui-icon-pencil" value="#{bundle.Edit}" update=":CapacidadesEditForm" oncomplete="PF('CapacidadesEditDialog').show()" disabled="#{empty capacidadesController.selected}"/>                            
+                            <p:commandButton id="deleteButton" icon="ui-icon-trash"  value="#{bundle.Delete}" actionListener="#{capacidadesController.destroy}" update=":growl,datalist" disabled="#{empty capacidadesController.selected}">
+                                <p:confirm header="Confirmação" message="Confirma a exclusão do registro selecionado?" icon="ui-icon-alert" />
+                            </p:commandButton>
+
+                            <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+                                <p:commandButton value="Sim" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+                                <p:commandButton value="Não" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+                            </p:confirmDialog>                            
+                        </f:facet>
+                        
+                        
                     </p:dataTable>                
                 </p:panel>
             </h:form>
+            <ui:include src="../areas/Create.xhtml"/>
+            <ui:include src="../areas/Edit.xhtml"/>
+            <ui:include src="../areas/View.xhtml"/>
         </p:dialog>
 
     </ui:composition>
