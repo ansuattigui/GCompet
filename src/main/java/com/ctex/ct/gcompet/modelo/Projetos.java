@@ -20,7 +20,6 @@ import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -48,8 +47,6 @@ public class Projetos implements Serializable {
     @Size(max = 255)
     @Column(name = "nome")
     private String nome;
-    @ManyToMany(mappedBy = "projetosList")
-    private List<Areas> areasList;
 
     public Projetos() {
     }
@@ -80,15 +77,6 @@ public class Projetos implements Serializable {
 
     public void setNome(String nome) {
         this.nome = nome;
-    }
-
-    @XmlTransient
-    public List<Areas> getAreasList() {
-        return areasList;
-    }
-
-    public void setAreasList(List<Areas> areasList) {
-        this.areasList = areasList;
     }
 
     @Override

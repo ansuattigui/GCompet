@@ -2,7 +2,7 @@ package com.ctex.ct.gcompet.bean;
 
 import com.ctex.ct.gcompet.bean.util.JsfUtil;
 import com.ctex.ct.gcompet.bean.util.JsfUtil.PersistAction;
-import com.ctex.ct.gcompet.modelo.Areas;
+import com.ctex.ct.gcompet.modelo.CapacidadesAreas;
 import java.io.Serializable;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -17,23 +17,23 @@ import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
 import javax.inject.Named;
 
-@Named("areasController")
+@Named("capacidadesAreasController")
 @SessionScoped
-public class AreasController implements Serializable {
+public class CapacidadesAreasController implements Serializable {
 
     @EJB
-    private com.ctex.ct.gcompet.bean.AreasFacade ejbFacade;
-    private List<Areas> items = null;
-    private Areas selected;
+    private com.ctex.ct.gcompet.bean.CapacidadesAreasFacade ejbFacade;
+    private List<CapacidadesAreas> items = null;
+    private CapacidadesAreas selected;
 
-    public AreasController() {
+    public CapacidadesAreasController() {
     }
 
-    public Areas getSelected() {
+    public CapacidadesAreas getSelected() {
         return selected;
     }
 
-    public void setSelected(Areas selected) {
+    public void setSelected(CapacidadesAreas selected) {
         this.selected = selected;
     }
 
@@ -43,42 +43,42 @@ public class AreasController implements Serializable {
     protected void initializeEmbeddableKey() {
     }
 
-    private AreasFacade getFacade() {
+    private CapacidadesAreasFacade getFacade() {
         return ejbFacade;
     }
 
-    public Areas prepareCreate() {
-        selected = new Areas();
+    public CapacidadesAreas prepareCreate() {
+        selected = new CapacidadesAreas();
         initializeEmbeddableKey();
         return selected;
     }
 
     public void create() {
-        persist(PersistAction.CREATE, ResourceBundle.getBundle("/Bundle").getString("AreasCreated"));
+        persist(PersistAction.CREATE, ResourceBundle.getBundle("/Bundle").getString("CapacidadesAreasCreated"));
         if (!JsfUtil.isValidationFailed()) {
             items = null;    // Invalidate list of items to trigger re-query.
         }
     }
 
     public void update() {
-        persist(PersistAction.UPDATE, ResourceBundle.getBundle("/Bundle").getString("AreasUpdated"));
+        persist(PersistAction.UPDATE, ResourceBundle.getBundle("/Bundle").getString("CapacidadesAreasUpdated"));
     }
 
     public void destroy() {
-        persist(PersistAction.DELETE, ResourceBundle.getBundle("/Bundle").getString("AreasDeleted"));
+        persist(PersistAction.DELETE, ResourceBundle.getBundle("/Bundle").getString("CapacidadesAreasDeleted"));
         if (!JsfUtil.isValidationFailed()) {
             selected = null; // Remove selection
             items = null;    // Invalidate list of items to trigger re-query.
         }
     }
 
-    public List<Areas> getItems() {
+    public List<CapacidadesAreas> getItems() {
         if (items == null) {
             items = getFacade().findAll();
         }
         return items;
     }
-    
+
     private void persist(PersistAction persistAction, String successMessage) {
         if (selected != null) {
             setEmbeddableKeys();
@@ -107,29 +107,29 @@ public class AreasController implements Serializable {
         }
     }
 
-    public Areas getAreas(java.lang.Integer id) {
+    public CapacidadesAreas getCapacidadesAreas(java.lang.Integer id) {
         return getFacade().find(id);
     }
 
-    public List<Areas> getItemsAvailableSelectMany() {
+    public List<CapacidadesAreas> getItemsAvailableSelectMany() {
         return getFacade().findAll();
     }
 
-    public List<Areas> getItemsAvailableSelectOne() {
+    public List<CapacidadesAreas> getItemsAvailableSelectOne() {
         return getFacade().findAll();
     }
 
-    @FacesConverter(forClass = Areas.class)
-    public static class AreasControllerConverter implements Converter {
+    @FacesConverter(forClass = CapacidadesAreas.class)
+    public static class CapacidadesAreasControllerConverter implements Converter {
 
         @Override
         public Object getAsObject(FacesContext facesContext, UIComponent component, String value) {
             if (value == null || value.length() == 0) {
                 return null;
             }
-            AreasController controller = (AreasController) facesContext.getApplication().getELResolver().
-                    getValue(facesContext.getELContext(), null, "areasController");
-            return controller.getAreas(getKey(value));
+            CapacidadesAreasController controller = (CapacidadesAreasController) facesContext.getApplication().getELResolver().
+                    getValue(facesContext.getELContext(), null, "capacidadesAreasController");
+            return controller.getCapacidadesAreas(getKey(value));
         }
 
         java.lang.Integer getKey(String value) {
@@ -149,11 +149,11 @@ public class AreasController implements Serializable {
             if (object == null) {
                 return null;
             }
-            if (object instanceof Areas) {
-                Areas o = (Areas) object;
+            if (object instanceof CapacidadesAreas) {
+                CapacidadesAreas o = (CapacidadesAreas) object;
                 return getStringKey(o.getId());
             } else {
-                Logger.getLogger(this.getClass().getName()).log(Level.SEVERE, "object {0} is of type {1}; expected type: {2}", new Object[]{object, object.getClass().getName(), Areas.class.getName()});
+                Logger.getLogger(this.getClass().getName()).log(Level.SEVERE, "object {0} is of type {1}; expected type: {2}", new Object[]{object, object.getClass().getName(), CapacidadesAreas.class.getName()});
                 return null;
             }
         }

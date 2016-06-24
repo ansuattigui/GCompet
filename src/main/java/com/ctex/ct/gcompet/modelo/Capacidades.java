@@ -6,20 +6,17 @@
 package com.ctex.ct.gcompet.modelo;
 
 import java.io.Serializable;
-import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToMany;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -43,8 +40,6 @@ public class Capacidades implements Serializable {
     @Size(max = 255)
     @Column(name = "nome")
     private String nome;
-    @ManyToMany(mappedBy = "capacidadesList")
-    private List<Areas> areasList;
 
     public Capacidades() {
     }
@@ -67,15 +62,6 @@ public class Capacidades implements Serializable {
 
     public void setNome(String nome) {
         this.nome = nome;
-    }
-
-    @XmlTransient
-    public List<Areas> getAreasList() {
-        return areasList;
-    }
-
-    public void setAreasList(List<Areas> areasList) {
-        this.areasList = areasList;
     }
 
     @Override

@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="CapacidadesAreasEditDlg" widgetVar="CapacidadesAreasEditDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.EditCapacidadesAreasTitle}">
+            <h:form id="CapacidadesAreasEditForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{capacidadesAreasController.selected != null}">
+                        <p:outputLabel value="#{bundle.EditCapacidadesAreasLabel_avaliada}" for="avaliada" />
+                        <p:selectBooleanCheckbox id="avaliada" value="#{capacidadesAreasController.selected.avaliada}" required="true" requiredMessage="#{bundle.EditCapacidadesAreasRequiredMessage_avaliada}"/>
+                        <p:outputLabel value="#{bundle.EditCapacidadesAreasLabel_avaliacao}" for="avaliacao" />
+                        <p:inputText id="avaliacao" value="#{capacidadesAreasController.selected.avaliacao}" title="#{bundle.EditCapacidadesAreasTitle_avaliacao}" required="true" requiredMessage="#{bundle.EditCapacidadesAreasRequiredMessage_avaliacao}"/>
+                        <p:outputLabel value="#{bundle.EditCapacidadesAreasLabel_usuario}" for="usuario" />
+                        <p:selectOneMenu id="usuario" value="#{capacidadesAreasController.selected.usuario}" >
+                            <f:selectItem itemLabel="#{bundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{usuariosController.itemsAvailableSelectOne}"
+                                           var="usuarioItem"
+                                           itemValue="#{usuarioItem}"/>
+                        </p:selectOneMenu>
+                        <p:outputLabel value="#{bundle.EditCapacidadesAreasLabel_capacidade}" for="capacidade" />
+                        <p:selectOneMenu id="capacidade" value="#{capacidadesAreasController.selected.capacidade}" >
+                            <f:selectItem itemLabel="#{bundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{capacidadesController.itemsAvailableSelectOne}"
+                                           var="capacidadeItem"
+                                           itemValue="#{capacidadeItem}"/>
+                        </p:selectOneMenu>
+                        <p:outputLabel value="#{bundle.EditCapacidadesAreasLabel_area}" for="area" />
+                        <p:selectOneMenu id="area" value="#{capacidadesAreasController.selected.area}" >
+                            <f:selectItem itemLabel="#{bundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{areasController.itemsAvailableSelectOne}"
+                                           var="areaItem"
+                                           itemValue="#{areaItem}"/>
+                        </p:selectOneMenu>
+                        <p:outputLabel value="#{bundle.EditCapacidadesAreasLabel_id}" for="id" />
+                        <p:inputText id="id" value="#{capacidadesAreasController.selected.id}" title="#{bundle.EditCapacidadesAreasTitle_id}" required="true" requiredMessage="#{bundle.EditCapacidadesAreasRequiredMessage_id}"/>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{capacidadesAreasController.update}" value="#{bundle.Save}" update="display,:CapacidadesAreasListForm:datalist,:growl" oncomplete="handleSubmit(args, 'CapacidadesAreasEditDialog');"/>
+                    <p:commandButton value="#{bundle.Cancel}" onclick="CapacidadesAreasEditDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>
