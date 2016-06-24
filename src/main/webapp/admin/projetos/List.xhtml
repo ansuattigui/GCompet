@@ -6,14 +6,14 @@
       xmlns:f="http://xmlns.jcp.org/jsf/core"
       xmlns:p="http://primefaces.org/ui">
 
-    <ui:composition template="../index.xhtml">
+    <ui:composition template="../../index.xhtml">
 
         <ui:define id="body" name="body">
-            <h:form id="AreasListForm">
-                <p:panel header="#{bundle.ListAreasTitle}">
-                    <p:dataTable id="datalist" value="#{areasController.items}" var="item"
-                                 selectionMode="single" selection="#{areasController.selected}"
-                                 paginator="true" 
+            <h:form id="ProjetosListForm">
+                <p:panel header="#{bundle.ListProjetosTitle}">
+                    <p:dataTable id="datalist" value="#{projetosController.items}" var="item"
+                                 selectionMode="single" selection="#{projetosController.selected}"
+                                 paginator="true"
                                  paginatorPosition="bottom"
                                  rowKey="#{item.id}"
                                  rows="10"
@@ -25,23 +25,27 @@
 
                         <p:column>
                             <f:facet name="header">
-                                <h:outputText value="#{bundle.ListAreasTitle_nome}"/>
+                                <h:outputText value="#{bundle.ListProjetosTitle_nome}"/>
                             </f:facet>
                             <h:outputText value="#{item.nome}"/>
                         </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListProjetosTitle_descricao}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.descricao}"/>
+                        </p:column>
                         <f:facet name="footer">
-                            <p:commandButton id="createButton" icon="ui-icon-plus"   value="#{bundle.Create}" actionListener="#{areasController.prepareCreate}" update=":AreasCreateForm" oncomplete="PF('AreasCreateDialog').show()"/>
-                            <p:commandButton id="viewButton"   icon="ui-icon-search" value="#{bundle.View}" update=":AreasViewForm" oncomplete="PF('AreasViewDialog').show()" disabled="#{empty areasController.selected}"/>
-                            <p:commandButton id="editButton"   icon="ui-icon-pencil" value="#{bundle.Edit}" update=":AreasEditForm" oncomplete="PF('AreasEditDialog').show()" disabled="#{empty areasController.selected}"/>                            
-                            <p:commandButton id="deleteButton" icon="ui-icon-trash"  value="#{bundle.Delete}" actionListener="#{areasController.destroy}" update=":growl,datalist" disabled="#{empty areasController.selected}">
+                            <p:commandButton id="createButton" icon="ui-icon-plus"   value="#{bundle.Create}" actionListener="#{projetosController.prepareCreate}" update=":ProjetosCreateForm" oncomplete="PF('ProjetosCreateDialog').show()"/>
+                            <p:commandButton id="viewButton"   icon="ui-icon-search" value="#{bundle.View}" update=":ProjetosViewForm" oncomplete="PF('ProjetosViewDialog').show()" disabled="#{empty projetosController.selected}"/>
+                            <p:commandButton id="editButton"   icon="ui-icon-pencil" value="#{bundle.Edit}" update=":ProjetosEditForm" oncomplete="PF('ProjetosEditDialog').show()" disabled="#{empty projetosController.selected}"/>
+                            <p:commandButton id="deleteButton" icon="ui-icon-trash"  value="#{bundle.Delete}" actionListener="#{projetosController.destroy}" update=":growl,datalist" disabled="#{empty projetosController.selected}">
                                 <p:confirm header="Confirmação" message="Confirma a exclusão do registro selecionado?" icon="ui-icon-alert" />
                             </p:commandButton>
-
                             <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
                                 <p:commandButton value="Sim" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
                                 <p:commandButton value="Não" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
-                            </p:confirmDialog>                            
-
+                            </p:confirmDialog>                                                        
                         </f:facet>
                     </p:dataTable>
                 </p:panel>

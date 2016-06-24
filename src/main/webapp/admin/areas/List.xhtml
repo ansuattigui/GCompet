@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition template="../../index.xhtml">
+
+        <ui:define id="body" name="body">
+            <h:form id="AreasListForm">
+                <p:panel header="#{bundle.ListAreasTitle}">
+                    <p:dataTable id="datalist" value="#{areasController.items}" var="item"
+                                 selectionMode="single" selection="#{areasController.selected}"
+                                 paginator="true" 
+                                 paginatorPosition="bottom"
+                                 rowKey="#{item.id}"
+                                 rows="10"
+                                 rowsPerPageTemplate="10,20,30,40,50"
+                                 >
+
+                        <p:ajax event="rowSelect"   update="createButton viewButton editButton deleteButton"/>
+                        <p:ajax event="rowUnselect" update="createButton viewButton editButton deleteButton"/>
+
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListAreasTitle_nome}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.nome}"/>
+                        </p:column>
+                        <f:facet name="footer">
+                            <p:commandButton id="createButton" icon="ui-icon-plus"   value="#{bundle.Create}" actionListener="#{areasController.prepareCreate}" update=":AreasCreateForm" oncomplete="PF('AreasCreateDialog').show()"/>
+                            <p:commandButton id="viewButton"   icon="ui-icon-search" value="#{bundle.View}" update=":AreasViewForm" oncomplete="PF('AreasViewDialog').show()" disabled="#{empty areasController.selected}"/>
+                            <p:commandButton id="editButton"   icon="ui-icon-pencil" value="#{bundle.Edit}" update=":AreasEditForm" oncomplete="PF('AreasEditDialog').show()" disabled="#{empty areasController.selected}"/>                            
+                            <p:commandButton id="deleteButton" icon="ui-icon-trash"  value="#{bundle.Delete}" actionListener="#{areasController.destroy}" update=":growl,datalist" disabled="#{empty areasController.selected}">
+                                <p:confirm header="Confirmação" message="Confirma a exclusão do registro selecionado?" icon="ui-icon-alert" />
+                            </p:commandButton>
+
+                            <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+                                <p:commandButton value="Sim" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+                                <p:commandButton value="Não" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+                            </p:confirmDialog>                            
+
+                        </f:facet>
+                    </p:dataTable>
+                </p:panel>
+            </h:form>
+
+            <ui:include src="Create.xhtml"/>
+            <ui:include src="Edit.xhtml"/>
+            <ui:include src="View.xhtml"/>
+        </ui:define>
+    </ui:composition>
+
+</html>
