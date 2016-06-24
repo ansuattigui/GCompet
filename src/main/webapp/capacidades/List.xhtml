@@ -34,7 +34,9 @@
                             <f:facet name="header">
                                 <h:outputText value="#{bundle.ListAreasTitle}"/>
                             </f:facet>
-                            <p:commandButton icon="ui-icon-search" value="#{bundle.View}" update=":ViewAreasAfinsForm" oncomplete="PF('ViewAreasAfinsDialog').show()"/>
+                            <p:commandButton id="associarButton" icon="ui-icon-search" value="#{bundle.View}" update=":ViewAreasAfinsForm" oncomplete="PF('ViewAreasAfinsDialog').show()">
+                                <f:setPropertyActionListener value="#{item}" target="#{areasController.capacidade}" />
+                            </p:commandButton>
                         </p:column>
                         <f:facet name="footer">
                             <p:commandButton id="createButton" icon="ui-icon-plus"   value="#{bundle.Create}" actionListener="#{capacidadesController.prepareCreate}" update=":CapacidadesCreateForm" oncomplete="PF('CapacidadesCreateDialog').show()"/>

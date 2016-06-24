@@ -33,9 +33,14 @@ import javax.xml.bind.annotation.XmlTransient;
 @NamedQueries({
     @NamedQuery(name = "Areas.findAll", query = "SELECT a FROM Areas a"),
     @NamedQuery(name = "Areas.findById", query = "SELECT a FROM Areas a WHERE a.id = :id"),
-    @NamedQuery(name = "Areas.findByNome", query = "SELECT a FROM Areas a WHERE a.nome = :nome")})
+    @NamedQuery(name = "Areas.findByNome", query = "SELECT a FROM Areas a WHERE a.nome = :nome"),
+    @NamedQuery(name = "Areas.findAllNotAssociatedWithCapacidade", 
+        query = "SELECT a FROM Areas a ORDER BY a.nome") })
 public class Areas implements Serializable {
 
+//        query = "SELECT a FROM Areas a JOIN FETCH a.capacidadesList WHERE a.capacidadesList.id != :parmcap") })
+    
+    
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

@@ -1,22 +1,24 @@
 package com.ctex.ct.gcompet.bean;
 
-import com.ctex.ct.gcompet.modelo.Areas;
 import com.ctex.ct.gcompet.bean.util.JsfUtil;
 import com.ctex.ct.gcompet.bean.util.JsfUtil.PersistAction;
-
+import com.ctex.ct.gcompet.modelo.Areas;
+import com.ctex.ct.gcompet.modelo.Capacidades;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.ejb.EJB;
 import javax.ejb.EJBException;
-import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
+import javax.inject.Named;
+import org.primefaces.model.DualListModel;
 
 @Named("areasController")
 @SessionScoped
@@ -26,6 +28,9 @@ public class AreasController implements Serializable {
     private com.ctex.ct.gcompet.bean.AreasFacade ejbFacade;
     private List<Areas> items = null;
     private Areas selected;
+    
+    private DualListModel<Areas> areasAfins;
+    private Capacidades capacidade;
 
     public AreasController() {
     }
@@ -79,6 +84,11 @@ public class AreasController implements Serializable {
         }
         return items;
     }
+    
+    public List<Areas> getAreasNaoRelacionadas() {
+        items = getFacade().findAll(capacidade);
+        return items;        
+    }
 
     private void persist(PersistAction persistAction, String successMessage) {
         if (selected != null) {
@@ -118,6 +128,55 @@ public class AreasController implements Serializable {
 
     public List<Areas> getItemsAvailableSelectOne() {
         return getFacade().findAll();
+    }
+
+    /**
+     * @return the capacidade
+     */
+    public Capacidades getCapacidade() {
+        return capacidade;
+    }
+
+    /**
+     * @param capacidade the capacidade to set
+     */
+    public void setCapacidade(Capacidades capacidade) {
+        this.capacidade = capacidade;
+    }
+
+    /**
+     * @return the areasAfins
+     */
+    public DualListModel<Areas> getAreasAfins() {
+        List<Areas> areasSource = getAreasNaoRelacionadas();
+        List<Areas> areasTarget = new ArrayList<>();         
+        areasAfins = new DualListModel<>(areasSource, areasTarget);                
+        return areasAfins;
+    }
+    
+    /**
+     * Efetua Associação de Áreas Afins Selecionadas
+     */
+    
+    public void associaAreasAfins() {
+        
+        for (Areas target : areasAfins.getTarget()) {
+            
+            target.getCapacidadesList().add(capacidade);
+            this.selected = target;
+            update();
+            
+            
+        }
+        
+    }
+    
+
+    /**
+     * @param areasAfins the areasAfins to set
+     */
+    public void setAreasAfins(DualListModel<Areas> areasAfins) {
+        this.areasAfins = areasAfins;
     }
 
     @FacesConverter(forClass = Areas.class)

@@ -14,6 +14,7 @@
                     <p:dataTable id="datalist" value="#{capacidadesController.selected.areasList}" var="item"
                         paginator="true" 
                         paginatorPosition="bottom"
+                        selection="#{areasController.capacidade}"
                         selectionMode="single"
                         rowKey="#{item.nome}"
                         rows="10"
@@ -27,7 +28,7 @@
                         </p:column>
                         
                         <f:facet name="footer">
-                            <p:commandButton id="createButton" icon="ui-icon-plus"   value="#{bundle.Create}" actionListener="#{areasController.prepareCreate}" update=":CapacidadesCreateForm" oncomplete="PF('CapacidadesCreateDialog').show()"/>
+                            <p:commandButton id="createButton" icon="ui-icon-plus"   value="#Associar" update=":AssociarAreaForm" oncomplete="PF('AssociarAreaDialog').show()" />                                
                             <p:commandButton id="viewButton"   icon="ui-icon-search" value="#{bundle.View}" update=":CapacidadesViewForm" oncomplete="PF('CapacidadesViewDialog').show()" disabled="#{empty capacidadesController.selected}"/>
                             <p:commandButton id="editButton"   icon="ui-icon-pencil" value="#{bundle.Edit}" update=":CapacidadesEditForm" oncomplete="PF('CapacidadesEditDialog').show()" disabled="#{empty capacidadesController.selected}"/>                            
                             <p:commandButton id="deleteButton" icon="ui-icon-trash"  value="#{bundle.Delete}" actionListener="#{capacidadesController.destroy}" update=":growl,datalist" disabled="#{empty capacidadesController.selected}">
@@ -44,7 +45,7 @@
                     </p:dataTable>                
                 </p:panel>
             </h:form>
-            <ui:include src="../areas/Create.xhtml"/>
+            <ui:include src="../capacidades_areas/Create.xhtml"/>
             <ui:include src="../areas/Edit.xhtml"/>
             <ui:include src="../areas/View.xhtml"/>
         </p:dialog>
