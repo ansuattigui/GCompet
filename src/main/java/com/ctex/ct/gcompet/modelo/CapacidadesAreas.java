@@ -31,23 +31,17 @@ public class CapacidadesAreas implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(name = "id")
-    private Integer id;
-    
+    private Integer id;   
     @ManyToOne
-    private Usuarios usuario;
-    
+    private Usuarios usuario;    
     @ManyToOne
-    private Capacidades capacidade;
-    
+    private Capacidades capacidade;    
     @ManyToOne
-    private Areas area;
-    
+    private Areas area;    
     @Basic(optional = false)
     @NotNull
     @Column(name = "avaliada")
     private boolean avaliada;
-    
-    
     @Basic(optional = false)
     @NotNull
     @Column(name = "avaliacao")

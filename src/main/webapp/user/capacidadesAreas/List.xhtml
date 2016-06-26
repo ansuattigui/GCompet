@@ -8,25 +8,53 @@
 
     <ui:composition template="../../index.xhtml">
 
-
         <ui:define name="title">
             <h:outputText value="#{bundle.ListCapacidadesAreasTitle}"></h:outputText>
         </ui:define>
 
         <ui:define name="body">
-            <h:form id="CapacidadesAreasListForm">
+            <h:form id="CapacidadesListForm" prependId="false">
+                <p:panel header="#{bundle.ListCapacidadesTitle}">
+                    <p:dataTable value="#{capacidadesController.items}" var="capacidade"
+                                 selectionMode="single" 
+                                 selection="#{capacidadesAreasController.capacidade}"
+                                 paginator="true"
+                                 paginatorPosition="bottom"
+                                 rowKey="#{capacidade.id}"
+                                 rows="5"
+                                 rowsPerPageTemplate="5,10,15,20,25,30"                                 
+                                 >
+                        <p:ajax event="rowSelect" listener="#{capacidadesAreasController.onRowSelect}" update="datalist:associaHeader"/>
+                        <p:ajax event="rowUnselect" update=""/>
+                        
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListCapacidadesTitle_nome}"/>
+                            </f:facet>
+                            <h:outputText value="#{capacidade.nome}"/>
+                        </p:column>
+                    </p:dataTable>
+                </p:panel>
+            </h:form>
+            
+            <h:form id="CapacidadesAreasListForm" prependId="false">
                 <p:panel header="#{bundle.ListCapacidadesAreasTitle}">
                     <p:dataTable id="datalist" value="#{capacidadesAreasController.items}" var="item"
                                  selectionMode="single" selection="#{capacidadesAreasController.selected}"
                                  paginator="true"
+                                 paginatorPosition="bottom"
                                  rowKey="#{item.id}"
-                                 rows="10"
-                                 rowsPerPageTemplate="10,20,30,40,50"
+                                 rows="5"
+                                 rowsPerPageTemplate="5,10,15,20,25,30"
                                  >
 
-                        <p:ajax event="rowSelect"   update="createButton viewButton editButton deleteButton"/>
-                        <p:ajax event="rowUnselect" update="createButton viewButton editButton deleteButton"/>
-
+                        <p:ajax event="rowSelect"   update="associateButton viewButton editButton "/>
+                        <p:ajax event="rowUnselect" update="associateButton viewButton editButton "/>
+                        
+                        <f:facet name="header">
+                            <h:outputText id="associaHeader" value="#{capacidadesAreasController.capacidade.nome}" />
+                        </f:facet>
+                        
                         <p:column>
                             <f:facet name="header">
                                 <h:outputText value="#{bundle.ListCapacidadesAreasTitle_avaliada}"/>
@@ -64,16 +92,15 @@
                             <h:outputText value="#{item.id}"/>
                         </p:column>
                         <f:facet name="footer">
-                            <p:commandButton id="createButton" icon="ui-icon-plus"   value="#{bundle.Create}" actionListener="#{capacidadesAreasController.prepareCreate}" update=":CapacidadesAreasCreateForm" oncomplete="PF('CapacidadesAreasCreateDialog').show()"/>
+                            <p:commandButton id="associateButton" icon="ui-icon-plus"   value="#{bundle.Associate}" actionListener="#{capacidadesAreasController.prepareCreate}" update=":AssociarAreasAfinsForm" oncomplete="PF('AssociarAreasAfinsDialog').show()"/>
                             <p:commandButton id="viewButton"   icon="ui-icon-search" value="#{bundle.View}" update=":CapacidadesAreasViewForm" oncomplete="PF('CapacidadesAreasViewDialog').show()" disabled="#{empty capacidadesAreasController.selected}"/>
                             <p:commandButton id="editButton"   icon="ui-icon-pencil" value="#{bundle.Edit}" update=":CapacidadesAreasEditForm" oncomplete="PF('CapacidadesAreasEditDialog').show()" disabled="#{empty capacidadesAreasController.selected}"/>
-                            <p:commandButton id="deleteButton" icon="ui-icon-trash"  value="#{bundle.Delete}" actionListener="#{capacidadesAreasController.destroy}" update=":growl,datalist" disabled="#{empty capacidadesAreasController.selected}"/>
                         </f:facet>
                     </p:dataTable>
                 </p:panel>
             </h:form>
 
-            <ui:include src="Create.xhtml"/>
+            <ui:include src="AssociarAreasAfins.xhtml"/>
             <ui:include src="Edit.xhtml"/>
             <ui:include src="View.xhtml"/>
         </ui:define>

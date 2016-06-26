@@ -2,6 +2,7 @@ package com.ctex.ct.gcompet.bean;
 
 import com.ctex.ct.gcompet.bean.util.JsfUtil;
 import com.ctex.ct.gcompet.bean.util.JsfUtil.PersistAction;
+import com.ctex.ct.gcompet.modelo.Capacidades;
 import com.ctex.ct.gcompet.modelo.CapacidadesAreas;
 import java.io.Serializable;
 import java.util.List;
@@ -16,6 +17,7 @@ import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
 import javax.inject.Named;
+import org.primefaces.event.SelectEvent;
 
 @Named("capacidadesAreasController")
 @SessionScoped
@@ -25,6 +27,8 @@ public class CapacidadesAreasController implements Serializable {
     private com.ctex.ct.gcompet.bean.CapacidadesAreasFacade ejbFacade;
     private List<CapacidadesAreas> items = null;
     private CapacidadesAreas selected;
+    private Capacidades capacidade;
+    private short associacao = -1;
 
     public CapacidadesAreasController() {
     }
@@ -119,6 +123,34 @@ public class CapacidadesAreasController implements Serializable {
         return getFacade().findAll();
     }
 
+    /**
+     * @return the capacidade
+     */
+    public Capacidades getCapacidade() {
+        return capacidade;
+    }
+
+    /**
+     * @param capacidade the capacidade to set
+     */
+    public void setCapacidade(Capacidades capacidade) {
+        this.capacidade = capacidade;
+    }
+
+    /**
+     * @return the associacao
+     */
+    public short getAssociacao() {
+        return associacao;
+    }
+
+    /**
+     * @param associacao the associacao to set
+     */
+    public void setAssociacao(short associacao) {
+        this.associacao = associacao;
+    }
+
     @FacesConverter(forClass = CapacidadesAreas.class)
     public static class CapacidadesAreasControllerConverter implements Converter {
 
@@ -159,5 +191,10 @@ public class CapacidadesAreasController implements Serializable {
         }
 
     }
+    
+    public void onRowSelect(SelectEvent event) {
+        this.capacidade = ((Capacidades) event.getObject());
+        System.out.println(this.capacidade.getNome());
+    }    
 
 }
