@@ -28,9 +28,11 @@
                         <p:menuitem value="Capacidades-Áreas" outcome="/user/capacidadesAreas/List"/>
                     </p:submenu>
                 </p:menubar>
+            <p:panel>
+                <p:outputLabel value="Usuario: #{loginController.userLoggedIn.nomeCompleto}" styleClass="ui-sem-borda"/>
+            </p:panel>
             </h:form>
         </ui:define>
-        
         <ui:define name="center">                        
             <ui:insert name="body">
                 <p:panel id="panel-centro" styleClass="ui-panel-centro"/>

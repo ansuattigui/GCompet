@@ -2,9 +2,12 @@ package com.ctex.ct.gcompet.bean;
 
 import com.ctex.ct.gcompet.bean.util.JsfUtil;
 import com.ctex.ct.gcompet.bean.util.JsfUtil.PersistAction;
+import com.ctex.ct.gcompet.modelo.Areas;
 import com.ctex.ct.gcompet.modelo.Capacidades;
 import com.ctex.ct.gcompet.modelo.CapacidadesAreas;
+import com.ctex.ct.gcompet.modelo.Usuarios;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
@@ -25,6 +28,10 @@ public class CapacidadesAreasController implements Serializable {
 
     @EJB
     private com.ctex.ct.gcompet.bean.CapacidadesAreasFacade ejbFacade;
+    @EJB
+    private com.ctex.ct.gcompet.bean.AreasFacade ejbAreasFacade;
+    
+    
     private List<CapacidadesAreas> items = null;
     private CapacidadesAreas selected;
     private Capacidades capacidade;
@@ -52,6 +59,9 @@ public class CapacidadesAreasController implements Serializable {
     }
 
     public CapacidadesAreas prepareCreate() {
+        
+        
+        
         selected = new CapacidadesAreas();
         initializeEmbeddableKey();
         return selected;
@@ -151,6 +161,21 @@ public class CapacidadesAreasController implements Serializable {
         this.associacao = associacao;
     }
 
+    /**
+     * @return the ejbAreasFacade
+     */
+    public com.ctex.ct.gcompet.bean.AreasFacade getEjbAreasFacade() {
+        return ejbAreasFacade;
+    }
+
+    /**
+     * @param ejbAreasFacade the ejbAreasFacade to set
+     */
+    public void setEjbAreasFacade(com.ctex.ct.gcompet.bean.AreasFacade ejbAreasFacade) {
+        this.ejbAreasFacade = ejbAreasFacade;
+    }
+
+
     @FacesConverter(forClass = CapacidadesAreas.class)
     public static class CapacidadesAreasControllerConverter implements Converter {
 
@@ -191,6 +216,152 @@ public class CapacidadesAreasController implements Serializable {
         }
 
     }
+    
+    /**********************************************
+        Classe de Areas Candidatas a Associação
+    *********************************************/
+    
+    private List<AreasCandidatas> areasCandidatas = new ArrayList<>();
+    private AreasCandidatas acSelected;
+
+    public void geraAreasCandidatas() {
+        List<Areas> areas = getEjbAreasFacade().findAll();        
+        for(Areas area: areas) {
+            AreasCandidatas ac = new AreasCandidatas();
+            ac.setArea(area);
+            areasCandidatas.add(ac);
+        }        
+    }
+    
+
+    /**
+     * @return the areasCandidatas
+     */
+    public List<AreasCandidatas> getAreasCandidatas() {
+        return areasCandidatas;
+    }
+
+    /**
+     * @param areasCandidatas the areasCandidatas to set
+     */
+    public void setAreasCandidatas(List<AreasCandidatas> areasCandidatas) {
+        this.areasCandidatas = areasCandidatas;
+    }
+    
+    /**
+     * @return the acSelected
+     */
+    public AreasCandidatas getAcSelected() {
+        return acSelected;
+    }
+
+    /**
+     * @param acSelected the acSelected to set
+     */
+    public void setAcSelected(AreasCandidatas acSelected) {
+        this.acSelected = acSelected;
+    }
+    
+    public class AreasCandidatas {
+        private int id;
+        private Usuarios usuario;
+        private Capacidades capacidade;
+        private Areas area;
+        private Boolean avaliada;
+        private short avaliacao;
+
+        private AreasCandidatas() {
+            usuario = LoginController.returnUserLoggedIn();
+            capacidade = this.getCapacidade();
+            avaliada = false;
+            avaliacao = -1;
+        }
+        /**
+         * @return the id
+         */
+        public int getId() {
+            return id;
+        }
+
+        /**
+         * @param id the id to set
+         */
+        public void setId(int id) {
+            this.id = id;
+        }        
+        
+        /**
+         * @return the usuario
+         */
+        public Usuarios getUsuario() {
+            return usuario;
+        }
+
+        /**
+         * @param usuario the usuario to set
+         */
+        public void setUsuario(Usuarios usuario) {
+            this.usuario = usuario;
+        }
+
+        /**
+         * @return the capacidade
+         */
+        public Capacidades getCapacidade() {
+            return capacidade;
+        }
+
+        /**
+         * @param capacidade the capacidade to set
+         */
+        public void setCapacidade(Capacidades capacidade) {
+            this.capacidade = capacidade;
+        }
+
+        /**
+         * @return the area
+         */
+        public Areas getArea() {
+            return area;
+        }
+
+        /**
+         * @param area the area to set
+         */
+        public void setArea(Areas area) {
+            this.area = area;
+        }
+
+        /**
+         * @return the avaliada
+         */
+        public Boolean getAvaliada() {
+            return avaliada;
+        }
+
+        /**
+         * @param avaliada the avaliada to set
+         */
+        public void setAvaliada(Boolean avaliada) {
+            this.avaliada = avaliada;
+        }
+
+        /**
+         * @return the avaliacao
+         */
+        public short getAvaliacao() {
+            return avaliacao;
+        }
+
+        /**
+         * @param avaliacao the avaliacao to set
+         */
+        public void setAvaliacao(short avaliacao) {
+            this.avaliacao = avaliacao;
+        }        
+        
+    }
+    
     
     public void onRowSelect(SelectEvent event) {
         this.capacidade = ((Capacidades) event.getObject());

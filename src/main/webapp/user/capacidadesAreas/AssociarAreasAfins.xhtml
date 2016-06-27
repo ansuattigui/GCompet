@@ -11,30 +11,28 @@
         <p:dialog id="AssociarAreasAfinsDlg" widgetVar="AssociarAreasAfinsDialog" modal="true" resizable="false" appendTo="@(body)" >
             <h:form id="AssociarAreasAfinsForm">
                 <p:panel header="#{bundle.ListCapacidadesAreasTitle}" style="width: 800px;">
-                    <p:dataTable id="datalist" value="#{areasController.items}" var="item"
-                                 selectionMode="single" selection="#{areasController.selected}"
+                    <p:dataTable id="datalist" value="#{capacidadesAreasController.areasCandidatas}" var="item"
+                                 selectionMode="single" selection="#{capacidadesAreasController.acSelected}"
                                  paginator="true" 
                                  paginatorPosition="bottom"
                                  rowKey="#{item.id}"
                                  rows="10"
                                  rowsPerPageTemplate="10,20,30,40,50"
-                                 >
-                        
+                                 >                        
                         <f:facet name="header">
                             <h:outputText id="associaHeader" value="#{capacidadesAreasController.capacidade.nome}" />
-                        </f:facet>
-                        
+                        </f:facet>                        
                         <p:column>
                             <f:facet name="header">
                                 <h:outputText value="#{bundle.ListAreasTitle_nome}"/>
                             </f:facet>
-                            <h:outputText value="#{item.nome}"/>
+                            <h:outputText value="#{item.area.nome}"/>
                         </p:column>
                         <p:column style="width:30%">
                             <f:facet name="header">
                                 <h:outputText value="#{bundle.ListCapacidadesAreasTitle_associacao}"/>
                             </f:facet>
-                            <p:selectOneRadio id="associaChoice" value="#{capacidadesAreasController.associacao}">
+                            <p:selectOneRadio id="associaChoice" value="#{capacidadesAreasController.acSelected.avaliacao}">
                                 <f:selectItem itemLabel="Sim" itemValue="1" />
                                 <f:selectItem itemLabel="Não" itemValue="0" />
                                 <f:selectItem itemLabel="N.A." itemValue="-1" />
@@ -42,7 +40,7 @@
                         </p:column>
                         
                         <f:facet name="footer">
-                            <p:commandButton id="confirmaButton" icon="ui-icon-plus"   value="#{bundle.Associate}" actionListener="#{areasController.prepareCreate}" />
+                            <p:commandButton id="confirmaButton" icon="ui-icon-plus"   value="#{bundle.Associate}" />
 
                             <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
                                 <p:commandButton value="Sim" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />

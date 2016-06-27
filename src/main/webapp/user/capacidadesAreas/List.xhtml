@@ -92,7 +92,7 @@
                             <h:outputText value="#{item.id}"/>
                         </p:column>
                         <f:facet name="footer">
-                            <p:commandButton id="associateButton" icon="ui-icon-plus"   value="#{bundle.Associate}" actionListener="#{capacidadesAreasController.prepareCreate}" update=":AssociarAreasAfinsForm" oncomplete="PF('AssociarAreasAfinsDialog').show()"/>
+                            <p:commandButton id="associateButton" icon="ui-icon-plus"   value="#{bundle.Associate}" actionListener="#{capacidadesAreasController.geraAreasCandidatas}" update=":AssociarAreasAfinsForm" oncomplete="PF('AssociarAreasAfinsDialog').show()"/>
                             <p:commandButton id="viewButton"   icon="ui-icon-search" value="#{bundle.View}" update=":CapacidadesAreasViewForm" oncomplete="PF('CapacidadesAreasViewDialog').show()" disabled="#{empty capacidadesAreasController.selected}"/>
                             <p:commandButton id="editButton"   icon="ui-icon-pencil" value="#{bundle.Edit}" update=":CapacidadesAreasEditForm" oncomplete="PF('CapacidadesAreasEditDialog').show()" disabled="#{empty capacidadesAreasController.selected}"/>
                         </f:facet>

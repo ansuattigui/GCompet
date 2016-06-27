@@ -56,5 +56,6 @@
 
 
 .ui-sem-borda {
-    border: none;
+    border: none !important;
+    padding: 0 !important;
 }

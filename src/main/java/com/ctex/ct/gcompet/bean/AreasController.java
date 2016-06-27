@@ -24,7 +24,7 @@ public class AreasController implements Serializable {
     @EJB
     private com.ctex.ct.gcompet.bean.AreasFacade ejbFacade;
     private List<Areas> items = null;
-    private Areas selected;
+    private Areas selected;        
 
     public AreasController() {
     }
@@ -76,6 +76,9 @@ public class AreasController implements Serializable {
         if (items == null) {
             items = getFacade().findAll();
         }
+        
+        
+        
         return items;
     }
     
@@ -157,7 +160,5 @@ public class AreasController implements Serializable {
                 return null;
             }
         }
-
     }
-
 }
