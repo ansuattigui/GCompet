@@ -13,6 +13,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -24,6 +26,12 @@ import javax.xml.bind.annotation.XmlRootElement;
 @Entity
 @Table(name = "capacidades_areas")
 @XmlRootElement
+@NamedQueries({
+    @NamedQuery(name = "CapacidadesAreas.findAll", query = "SELECT ca FROM CapacidadesAreas ca"),
+    @NamedQuery(name = "CapacidadesAreas.findById", query = "SELECT ca FROM CapacidadesAreas ca WHERE ca.id = :id"),
+    @NamedQuery(name = "CapacidadesAreas.findByNome", query = "SELECT ca FROM CapacidadesAreas ca WHERE ca.area.nome = :nome"),
+    @NamedQuery(name = "CapacidadesAreas.findAllByCapacidade", query = "SELECT ca FROM CapacidadesAreas ca WHERE ca.capacidade = :capacidade AND ca.avaliacao != -1 ORDER BY ca.area.nome" )})
+
 public class CapacidadesAreas implements Serializable {
     private static final long serialVersionUID = 1L;
     

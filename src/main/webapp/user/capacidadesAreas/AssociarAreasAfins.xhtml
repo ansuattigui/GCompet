@@ -32,7 +32,7 @@
                             <f:facet name="header">
                                 <h:outputText value="#{bundle.ListCapacidadesAreasTitle_associacao}"/>
                             </f:facet>
-                            <p:selectOneRadio id="associaChoice" value="#{capacidadesAreasController.acSelected.avaliacao}">
+                            <p:selectOneRadio id="associaChoice" value="#{item.avaliacao}">
                                 <f:selectItem itemLabel="Sim" itemValue="1" />
                                 <f:selectItem itemLabel="Não" itemValue="0" />
                                 <f:selectItem itemLabel="N.A." itemValue="-1" />
@@ -40,8 +40,8 @@
                         </p:column>
                         
                         <f:facet name="footer">
-                            <p:commandButton id="confirmaButton" icon="ui-icon-plus"   value="#{bundle.Associate}" />
-
+                            <p:commandButton id="confirmaButton" icon="ui-icon-plus"   value="#{bundle.Associate}" actionListener="#{capacidadesAreasController.salvaAreasCandidatas}" 
+                                                update=":CapacidadesAreasListForm:datalist,:growl" oncomplete="handleSubmit(args,'AssociarAreasAfinsDialog');"/>
                             <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
                                 <p:commandButton value="Sim" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
                                 <p:commandButton value="Não" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />

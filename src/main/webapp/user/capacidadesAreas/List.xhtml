@@ -24,7 +24,7 @@
                                  rows="5"
                                  rowsPerPageTemplate="5,10,15,20,25,30"                                 
                                  >
-                        <p:ajax event="rowSelect" listener="#{capacidadesAreasController.onRowSelect}" update="datalist:associaHeader"/>
+                        <p:ajax event="rowSelect" listener="#{capacidadesAreasController.onRowSelect}" update="datalist:associaHeader,:datalist"/>
                         <p:ajax event="rowUnselect" update=""/>
                         
                         <p:column>
@@ -39,7 +39,7 @@
             
             <h:form id="CapacidadesAreasListForm" prependId="false">
                 <p:panel header="#{bundle.ListCapacidadesAreasTitle}">
-                    <p:dataTable id="datalist" value="#{capacidadesAreasController.items}" var="item"
+                    <p:dataTable id="datalist" value="#{capacidadesAreasController.itemsByCapacidade}" var="item"
                                  selectionMode="single" selection="#{capacidadesAreasController.selected}"
                                  paginator="true"
                                  paginatorPosition="bottom"
@@ -48,53 +48,29 @@
                                  rowsPerPageTemplate="5,10,15,20,25,30"
                                  >
 
-                        <p:ajax event="rowSelect"   update="associateButton viewButton editButton "/>
-                        <p:ajax event="rowUnselect" update="associateButton viewButton editButton "/>
+                        <p:ajax event="rowSelect"   update="associateButton "/>
+                        <p:ajax event="rowUnselect" update="associateButton "/>
                         
                         <f:facet name="header">
                             <h:outputText id="associaHeader" value="#{capacidadesAreasController.capacidade.nome}" />
-                        </f:facet>
-                        
-                        <p:column>
-                            <f:facet name="header">
-                                <h:outputText value="#{bundle.ListCapacidadesAreasTitle_avaliada}"/>
-                            </f:facet>
-                            <p:selectBooleanCheckbox value="#{item.avaliada}" disabled="true"/>
-                        </p:column>
-                        <p:column>
-                            <f:facet name="header">
-                                <h:outputText value="#{bundle.ListCapacidadesAreasTitle_avaliacao}"/>
-                            </f:facet>
-                            <h:outputText value="#{item.avaliacao}"/>
-                        </p:column>
-                        <p:column>
-                            <f:facet name="header">
-                                <h:outputText value="#{bundle.ListCapacidadesAreasTitle_usuario}"/>
-                            </f:facet>
-                            <h:outputText value="#{item.usuario}"/>
-                        </p:column>
-                        <p:column>
-                            <f:facet name="header">
-                                <h:outputText value="#{bundle.ListCapacidadesAreasTitle_capacidade}"/>
-                            </f:facet>
-                            <h:outputText value="#{item.capacidade}"/>
-                        </p:column>
-                        <p:column>
+                        </f:facet>                        
+                        <p:column style="width: 55%;">
                             <f:facet name="header">
                                 <h:outputText value="#{bundle.ListCapacidadesAreasTitle_area}"/>
                             </f:facet>
-                            <h:outputText value="#{item.area}"/>
+                            <h:outputText value="#{item.area.nome}"/>
                         </p:column>
-                        <p:column>
+                        <p:column style="width: 15%;">
                             <f:facet name="header">
-                                <h:outputText value="#{bundle.ListCapacidadesAreasTitle_id}"/>
+                                <h:outputText value="#{bundle.ListCapacidadesAreasTitle_avaliacao}"/>
                             </f:facet>
-                            <h:outputText value="#{item.id}"/>
+                            <p:selectOneRadio value="#{item.avaliacao}" disabled="true">
+                                <f:selectItem itemLabel="Sim" itemValue="1" />
+                                <f:selectItem itemLabel="Não" itemValue="0" />
+                            </p:selectOneRadio>                                
                         </p:column>
                         <f:facet name="footer">
                             <p:commandButton id="associateButton" icon="ui-icon-plus"   value="#{bundle.Associate}" actionListener="#{capacidadesAreasController.geraAreasCandidatas}" update=":AssociarAreasAfinsForm" oncomplete="PF('AssociarAreasAfinsDialog').show()"/>
-                            <p:commandButton id="viewButton"   icon="ui-icon-search" value="#{bundle.View}" update=":CapacidadesAreasViewForm" oncomplete="PF('CapacidadesAreasViewDialog').show()" disabled="#{empty capacidadesAreasController.selected}"/>
-                            <p:commandButton id="editButton"   icon="ui-icon-pencil" value="#{bundle.Edit}" update=":CapacidadesAreasEditForm" oncomplete="PF('CapacidadesAreasEditDialog').show()" disabled="#{empty capacidadesAreasController.selected}"/>
                         </f:facet>
                     </p:dataTable>
                 </p:panel>

@@ -34,9 +34,8 @@ public class AreasFacade extends AbstractFacade<Areas> {
     
     public List<Areas> findAll(Capacidades cap) {       
         TypedQuery<Areas> tq;
-        tq = getEntityManager().createNamedQuery("Areas.findAllNotAssociatedWithCapacidade", Areas.class);
-//        tq.setParameter("parmcap", cap);
-        
+        tq = getEntityManager().createNamedQuery("Areas.findAllNaoAvaliadas", Areas.class);
+        tq.setParameter("cap", cap);        
         List<Areas> lista = tq.getResultList();
         return lista;
     }

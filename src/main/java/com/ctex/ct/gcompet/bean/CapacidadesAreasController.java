@@ -59,9 +59,6 @@ public class CapacidadesAreasController implements Serializable {
     }
 
     public CapacidadesAreas prepareCreate() {
-        
-        
-        
         selected = new CapacidadesAreas();
         initializeEmbeddableKey();
         return selected;
@@ -93,6 +90,11 @@ public class CapacidadesAreasController implements Serializable {
         return items;
     }
 
+    public List<CapacidadesAreas> getItemsByCapacidade() {
+        return getFacade().findAll(capacidade);
+    }
+    
+    
     private void persist(PersistAction persistAction, String successMessage) {
         if (selected != null) {
             setEmbeddableKeys();
@@ -120,6 +122,28 @@ public class CapacidadesAreasController implements Serializable {
             }
         }
     }
+    
+    private void persist(PersistAction persistAction, CapacidadesAreas selected) {
+        if (selected != null) {
+            setEmbeddableKeys();
+            try {
+                if (persistAction != PersistAction.DELETE) {
+                    getFacade().edit(selected);
+                } else {
+                    getFacade().remove(selected);
+                }
+            } catch (EJBException ex) {
+                String msg = "";
+                Throwable cause = ex.getCause();
+                if (cause != null) {
+                    msg = cause.getLocalizedMessage();
+                }
+            } catch (Exception ex) {
+                Logger.getLogger(this.getClass().getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    }
+    
 
     public CapacidadesAreas getCapacidadesAreas(java.lang.Integer id) {
         return getFacade().find(id);
@@ -221,16 +245,33 @@ public class CapacidadesAreasController implements Serializable {
         Classe de Areas Candidatas a Associação
     *********************************************/
     
-    private List<AreasCandidatas> areasCandidatas = new ArrayList<>();
+    private List<AreasCandidatas> areasCandidatas;
     private AreasCandidatas acSelected;
 
     public void geraAreasCandidatas() {
-        List<Areas> areas = getEjbAreasFacade().findAll();        
+        areasCandidatas = new ArrayList<>();
+        List<Areas> areas = getEjbAreasFacade().findAll(capacidade);        
         for(Areas area: areas) {
             AreasCandidatas ac = new AreasCandidatas();
             ac.setArea(area);
+            ac.setCapacidade(capacidade);
             areasCandidatas.add(ac);
         }        
+    }
+    
+    public void salvaAreasCandidatas() {
+        for (AreasCandidatas ac: areasCandidatas) {
+            if (ac.avaliacao!=-1) {
+                CapacidadesAreas ca = new CapacidadesAreas();
+                ca.setUsuario(ac.getUsuario());
+                ca.setCapacidade(ac.getCapacidade());
+                ca.setArea(ac.getArea());
+                ca.setAvaliacao(ac.getAvaliacao());
+                ca.setAvaliada(true);
+                
+                persist(PersistAction.CREATE, ca);
+            }
+        }
     }
     
 
@@ -272,7 +313,6 @@ public class CapacidadesAreasController implements Serializable {
 
         private AreasCandidatas() {
             usuario = LoginController.returnUserLoggedIn();
-            capacidade = this.getCapacidade();
             avaliada = false;
             avaliacao = -1;
         }
