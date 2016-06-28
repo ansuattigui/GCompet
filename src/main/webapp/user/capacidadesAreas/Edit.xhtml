@@ -40,7 +40,7 @@
                         <p:outputLabel value="#{bundle.EditCapacidadesAreasLabel_id}" for="id" />
                         <p:inputText id="id" value="#{capacidadesAreasController.selected.id}" title="#{bundle.EditCapacidadesAreasTitle_id}" required="true" requiredMessage="#{bundle.EditCapacidadesAreasRequiredMessage_id}"/>
                     </p:panelGrid>
-                    <p:commandButton actionListener="#{capacidadesAreasController.update}" value="#{bundle.Save}" update="display,:CapacidadesAreasListForm:datalist,:growl" oncomplete="handleSubmit(args, 'CapacidadesAreasEditDialog');"/>
+                    <p:commandButton actionListener="#{capacidadesAreasController.update}" value="#{bundle.Save}" update="" oncomplete="handleSubmit(args, 'CapacidadesAreasEditDialog');"/>
                     <p:commandButton value="#{bundle.Cancel}" onclick="CapacidadesAreasEditDialog.hide()"/>
                 </h:panelGroup>
             </h:form>

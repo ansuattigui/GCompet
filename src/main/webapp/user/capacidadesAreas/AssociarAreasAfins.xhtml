@@ -10,7 +10,7 @@
 
         <p:dialog id="AssociarAreasAfinsDlg" widgetVar="AssociarAreasAfinsDialog" modal="true" resizable="false" appendTo="@(body)" >
             <h:form id="AssociarAreasAfinsForm">
-                <p:panel header="#{bundle.ListCapacidadesAreasTitle}" style="width: 800px;">
+                <p:panel style="width: 800px;" class="ui-sem-borda">
                     <p:dataTable id="datalist" value="#{capacidadesAreasController.areasCandidatas}" var="item"
                                  selectionMode="single" selection="#{capacidadesAreasController.acSelected}"
                                  paginator="true" 
@@ -20,7 +20,7 @@
                                  rowsPerPageTemplate="10,20,30,40,50"
                                  >                        
                         <f:facet name="header">
-                            <h:outputText id="associaHeader" value="#{capacidadesAreasController.capacidade.nome}" />
+                            <h:outputText id="associaHeader" value="#{capacidadesAreasController.capacidade.nome} - Avaliação de Áreas Afins" />
                         </f:facet>                        
                         <p:column>
                             <f:facet name="header">
@@ -41,7 +41,7 @@
                         
                         <f:facet name="footer">
                             <p:commandButton id="confirmaButton" icon="ui-icon-plus"   value="#{bundle.Associate}" actionListener="#{capacidadesAreasController.salvaAreasCandidatas}" 
-                                                update=":CapacidadesAreasListForm:datalist,:growl" oncomplete="handleSubmit(args,'AssociarAreasAfinsDialog');"/>
+                                                update="tvCapac:datalist,:growl" oncomplete="handleSubmit(args,'AssociarAreasAfinsDialog');"/>
                             <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
                                 <p:commandButton value="Sim" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
                                 <p:commandButton value="Não" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />

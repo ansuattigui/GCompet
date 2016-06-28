@@ -13,68 +13,80 @@
         </ui:define>
 
         <ui:define name="body">
-            <h:form id="CapacidadesListForm" prependId="false">
-                <p:panel header="#{bundle.ListCapacidadesTitle}">
-                    <p:dataTable value="#{capacidadesController.items}" var="capacidade"
-                                 selectionMode="single" 
-                                 selection="#{capacidadesAreasController.capacidade}"
-                                 paginator="true"
-                                 paginatorPosition="bottom"
-                                 rowKey="#{capacidade.id}"
-                                 rows="5"
-                                 rowsPerPageTemplate="5,10,15,20,25,30"  
-                                 >
-                        <p:ajax event="rowSelect" listener="#{capacidadesAreasController.onRowSelect}" update="datalist:associaHeader,:datalist"/>
-                        <p:ajax event="rowUnselect" update=""/>
-                        
-                        <p:column>
-                            <f:facet name="header">
-                                <h:outputText value="#{bundle.ListCapacidadesTitle_nome}"/>
-                            </f:facet>
-                            <h:outputText value="#{capacidade.nome}"/>
-                        </p:column>
-                    </p:dataTable>
-                </p:panel>
-            </h:form>
             
-            <h:form id="CapacidadesAreasListForm" prependId="false">
-                <p:panel header="#{bundle.ListCapacidadesAreasTitle}">
-                    <p:dataTable id="datalist" value="#{capacidadesAreasController.itemsByCapacidade}" var="item"
-                                 selectionMode="single" selection="#{capacidadesAreasController.selected}"
-                                 paginator="true"
-                                 paginatorPosition="bottom"
-                                 rowKey="#{item.id}"
-                                 rows="5"
-                                 rowsPerPageTemplate="5,10,15,20,25,30"
-                                 >
+            <p:tabView id="tvCapac" class="ui-sem-borda">
+                
+                <p:tab id="tabCapac" title="Capacidades">
+                    <h:form id="CapacidadesListForm" prependId="false">
+                        <p:panel>
+                            <p:dataTable value="#{capacidadesController.items}" var="capacidade"
+                                         selectionMode="single" 
+                                         selection="#{capacidadesAreasController.capacidade}"
+                                         paginator="true"
+                                         paginatorPosition="bottom"
+                                         rowKey="#{capacidade.id}"
+                                         rows="5"
+                                         rowsPerPageTemplate="5,10,15,20,25,30"  
+                                         >
+                                <p:ajax event="rowSelect" listener="#{capacidadesAreasController.onRowSelect}" update="tvCapac:datalist:associaHeader,tvCapac:datalist"/>
+                                <p:ajax event="rowUnselect" update=""/>
+                                
+                                <f:facet name="header">
+                                    <h:outputText id="associaHeader" value="#{bundle.ListCapacidadesTitle}"/>
+                                </f:facet>                        
+                                <p:column>
+                                    <f:facet name="header">
+                                        <h:outputText value="#{bundle.ListCapacidadesTitle_nome}"/>
+                                    </f:facet>
+                                    <h:outputText value="#{capacidade.nome}"/>
+                                </p:column>
+                            </p:dataTable>
+                        </p:panel>
+                    </h:form>
+                </p:tab>
+                
+                <p:tab id="tabAAfins" title="Áreas Afins">
+            
+                    <h:form id="CapacidadesAreasListForm" prependId="false">
+                        <p:panel>
+                            <p:dataTable id="datalist" value="#{capacidadesAreasController.itemsByCapacidade}" var="item"
+                                         selectionMode="single" selection="#{capacidadesAreasController.selected}"
+                                         paginator="true"
+                                         paginatorPosition="bottom"
+                                         rowKey="#{item.id}"
+                                         rows="5"
+                                         rowsPerPageTemplate="5,10,15,20,25,30"
+                                         >
 
-                        <p:ajax event="rowSelect"   update="associateButton "/>
-                        <p:ajax event="rowUnselect" update="associateButton "/>
-                        
-                        <f:facet name="header">
-                            <h:outputText id="associaHeader" value="#{capacidadesAreasController.capacidade.nome}" />
-                        </f:facet>                        
-                        <p:column style="width: 55%;">
-                            <f:facet name="header">
-                                <h:outputText value="#{bundle.ListCapacidadesAreasTitle_area}"/>
-                            </f:facet>
-                            <h:outputText value="#{item.area.nome}"/>
-                        </p:column>
-                        <p:column style="width: 18%;">
-                            <f:facet name="header">
-                                <h:outputText value="#{bundle.ListCapacidadesAreasTitle_associado}"/>
-                            </f:facet>
-                            <p:selectOneRadio value="#{item.avaliacao}" disabled="false">
-                                <f:selectItem itemLabel="Sim" itemValue="1" itemDisabled="#{item.avaliacao==0}"/>
-                                <f:selectItem itemLabel="Não" itemValue="0" itemDisabled="#{item.avaliacao==1}"/>
-                            </p:selectOneRadio>                                
-                        </p:column>
-                        <f:facet name="footer">
-                            <p:commandButton id="associateButton" icon="ui-icon-plus"   value="#{bundle.Associate}" actionListener="#{capacidadesAreasController.geraAreasCandidatas}" update=":AssociarAreasAfinsForm" oncomplete="PF('AssociarAreasAfinsDialog').show()"/>
-                        </f:facet>
-                    </p:dataTable>
-                </p:panel>
-            </h:form>
+                                <p:ajax event="rowSelect"   update="associateButton "/>
+                                <p:ajax event="rowUnselect" update="associateButton "/>
+
+                                <f:facet name="header">
+                                    <h:outputText id="associaHeader" value="#{capacidadesAreasController.capacidade.nome} - Áreas Afins" />
+                                </f:facet>                        
+                                <p:column style="width: 55%;">
+                                    <f:facet name="header">
+                                        <h:outputText value="#{bundle.ListCapacidadesAreasTitle_area}"/>
+                                    </f:facet>
+                                    <h:outputText value="#{item.area.nome}"/>
+                                </p:column>
+                                <p:column style="width: 18%;">
+                                    <f:facet name="header">
+                                        <h:outputText value="#{bundle.ListCapacidadesAreasTitle_associado}"/>
+                                    </f:facet>
+                                    <p:selectOneRadio value="#{item.avaliacao}" disabled="false">
+                                        <f:selectItem itemLabel="Sim" itemValue="1" itemDisabled="#{item.avaliacao==0}"/>
+                                        <f:selectItem itemLabel="Não" itemValue="0" itemDisabled="#{item.avaliacao==1}"/>
+                                    </p:selectOneRadio>                                
+                                </p:column>
+                                <f:facet name="footer">
+                                    <p:commandButton id="associateButton" icon="ui-icon-plus"   value="#{bundle.Associate}" actionListener="#{capacidadesAreasController.geraAreasCandidatas}" update=":AssociarAreasAfinsForm" oncomplete="PF('AssociarAreasAfinsDialog').show()"/>
+                                </f:facet>
+                            </p:dataTable>
+                        </p:panel>
+                    </h:form>
+                </p:tab>
+            </p:tabView>
 
             <ui:include src="AssociarAreasAfins.xhtml"/>
             <ui:include src="Edit.xhtml"/>
