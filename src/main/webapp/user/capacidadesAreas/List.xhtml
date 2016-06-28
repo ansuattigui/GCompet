@@ -22,7 +22,7 @@
                                  paginatorPosition="bottom"
                                  rowKey="#{capacidade.id}"
                                  rows="5"
-                                 rowsPerPageTemplate="5,10,15,20,25,30"                                 
+                                 rowsPerPageTemplate="5,10,15,20,25,30"  
                                  >
                         <p:ajax event="rowSelect" listener="#{capacidadesAreasController.onRowSelect}" update="datalist:associaHeader,:datalist"/>
                         <p:ajax event="rowUnselect" update=""/>
@@ -60,13 +60,13 @@
                             </f:facet>
                             <h:outputText value="#{item.area.nome}"/>
                         </p:column>
-                        <p:column style="width: 15%;">
+                        <p:column style="width: 18%;">
                             <f:facet name="header">
-                                <h:outputText value="#{bundle.ListCapacidadesAreasTitle_avaliacao}"/>
+                                <h:outputText value="#{bundle.ListCapacidadesAreasTitle_associado}"/>
                             </f:facet>
-                            <p:selectOneRadio value="#{item.avaliacao}" disabled="true">
-                                <f:selectItem itemLabel="Sim" itemValue="1" />
-                                <f:selectItem itemLabel="Não" itemValue="0" />
+                            <p:selectOneRadio value="#{item.avaliacao}" disabled="false">
+                                <f:selectItem itemLabel="Sim" itemValue="1" itemDisabled="#{item.avaliacao==0}"/>
+                                <f:selectItem itemLabel="Não" itemValue="0" itemDisabled="#{item.avaliacao==1}"/>
                             </p:selectOneRadio>                                
                         </p:column>
                         <f:facet name="footer">
