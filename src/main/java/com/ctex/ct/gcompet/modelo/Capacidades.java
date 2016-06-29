@@ -12,6 +12,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Lob;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
@@ -40,6 +41,10 @@ public class Capacidades implements Serializable {
     @Size(max = 255)
     @Column(name = "nome")
     private String nome;
+    @Lob
+    @Size(max = 2147483647)
+    @Column(name = "descricao")
+    private String descricao;
 
     public Capacidades() {
     }
@@ -87,6 +92,20 @@ public class Capacidades implements Serializable {
     @Override
     public String toString() {
         return "com.ctex.ct.gcompet.modelo.Capacidades[ id=" + id + " ]";
+    }
+
+    /**
+     * @return the descricao
+     */
+    public String getDescricao() {
+        return descricao;
+    }
+
+    /**
+     * @param descricao the descricao to set
+     */
+    public void setDescricao(String descricao) {
+        this.descricao = descricao;
     }
     
 }

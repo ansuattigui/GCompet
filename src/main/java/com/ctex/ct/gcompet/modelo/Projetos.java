@@ -40,10 +40,6 @@ public class Projetos implements Serializable {
     @Basic(optional = false)
     @Column(name = "id")
     private Integer id;
-    @Lob
-    @Size(max = 2147483647)
-    @Column(name = "descricao")
-    private String descricao;
     @Size(max = 255)
     @Column(name = "nome")
     private String nome;
@@ -61,14 +57,6 @@ public class Projetos implements Serializable {
 
     public void setId(Integer id) {
         this.id = id;
-    }
-
-    public String getDescricao() {
-        return descricao;
-    }
-
-    public void setDescricao(String descricao) {
-        this.descricao = descricao;
     }
 
     public String getNome() {

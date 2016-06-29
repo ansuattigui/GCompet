@@ -12,6 +12,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Lob;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
@@ -40,7 +41,7 @@ public class Empresas implements Serializable {
     @Size(max = 255)
     @Column(name = "nome")
     private String nome;
-
+    
     public Empresas() {
     }
 
@@ -88,5 +89,5 @@ public class Empresas implements Serializable {
     public String toString() {
         return "com.ctex.ct.gcompet.modelo.Empresas[ id=" + id + " ]";
     }
-    
+
 }

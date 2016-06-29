@@ -29,12 +29,6 @@
                             </f:facet>
                             <h:outputText value="#{item.nome}"/>
                         </p:column>
-                        <p:column>
-                            <f:facet name="header">
-                                <h:outputText value="#{bundle.ListProjetosTitle_descricao}"/>
-                            </f:facet>
-                            <h:outputText value="#{item.descricao}"/>
-                        </p:column>
                         <f:facet name="footer">
                             <p:commandButton id="createButton" icon="ui-icon-plus"   value="#{bundle.Create}" actionListener="#{projetosController.prepareCreate}" update=":ProjetosCreateForm" oncomplete="PF('ProjetosCreateDialog').show()"/>
                             <p:commandButton id="viewButton"   icon="ui-icon-search" value="#{bundle.View}" update=":ProjetosViewForm" oncomplete="PF('ProjetosViewDialog').show()" disabled="#{empty projetosController.selected}"/>
