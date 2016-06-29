@@ -1,5 +1,12 @@
 .ui-widget {
-    font-size: 14px !important;
+    font-size: 12px !important;
+}
+.ui-widget-content {
+    color: black !important;
+}
+
+.ui-widget-content a {
+    color: brown !important;
 }
 .ui-layout-north {
     z-index: 20 !important;
@@ -10,7 +17,7 @@
 }
 .ui-widget-header {
     text-align: center;
-    text-transform: uppercase;
+    text-transform: capitalize !important;
 }
 .ui-button {
     margin-top: 10px !important;
@@ -20,6 +27,9 @@
     width: 110px;
 }
 
+.ui-button-text {
+    color: brown !important;
+}
 .ui-panel-cabecalho {
     background-image: url(http://localhost:8080/GCompet/faces/resources/img/banner.png);
     background-position: center; 
@@ -54,6 +64,9 @@
     height: 80px;
 }
 
+.ui-menu .ui-menuitem-link {
+    font-weight: normal !important;
+}
 
 .ui-sem-borda {
     border: none !important;
