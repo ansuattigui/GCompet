@@ -25,10 +25,13 @@
                                     <p:menuitem value="Empresas" outcome="/admin/empresas/List" />
                                     <p:menuitem value="Perfil" outcome="/perfil/List" rendered="false"/>
                                     <p:menuitem value="Projetos" outcome="/admin/projetos/List" />
-                                    <p:menuitem value="Usuarios" outcome="/usuarios/List" rendered="false"/>
+                                    <p:menuitem value="Usuarios" outcome="/admin/usuarios/List" />
                                 </p:submenu>
-                                <p:submenu label="#{bundle.Usuario}">
-                                    <p:menuitem value="Capacidades-Áreas" outcome="/user/capacidadesAreas/List"/>
+                                <p:submenu label="#{bundle.Avaliacoes}">
+                                    <p:menuitem value="Visão Capacidades" outcome="/user/capacidadesAreas/List"/>
+                                </p:submenu>
+                                <p:submenu label="#{bundle.Relatorios}">
+                                    <p:menuitem ajax="false" value="Contagem das avaliações"  actionListener="#{relatorioContagem.getRelatorioContagemCapacidadeArea}" update="@all" />                            
                                 </p:submenu>
                             </p:menubar>
                         </p:column>                        

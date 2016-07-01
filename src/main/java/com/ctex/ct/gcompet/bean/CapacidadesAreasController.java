@@ -35,6 +35,7 @@ public class CapacidadesAreasController implements Serializable {
     private List<CapacidadesAreas> items = null;
     private CapacidadesAreas selected;
     private Capacidades capacidade;
+    private AreasCandidatas area;
     private short associacao = -1;
 
     public CapacidadesAreasController() {
@@ -197,6 +198,20 @@ public class CapacidadesAreasController implements Serializable {
      */
     public void setEjbAreasFacade(com.ctex.ct.gcompet.bean.AreasFacade ejbAreasFacade) {
         this.ejbAreasFacade = ejbAreasFacade;
+    }
+
+    /**
+     * @return the area
+     */
+    public AreasCandidatas getArea() {
+        return area;
+    }
+
+    /**
+     * @param area the area to set
+     */
+    public void setArea(AreasCandidatas area) {
+        this.area = area;
     }
 
 
@@ -403,9 +418,12 @@ public class CapacidadesAreasController implements Serializable {
     }
     
     
-    public void onRowSelect(SelectEvent event) {
+    public void onCapacidadeSelect(SelectEvent event) {
         this.capacidade = ((Capacidades) event.getObject());
-        System.out.println(this.capacidade.getNome());
     }    
 
+    public void onAreaSelect(SelectEvent event) {
+        this.area = ((AreasCandidatas) event.getObject());
+    }    
+    
 }

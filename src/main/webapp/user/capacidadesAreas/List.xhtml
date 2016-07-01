@@ -18,28 +18,37 @@
                 
                 <p:tab id="tabCapac" title="Capacidades">
                     <h:form id="CapacidadesListForm" prependId="false">
-                        <p:panel>
+                        <p:panel class="ui-sem-borda">
                             <p:dataTable value="#{capacidadesController.items}" var="capacidade"
                                          selectionMode="single" 
                                          selection="#{capacidadesAreasController.capacidade}"
                                          paginator="true"
                                          paginatorPosition="bottom"
                                          rowKey="#{capacidade.id}"
-                                         rows="5"
+                                         rows="12"
                                          rowsPerPageTemplate="5,10,15,20,25,30"  
                                          >
-                                <p:ajax event="rowSelect" listener="#{capacidadesAreasController.onRowSelect}" update="tvCapac:datalist:associaHeader,tvCapac:datalist"/>
-                                <p:ajax event="rowUnselect" update=""/>
+                                <p:ajax event="rowSelect" listener="#{capacidadesAreasController.onCapacidadeSelect}" update="tvCapac:datalist:associaHeader tvCapac:datalist viewButton"/>
+                                <p:ajax event="rowUnselect" update="viewButton"/>
                                 
                                 <f:facet name="header">
                                     <h:outputText id="associaHeader" value="#{bundle.ListCapacidadesTitle}"/>
                                 </f:facet>                        
+                                <p:column style="width: 5%;">
+                                    <f:facet name="header">
+                                        <h:outputText value="#{bundle.ListCapacidadesTitle_num}"/>
+                                    </f:facet>
+                                    <h:outputText value="#{capacidade.id}"/>
+                                </p:column>
                                 <p:column>
                                     <f:facet name="header">
                                         <h:outputText value="#{bundle.ListCapacidadesTitle_nome}"/>
                                     </f:facet>
                                     <h:outputText value="#{capacidade.nome}"/>
                                 </p:column>
+                                <f:facet name="footer">
+                                    <p:commandButton id="viewButton"   icon="ui-icon-search" value="#{bundle.View}" update=":CapacidadesViewForm" oncomplete="PF('CapacidadesViewDialog').show()" disabled="#{empty capacidadesAreasController.capacidade}"/>
+                                </f:facet>
                             </p:dataTable>
                         </p:panel>
                     </h:form>
@@ -48,14 +57,14 @@
                 <p:tab id="tabAAfins" title="Áreas Afins">
             
                     <h:form id="CapacidadesAreasListForm" prependId="false">
-                        <p:panel>
+                        <p:panel class="ui-sem-borda">
                             <p:dataTable id="datalist" value="#{capacidadesAreasController.itemsByCapacidade}" var="item"
                                          selectionMode="single" selection="#{capacidadesAreasController.selected}"
                                          paginator="true"
                                          paginatorPosition="bottom"
                                          rowKey="#{item.id}"
-                                         rows="5"
-                                         rowsPerPageTemplate="5,10,15,20,25,30"
+                                         rows="8"
+                                         rowsPerPageTemplate="8,16,24,32,40,48"
                                          >
 
                                 <p:ajax event="rowSelect"   update="associateButton "/>
@@ -63,7 +72,13 @@
 
                                 <f:facet name="header">
                                     <h:outputText id="associaHeader" value="#{capacidadesAreasController.capacidade.nome} - Áreas Afins" />
-                                </f:facet>                        
+                                </f:facet>  
+                                <p:column style="width: 5%;">
+                                    <f:facet name="header">
+                                        <h:outputText value="#{bundle.ListCapacidadesAreasTitle_num}"/>
+                                    </f:facet>
+                                    <h:outputText value="#{item.area.id}"/>
+                                </p:column>
                                 <p:column style="width: 55%;">
                                     <f:facet name="header">
                                         <h:outputText value="#{bundle.ListCapacidadesAreasTitle_area}"/>
@@ -91,6 +106,7 @@
             <ui:include src="AssociarAreasAfins.xhtml"/>
             <ui:include src="Edit.xhtml"/>
             <ui:include src="View.xhtml"/>
+            <ui:include src="ViewCapacidade.xhtml"/>
         </ui:define>
     </ui:composition>
 
