@@ -13,7 +13,7 @@
         </ui:define>
         
         <ui:define name="menuhor">
-            <h:form id="menuForm">
+            <h:form id="menuForm" prependId="false">
                 <p:panelGrid class="ui-sem-borda">
                     <p:row class="ui-sem-borda">
                         <p:column style="width: 50%;" class="ui-sem-borda">
@@ -31,7 +31,7 @@
                                     <p:menuitem value="Visão Capacidades" outcome="/user/capacidadesAreas/List"/>
                                 </p:submenu>
                                 <p:submenu label="#{bundle.Relatorios}">
-                                    <p:menuitem ajax="false" value="Contagem das avaliações"  actionListener="#{relatorioContagem.getRelatorioContagemCapacidadeArea}" update="@all" />                            
+                                    <p:menuitem ajax="false" value="Contagem das avaliações" actionListener="#{relatorioContagem.getRelatorioContagemAvaliacoes}" update="@all" />                            
                                 </p:submenu>
                             </p:menubar>
                         </p:column>                        
