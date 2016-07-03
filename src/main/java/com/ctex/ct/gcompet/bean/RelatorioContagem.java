@@ -15,10 +15,6 @@ import javax.enterprise.context.SessionScoped;
 import javax.faces.bean.ManagedBean;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
-import javax.naming.Context;
-import javax.naming.InitialContext;
-import javax.naming.NamingException;
-import javax.sql.DataSource;
 import javax.swing.ImageIcon;
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JasperExportManager;
@@ -39,10 +35,10 @@ public class RelatorioContagem implements Serializable {
     private JasperPrint jasperPrint;
     private Connection connection;
     private String contentType;
-    private String RelatorioContagemCapacidadeArea;
+    private String relatorioContagemAvaliacoes;
         
     @EJB 
-    private CapacidadesAreasFacade capacidadesAreasFacade;
+    private CapacidadesAreasFacade ejbFacade;
 
  
     /**
@@ -55,7 +51,7 @@ public class RelatorioContagem implements Serializable {
      * @return the jasper
      */
     public String getJasper() {
-        jasper = getContext().getRealPath("user/relatorios/contagemCapacidadeArea.jasper");
+        jasper = getContext().getRealPath("user/relatorios/contagemAvaliacoes.jasper");
         return jasper;
     }
 
@@ -90,7 +86,7 @@ public class RelatorioContagem implements Serializable {
         hm.put("par_logotipo",logotipo.getImage());        
         hm.put("par_nomerelat","Associação Capacidades Operacionais / Areas de Pesquisa");        
         try {   
-            jasperPrint = JasperFillManager.fillReport(getJasper(),hm, connection);
+            jasperPrint = JasperFillManager.fillReport(getJasper(),hm, getConnection());
         } catch (JRException ex) {
             Logger.getLogger(RelatorioContagem.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -104,7 +100,9 @@ public class RelatorioContagem implements Serializable {
         this.jasperPrint = jasperPrint;
     }
     
-    public String getRelatorioContagemCapacidadeArea() {
+    
+    /*
+    public String getRelatorioContagemAvaliacoes() {
         relatorio = "/reports/contagem/capacidadesAreas.pdf";
         try {                
             JasperExportManager.exportReportToPdfFile(getJasperPrint(), getContext().getRealPath(relatorio));
@@ -115,10 +113,11 @@ public class RelatorioContagem implements Serializable {
     }
 
     /**
-     * @param RelatorioContagemCapacidadeArea the RelatorioContagemCapacidadeArea to set
+     * @param relatorioContagemAvaliacoes
      */
-    public void setRelatorioContagemCapacidadeArea(String RelatorioContagemCapacidadeArea) {
-        this.RelatorioContagemCapacidadeArea = RelatorioContagemCapacidadeArea;
+   /*
+    public void setRelatorioContagemAvaliacoes(String relatorioContagemAvaliacoes) {
+        this.relatorioContagemAvaliacoes = relatorioContagemAvaliacoes;
     }
     
     /**
@@ -126,7 +125,7 @@ public class RelatorioContagem implements Serializable {
      */
     public String getRelatorio() {        
         relatorio = "/reports/contagem/capacidadesAreas.pdf";
-//        contentType = FacesContext.getCurrentInstance().getExternalContext().getMimeType(relatorio);
+        contentType = FacesContext.getCurrentInstance().getExternalContext().getMimeType(relatorio);
         return relatorio;
     }
 
@@ -136,32 +135,13 @@ public class RelatorioContagem implements Serializable {
     public void setRelatorio(String relatorio) {
         this.relatorio = relatorio;
     }
-/*    
-    public String setReport() {        
-        relatorio = "/reports/divisao.pdf";
-        try { 
-            JasperExportManager.exportReportToPdfFile(getJasperPrint(), getContext().getRealPath(relatorio));
-        } catch (JRException ex) {
-            Logger.getLogger(RelatorioContagem.class.getName()).log(Level.SEVERE, null, ex);
-        }        
-        return "/relatorios/divisao/divisao";        
-    }    
-*/
+
     /**
      * @return the connection
      */
-    public Connection getConnection() {        
-
-        Context ctx = null;
-        try {
-            ctx = new InitialContext();
-            DataSource ds = (DataSource)ctx.lookup("jdbc/gcompet");        
-        } catch (NamingException ex) {
-            Logger.getLogger(RelatorioContagem.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return connection;
+    public Connection getConnection() {
+        return getEjbFacade().getConnection();
     }
-    
 
     /**
      * @param connection the connection to set
@@ -169,7 +149,40 @@ public class RelatorioContagem implements Serializable {
     public void setConnection(Connection connection) {
         this.connection = connection;
     }
-    
-    
+
+    /**
+     * @return the ejbFacade
+     */
+    public CapacidadesAreasFacade getEjbFacade() {
+        return ejbFacade;
+    }
+
+    /**
+     * @param ejbFacade the ejbFacade to set
+     */
+    public void setEjbFacade(CapacidadesAreasFacade ejbFacade) {
+        this.ejbFacade = ejbFacade;
+    }
+
+    /**
+     * @return the relatorioContagemAvaliacoes
+     */
+    public String getRelatorioContagemAvaliacoes() {
+        relatorio = "/reports/contagem/capacidadesAreas.pdf";
+        try {                
+            JasperExportManager.exportReportToPdfFile(getJasperPrint(), getContext().getRealPath(relatorio));
+        } catch (JRException ex) {
+            Logger.getLogger(RelatorioContagem.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        relatorioContagemAvaliacoes = "/user/relatorios/capacidadeArea";
+        return relatorioContagemAvaliacoes;
+    }
+
+    /**
+     * @param relatorioContagemAvaliacoes the relatorioContagemAvaliacoes to set
+     */
+    public void setRelatorioContagemAvaliacoes(String relatorioContagemAvaliacoes) {
+        this.relatorioContagemAvaliacoes = relatorioContagemAvaliacoes;
+    }
 
 }

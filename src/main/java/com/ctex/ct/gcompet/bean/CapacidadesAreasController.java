@@ -27,9 +27,9 @@ import org.primefaces.event.SelectEvent;
 public class CapacidadesAreasController implements Serializable {
 
     @EJB
-    private com.ctex.ct.gcompet.bean.CapacidadesAreasFacade ejbFacade;
+    private CapacidadesAreasFacade ejbFacade;
     @EJB
-    private com.ctex.ct.gcompet.bean.AreasFacade ejbAreasFacade;
+    private AreasFacade ejbAreasFacade;
     
     
     private List<CapacidadesAreas> items = null;
@@ -189,14 +189,14 @@ public class CapacidadesAreasController implements Serializable {
     /**
      * @return the ejbAreasFacade
      */
-    public com.ctex.ct.gcompet.bean.AreasFacade getEjbAreasFacade() {
+    public AreasFacade getEjbAreasFacade() {
         return ejbAreasFacade;
     }
 
     /**
      * @param ejbAreasFacade the ejbAreasFacade to set
      */
-    public void setEjbAreasFacade(com.ctex.ct.gcompet.bean.AreasFacade ejbAreasFacade) {
+    public void setEjbAreasFacade(AreasFacade ejbAreasFacade) {
         this.ejbAreasFacade = ejbAreasFacade;
     }
 

@@ -1,0 +1,2 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<jdbcDataAdapter class="net.sf.jasperreports.data.jdbc.JdbcDataAdapterImpl"><name>gcompet</name><driver>com.mysql.jdbc.Driver</driver><username>root</username><password>arv0702</password><savePassword>true</savePassword><url>jdbc:mysql://localhost/gcompet</url><database></database><serverAddress></serverAddress><classpath>C:\Users\Ralfh\Documents\NetBeansProjects\GCompet\relatorios\lib\mysql-connector-java-5.1.39.jar</classpath></jdbcDataAdapter>
