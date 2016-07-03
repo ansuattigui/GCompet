@@ -31,7 +31,7 @@
                                     <p:menuitem value="Visão Capacidades" outcome="/user/capacidadesAreas/List"/>
                                 </p:submenu>
                                 <p:submenu label="#{bundle.Relatorios}">
-                                    <p:menuitem ajax="false" value="Contagem das avaliações" actionListener="#{relatorioContagem.getRelatorioContagemAvaliacoes}" update="@all" />                            
+                                    <p:menuitem ajax="false" value="Contagem das avaliações" action="#{relatorioContagem.getRelatorioContagemAvaliacoes}" update="@all" />                            
                                 </p:submenu>
                             </p:menubar>
                         </p:column>                        

@@ -7,6 +7,7 @@ package com.ctex.ct.gcompet.bean;
 
 import java.io.Serializable;
 import java.sql.Connection;
+import java.util.HashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.ejb.EJB;
@@ -14,6 +15,7 @@ import javax.enterprise.context.SessionScoped;
 import javax.faces.bean.ManagedBean;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
+import javax.swing.ImageIcon;
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JasperExportManager;
 import net.sf.jasperreports.engine.JasperFillManager;
@@ -79,12 +81,12 @@ public class RelatorioContagem implements Serializable {
      * @return the jasperPrint
      */
     public JasperPrint getJasperPrint() {        
-//        ImageIcon logotipo = new ImageIcon(getContext().getRealPath("/resources/img/logo-ctex.png"));                
-//        HashMap hm = new HashMap<>();
-//        hm.put("par_logotipo",logotipo.getImage());        
-//        hm.put("par_nomerelat","Associação Capacidades Operacionais / Areas de Pesquisa");        
+        ImageIcon logotipo = new ImageIcon(getContext().getRealPath("/resources/img/logo-ctex.png"));                
+        HashMap hm = new HashMap<>();
+        hm.put("par_logotipo",logotipo.getImage());        
+        hm.put("par_nomerelat","Associação Capacidades Operacionais / Areas de Pesquisa");        
         try {   
-            jasperPrint = JasperFillManager.fillReport(getJasper(),null, getConnection());
+            jasperPrint = JasperFillManager.fillReport(getJasper(),hm, getConnection());
         } catch (JRException ex) {
             Logger.getLogger(RelatorioContagem.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -172,8 +174,8 @@ public class RelatorioContagem implements Serializable {
         } catch (JRException ex) {
             Logger.getLogger(RelatorioContagem.class.getName()).log(Level.SEVERE, null, ex);
         }
-//        relatorioContagemAvaliacoes = "/user/relatorios/capacidadeArea";
-        return "/user/relatorios/capacidadeArea";
+        relatorioContagemAvaliacoes = "/user/relatorios/capacidadeArea";
+        return relatorioContagemAvaliacoes;
     }
 
     /**

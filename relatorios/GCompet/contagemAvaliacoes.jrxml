@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with Jaspersoft Studio version 6.2.0.final using JasperReports Library version 6.2.0  -->
-<!-- 2016-07-02T19:40:12 -->
+<!-- 2016-07-03T14:07:09 -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="ContagemAvaliacoes" pageWidth="842" pageHeight="595" orientation="Landscape" whenNoDataType="NoDataSection" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="cee05612-34ea-4758-8afd-e3b7679e08b0">
 	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
 	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="gcompet.xml"/>
@@ -36,12 +36,21 @@ ORDER BY gcompet.capacidades_areas.`CAPACIDADE_id` DESC,
 	<group name="Group1">
 		<groupExpression><![CDATA[$F{capacidade}]]></groupExpression>
 		<groupHeader>
-			<band height="41">
+			<band height="32">
+				<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				<rectangle>
+					<reportElement mode="Opaque" x="0" y="0" width="802" height="32" backcolor="#FFFFFF" uuid="a68f2840-918b-4a96-a886-b2c5176f0e87"/>
+					<graphicElement>
+						<pen lineStyle="Solid" lineColor="#000000"/>
+					</graphicElement>
+				</rectangle>
 				<textField>
-					<reportElement x="16" y="7" width="761" height="25" uuid="f180abf7-d128-4a2f-a8ff-a68a904f413d">
+					<reportElement x="13" y="6" width="776" height="20" uuid="f180abf7-d128-4a2f-a8ff-a68a904f413d">
 						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
 					</reportElement>
-					<textElement verticalAlignment="Middle"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font isBold="true" isItalic="true"/>
+					</textElement>
 					<textFieldExpression><![CDATA["Capacidade Operacional: " + $F{capacidade}]]></textFieldExpression>
 				</textField>
 			</band>
@@ -84,46 +93,93 @@ ORDER BY gcompet.capacidades_areas.`CAPACIDADE_id` DESC,
 				</textElement>
 				<text><![CDATA[Departamento de Ciência e Tecnologia]]></text>
 			</staticText>
+			<image>
+				<reportElement positionType="FixRelativeToBottom" x="16" y="12" width="69" height="67" uuid="0356b5ee-6fe9-4364-9d37-05926be69b1c"/>
+				<imageExpression><![CDATA[$P{par_logotipo}]]></imageExpression>
+			</image>
 		</band>
 	</title>
 	<pageHeader>
-		<band height="36" splitType="Stretch"/>
-	</pageHeader>
-	<columnHeader>
-		<band height="39" splitType="Stretch">
-			<staticText>
-				<reportElement x="53" y="7" width="520" height="25" uuid="694a34ed-73ad-45b0-bc02-284377978897">
+		<band height="36" splitType="Stretch">
+			<textField isBlankWhenNull="true">
+				<reportElement x="39" y="9" width="724" height="20" uuid="cf4eaf5c-4857-4d33-bdfd-ca53fc728acc">
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
 					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
 				</reportElement>
-				<textElement verticalAlignment="Middle"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{par_nomerelat}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="40" splitType="Stretch">
+			<rectangle>
+				<reportElement x="0" y="0" width="802" height="40" uuid="8515948b-c78a-4ea3-8fad-a2e056603554"/>
+				<graphicElement>
+					<pen lineStyle="Solid"/>
+				</graphicElement>
+			</rectangle>
+			<staticText>
+				<reportElement x="9" y="7" width="641" height="25" uuid="694a34ed-73ad-45b0-bc02-284377978897">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+				</reportElement>
+				<textElement verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
 				<text><![CDATA[Área de Pesquisa]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="678" y="7" width="62" height="25" uuid="bf71cf0f-88de-4a88-a4c7-89084d23c85a">
+				<reportElement x="701" y="7" width="62" height="25" uuid="bf71cf0f-88de-4a88-a4c7-89084d23c85a">
 					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
 				</reportElement>
-				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
 				<text><![CDATA[Contagem]]></text>
 			</staticText>
+			<line>
+				<reportElement x="677" y="0" width="1" height="40" uuid="a7a51393-7685-4a44-8b1f-671a7f143f96">
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+				</reportElement>
+			</line>
 		</band>
 	</columnHeader>
 	<detail>
-		<band height="38" splitType="Stretch">
+		<band height="32" splitType="Stretch">
 			<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+			<rectangle>
+				<reportElement mode="Opaque" x="0" y="0" width="802" height="32" backcolor="#FFFFFF" uuid="6afead33-abfd-4dd8-99a4-ab078515c5c0"/>
+				<graphicElement>
+					<pen lineStyle="Solid" lineColor="#000000"/>
+				</graphicElement>
+			</rectangle>
 			<textField>
-				<reportElement x="53" y="6" width="329" height="25" uuid="19cc030c-c45a-46f6-9d34-c141d5a583b7">
+				<reportElement stretchType="RelativeToBandHeight" x="9" y="6" width="641" height="20" uuid="19cc030c-c45a-46f6-9d34-c141d5a583b7">
 					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
 				</reportElement>
 				<textElement verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{area}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="680" y="6" width="57" height="25" uuid="099f97f7-71d6-4a39-bf6d-596fbf690546">
+				<reportElement stretchType="RelativeToBandHeight" x="701" y="6" width="62" height="20" uuid="099f97f7-71d6-4a39-bf6d-596fbf690546">
 					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
 				</reportElement>
 				<textElement textAlignment="Right" verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{NUMERO}]]></textFieldExpression>
 			</textField>
+			<line>
+				<reportElement x="677" y="0" width="1" height="32" uuid="47d68777-ca78-446f-96cf-5a832fcf0295">
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+				</reportElement>
+			</line>
 		</band>
 	</detail>
 	<columnFooter>
