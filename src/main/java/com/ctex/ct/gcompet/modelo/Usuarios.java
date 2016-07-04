@@ -5,6 +5,7 @@
  */
 package com.ctex.ct.gcompet.modelo;
 
+import com.ctex.ct.gcompet.bean.util.JsfUtil;
 import java.io.Serializable;
 import javax.persistence.Basic;
 import javax.persistence.Column;
@@ -86,7 +87,7 @@ public class Usuarios implements Serializable {
     }
 
     public void setSenha(String senha) {
-        this.senha = senha;
+        this.senha =  JsfUtil.encryptPassword(senha);
     }
 
     @Override

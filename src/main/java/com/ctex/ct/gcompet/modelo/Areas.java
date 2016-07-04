@@ -30,7 +30,7 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Areas.findAll", query = "SELECT a FROM Areas a"),
     @NamedQuery(name = "Areas.findById", query = "SELECT a FROM Areas a WHERE a.id = :id"),
     @NamedQuery(name = "Areas.findByNome", query = "SELECT a FROM Areas a WHERE a.nome = :nome"),
-    @NamedQuery(name = "Areas.findAllNaoAvaliadas", query = "SELECT a FROM Areas a WHERE a.id NOT IN (SELECT ca.area.id FROM CapacidadesAreas ca WHERE ca.capacidade = :cap)")})
+    @NamedQuery(name = "Areas.findAllNaoAvaliadas", query = "SELECT a FROM Areas a WHERE a.id NOT IN (SELECT ca.area.id FROM CapacidadesAreas ca WHERE ca.capacidade = :cap and ca.usuario = :user)")})
 public class Areas implements Serializable {
     
     private static final long serialVersionUID = 1L;

@@ -31,7 +31,7 @@
     color: brown !important;
 }
 .ui-panel-cabecalho {
-    background-image: url(http://localhost:8080/GCompet/faces/resources/img/banner.png);
+    background-image: url(img/banner.png);
     background-position: center; 
     background-repeat: no-repeat; 
     border-style: none;
@@ -39,7 +39,7 @@
 }
 
 .ui-panel-rodape {
-    background-image:url(http://localhost:8080/GCompet/faces/resources/img/rodape.png); 
+    background-image:url(img/rodape.png); 
     background-position: center; 
     background-repeat: no-repeat; 
     border-style: none;
@@ -47,7 +47,7 @@
 }
 
 .ui-panel-centro {
-    background-image:url(http://localhost:8080/GCompet/faces/resources/img/splash.png); 
+    background-image:url(img/splash.png); 
     background-position: center; 
     background-repeat: no-repeat; 
     border-style: none;
@@ -56,7 +56,7 @@
 }
 
 .ui-panel-login {
-    background-image:url(http://localhost:8080/GCompet/faces/resources/img/login.fw.png); 
+    background-image:url(img/login.fw.png); 
     background-position: center; 
     background-repeat: no-repeat; 
     background-size: contain;

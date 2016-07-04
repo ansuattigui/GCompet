@@ -1,9 +1,8 @@
 package com.ctex.ct.gcompet.bean;
 
-import com.ctex.ct.gcompet.modelo.Usuarios;
 import com.ctex.ct.gcompet.bean.util.JsfUtil;
 import com.ctex.ct.gcompet.bean.util.JsfUtil.PersistAction;
-
+import com.ctex.ct.gcompet.modelo.Usuarios;
 import java.io.Serializable;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -11,15 +10,15 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.ejb.EJB;
 import javax.ejb.EJBException;
-import javax.inject.Named;
-import javax.enterprise.context.SessionScoped;
+import javax.faces.bean.ViewScoped;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
+import javax.inject.Named;
 
 @Named("usuariosController")
-@SessionScoped
+@ViewScoped
 public class UsuariosController implements Serializable {
 
     @EJB

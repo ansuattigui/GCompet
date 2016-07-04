@@ -12,14 +12,10 @@
             <h:form id="UsuariosEditForm">
                 <h:panelGroup id="display">
                     <p:panelGrid columns="2" rendered="#{usuariosController.selected != null}">
-                        <p:outputLabel value="#{bundle.EditUsuariosLabel_id}" for="id" />
-                        <p:inputText id="id" value="#{usuariosController.selected.id}" title="#{bundle.EditUsuariosTitle_id}" required="true" requiredMessage="#{bundle.EditUsuariosRequiredMessage_id}"/>
                         <p:outputLabel value="#{bundle.EditUsuariosLabel_nomeCompleto}" for="nomeCompleto" />
                         <p:inputText id="nomeCompleto" value="#{usuariosController.selected.nomeCompleto}" title="#{bundle.EditUsuariosTitle_nomeCompleto}" />
                         <p:outputLabel value="#{bundle.EditUsuariosLabel_nomeUsuario}" for="nomeUsuario" />
                         <p:inputText id="nomeUsuario" value="#{usuariosController.selected.nomeUsuario}" title="#{bundle.EditUsuariosTitle_nomeUsuario}" />
-                        <p:outputLabel value="#{bundle.EditUsuariosLabel_senha}" for="senha" />
-                        <p:inputText id="senha" value="#{usuariosController.selected.senha}" title="#{bundle.EditUsuariosTitle_senha}" />
                     </p:panelGrid>
                     <p:commandButton actionListener="#{usuariosController.update}" value="#{bundle.Save}" update="display,:UsuariosListForm:datalist,:growl" oncomplete="handleSubmit(args, 'UsuariosEditDialog');"/>
                     <p:commandButton value="#{bundle.Cancel}" onclick="UsuariosEditDialog.hide()"/>

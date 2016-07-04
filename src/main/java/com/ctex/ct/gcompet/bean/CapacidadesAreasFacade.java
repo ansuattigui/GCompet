@@ -7,8 +7,8 @@ package com.ctex.ct.gcompet.bean;
 
 import com.ctex.ct.gcompet.modelo.Capacidades;
 import com.ctex.ct.gcompet.modelo.CapacidadesAreas;
+import com.ctex.ct.gcompet.modelo.Usuarios;
 import java.sql.Connection;
-
 import java.sql.SQLException;
 import java.util.List;
 import java.util.logging.Level;
@@ -52,6 +52,15 @@ public class CapacidadesAreasFacade extends AbstractFacade<CapacidadesAreas> {
         TypedQuery<CapacidadesAreas> tq;
         tq = getEntityManager().createNamedQuery("CapacidadesAreas.findAllByCapacidade", CapacidadesAreas.class);
         tq.setParameter("capacidade", cap);
+        List<CapacidadesAreas> lista = tq.getResultList();
+        return lista;
+    }
+
+    public List<CapacidadesAreas> findAll(Capacidades cap, Usuarios user) {
+        TypedQuery<CapacidadesAreas> tq;
+        tq = getEntityManager().createNamedQuery("CapacidadesAreas.findAllByUsuario", CapacidadesAreas.class);
+        tq.setParameter("capacidade", cap);
+        tq.setParameter("user", user);
         List<CapacidadesAreas> lista = tq.getResultList();
         return lista;
     }

@@ -92,9 +92,15 @@ public class CapacidadesAreasController implements Serializable {
     }
 
     public List<CapacidadesAreas> getItemsByCapacidade() {
+        Usuarios user = LoginController.returnUserLoggedIn();
         return getFacade().findAll(capacidade);
     }
     
+    public List<CapacidadesAreas> getItemsByUsuario() {
+        Usuarios user = LoginController.returnUserLoggedIn();
+        return getFacade().findAll(capacidade,user);
+    }
+
     
     private void persist(PersistAction persistAction, String successMessage) {
         if (selected != null) {
@@ -264,8 +270,9 @@ public class CapacidadesAreasController implements Serializable {
     private AreasCandidatas acSelected;
 
     public void geraAreasCandidatas() {
+        Usuarios user = LoginController.returnUserLoggedIn();
         areasCandidatas = new ArrayList<>();
-        List<Areas> areas = getEjbAreasFacade().findAll(capacidade);        
+        List<Areas> areas = getEjbAreasFacade().findAll(capacidade,user);        
         for(Areas area: areas) {
             AreasCandidatas ac = new AreasCandidatas();
             ac.setArea(area);

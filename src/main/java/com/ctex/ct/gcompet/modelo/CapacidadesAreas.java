@@ -30,9 +30,9 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "CapacidadesAreas.findAll", query = "SELECT ca FROM CapacidadesAreas ca"),
     @NamedQuery(name = "CapacidadesAreas.findById", query = "SELECT ca FROM CapacidadesAreas ca WHERE ca.id = :id"),
     @NamedQuery(name = "CapacidadesAreas.findByNome", query = "SELECT ca FROM CapacidadesAreas ca WHERE ca.area.nome = :nome"),
-    @NamedQuery(name = "CapacidadesAreas.findAllByCapacidade", query = "SELECT ca FROM CapacidadesAreas ca WHERE ca.capacidade = :capacidade AND ca.avaliacao != -1 ORDER BY ca.area.id")
+    @NamedQuery(name = "CapacidadesAreas.findAllByCapacidade", query = "SELECT ca FROM CapacidadesAreas ca WHERE ca.capacidade = :capacidade AND ca.avaliacao != -1 ORDER BY ca.area.id"),
+    @NamedQuery(name = "CapacidadesAreas.findAllByUsuario", query = "SELECT ca FROM CapacidadesAreas ca WHERE ca.capacidade = :capacidade AND ca.avaliacao != -1 AND ca.usuario = :user ORDER BY ca.area.id")
 })
-
 
 public class CapacidadesAreas implements Serializable {
     private static final long serialVersionUID = 1L;

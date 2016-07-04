@@ -23,11 +23,23 @@
                         <p:ajax event="rowSelect"   update="createButton viewButton editButton deleteButton"/>
                         <p:ajax event="rowUnselect" update="createButton viewButton editButton deleteButton"/>
 
+                        <p:column style="width: 5%;">
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListEmpresasTitle_num}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.id}"/>
+                        </p:column>
                         <p:column>
                             <f:facet name="header">
                                 <h:outputText value="#{bundle.ListEmpresasTitle_nome}"/>
                             </f:facet>
                             <h:outputText value="#{item.nome}"/>
+                        </p:column>
+                        <p:column style="width: 15%;">
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListEmpresasTitle_cnpj}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.cnpj}"/>
                         </p:column>
                         <f:facet name="footer">
                             <p:commandButton id="createButton" icon="ui-icon-plus"   value="#{bundle.Create}" actionListener="#{empresasController.prepareCreate}" update=":EmpresasCreateForm" oncomplete="PF('EmpresasCreateDialog').show()"/>

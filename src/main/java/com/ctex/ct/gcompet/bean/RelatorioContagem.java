@@ -51,7 +51,7 @@ public class RelatorioContagem implements Serializable {
      * @return the jasper
      */
     public String getJasper() {
-        jasper = getContext().getRealPath("user/relatorios/contagemAvaliacoes.jasper");
+        jasper = getContext().getRealPath("user/relatorios/contagemAvaliacoesVert.jasper");
         return jasper;
     }
 
@@ -98,26 +98,6 @@ public class RelatorioContagem implements Serializable {
      */
     public void setJasperPrint(JasperPrint jasperPrint) {
         this.jasperPrint = jasperPrint;
-    }
-    
-    
-    /*
-    public String getRelatorioContagemAvaliacoes() {
-        relatorio = "/reports/contagem/capacidadesAreas.pdf";
-        try {                
-            JasperExportManager.exportReportToPdfFile(getJasperPrint(), getContext().getRealPath(relatorio));
-        } catch (JRException ex) {
-            Logger.getLogger(RelatorioContagem.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return "/user/relatorios/capacidadeArea";
-    }
-
-    /**
-     * @param relatorioContagemAvaliacoes
-     */
-   /*
-    public void setRelatorioContagemAvaliacoes(String relatorioContagemAvaliacoes) {
-        this.relatorioContagemAvaliacoes = relatorioContagemAvaliacoes;
     }
     
     /**

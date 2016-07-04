@@ -5,11 +5,8 @@
  */
 package com.ctex.ct.gcompet.bean;
 
+import com.ctex.ct.gcompet.bean.util.JsfUtil;
 import com.ctex.ct.gcompet.modelo.Usuarios;
-import java.io.UnsupportedEncodingException;
-import java.math.BigInteger;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
@@ -39,7 +36,7 @@ public class UsuariosFacade extends AbstractFacade<Usuarios> {
         Usuarios valido;
         TypedQuery<Usuarios> tq = getEntityManager().createNamedQuery("Usuarios.findByLogin", Usuarios.class);
         tq.setParameter("pusername", usuario);
-        tq.setParameter("ppassword", encryptPassword(senha));
+        tq.setParameter("ppassword", JsfUtil.encryptPassword(senha));
         try {
             valido = (tq.getSingleResult());
         } catch (NoResultException nre) {
@@ -47,21 +44,4 @@ public class UsuariosFacade extends AbstractFacade<Usuarios> {
         }
         return valido;
     }
-    
-   public String encryptPassword(String password) {
-        String encPassword = null;
-        try {
-            MessageDigest md = MessageDigest.getInstance("SHA-256");
-            md.update(password.getBytes("UTF-8")); // Change this to "UTF-16" if needed
-            byte[] digest = md.digest();
-            BigInteger bigInt = new BigInteger(1, digest);
-            encPassword = bigInt.toString(16);
-        } catch (NoSuchAlgorithmException | UnsupportedEncodingException ex) {
-            //Logger.getLogger(PasswordTest.class.getName()).log(Level.SEVERE, null, ex);
-        }       
-        return encPassword;
-    }    
-    
-    
-    
 }

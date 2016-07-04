@@ -7,6 +7,7 @@ package com.ctex.ct.gcompet.bean;
 
 import com.ctex.ct.gcompet.modelo.Areas;
 import com.ctex.ct.gcompet.modelo.Capacidades;
+import com.ctex.ct.gcompet.modelo.Usuarios;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -32,10 +33,11 @@ public class AreasFacade extends AbstractFacade<Areas> {
         super(Areas.class);
     }
     
-    public List<Areas> findAll(Capacidades cap) {       
+    public List<Areas> findAll(Capacidades cap, Usuarios user) {       
         TypedQuery<Areas> tq;
         tq = getEntityManager().createNamedQuery("Areas.findAllNaoAvaliadas", Areas.class);
         tq.setParameter("cap", cap);        
+        tq.setParameter("user", user);
         List<Areas> lista = tq.getResultList();
         return lista;
     }

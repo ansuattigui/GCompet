@@ -14,6 +14,8 @@
                     <p:panelGrid columns="2" rendered="#{empresasController.selected != null}">
                         <p:outputLabel value="#{bundle.EditEmpresasLabel_nome}" for="nome" />
                         <p:inputText id="nome" value="#{empresasController.selected.nome}" title="#{bundle.EditEmpresasTitle_nome}" />
+                        <p:outputLabel value="#{bundle.CreateEmpresasLabel_cnpj}" for="cnpj" />
+                        <p:inputText id="cnpj" value="#{empresasController.selected.cnpj}" title="#{bundle.CreateEmpresasTitle_cnpj}" />
                     </p:panelGrid>
                     <p:commandButton actionListener="#{empresasController.update}" value="#{bundle.Save}" update="display,:EmpresasListForm:datalist,:growl" oncomplete="handleSubmit(args, 'EmpresasEditDialog');"/>
                     <p:commandButton value="#{bundle.Cancel}" onclick="EmpresasEditDialog.hide()"/>
