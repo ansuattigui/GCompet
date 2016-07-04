@@ -80,10 +80,10 @@ public class RelatorioContagem implements Serializable {
     /**
      * @return the jasperPrint
      */
-    public JasperPrint getJasperPrint() {        
-        ImageIcon logotipo = new ImageIcon(getContext().getRealPath("/resources/img/logo-ctex.png"));                
+    public JasperPrint getJasperPrint() {  
+        ImageIcon logotipo = new ImageIcon();                
         HashMap hm = new HashMap<>();
-        hm.put("par_logotipo",logotipo.getImage());        
+        hm.put("par_logotipo",null);        
         hm.put("par_nomerelat","Associação Capacidades Operacionais / Areas de Pesquisa");        
         try {   
             jasperPrint = JasperFillManager.fillReport(getJasper(),hm, getConnection());
