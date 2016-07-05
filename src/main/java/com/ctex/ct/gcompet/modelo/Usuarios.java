@@ -13,6 +13,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
@@ -50,7 +52,10 @@ public class Usuarios implements Serializable {
     @Size(max = 255)
     @Column(name = "senha")
     private String senha;
-
+    @JoinColumn(name="id")
+    @ManyToOne
+    private Perfil perfil;
+    
     public Usuarios() {
     }
 
@@ -113,6 +118,20 @@ public class Usuarios implements Serializable {
     @Override
     public String toString() {
         return "com.ctex.ct.gcompet.modelo.Usuarios[ id=" + id + " ]";
+    }
+
+    /**
+     * @return the perfil
+     */
+    public Perfil getPerfil() {
+        return perfil;
+    }
+
+    /**
+     * @param perfil the perfil to set
+     */
+    public void setPerfil(Perfil perfil) {
+        this.perfil = perfil;
     }
     
 }

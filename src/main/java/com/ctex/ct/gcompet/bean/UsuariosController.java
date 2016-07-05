@@ -10,7 +10,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.ejb.EJB;
 import javax.ejb.EJBException;
-import javax.faces.bean.ViewScoped;
+import javax.enterprise.context.SessionScoped;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
@@ -18,7 +18,7 @@ import javax.faces.convert.FacesConverter;
 import javax.inject.Named;
 
 @Named("usuariosController")
-@ViewScoped
+@SessionScoped
 public class UsuariosController implements Serializable {
 
     @EJB
