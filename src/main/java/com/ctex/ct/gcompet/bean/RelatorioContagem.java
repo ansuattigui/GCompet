@@ -81,15 +81,16 @@ public class RelatorioContagem implements Serializable {
      * @return the jasperPrint
      */
     public JasperPrint getJasperPrint() {  
-        ImageIcon logotipo = new ImageIcon();                
+        ImageIcon logotipo = new ImageIcon(getContext().getRealPath("resources/img/logo-ctex.png"));                
         HashMap hm = new HashMap<>();
-        hm.put("par_logotipo",null);        
+        hm.put("par_logotipo",logotipo.getImage());        
         hm.put("par_nomerelat","Associação Capacidades Operacionais / Areas de Pesquisa");        
         try {   
             jasperPrint = JasperFillManager.fillReport(getJasper(),hm, getConnection());
+            closeConnection();
         } catch (JRException ex) {
             Logger.getLogger(RelatorioContagem.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        }        
         return jasperPrint;
     }
 
@@ -117,10 +118,11 @@ public class RelatorioContagem implements Serializable {
     }
 
     /**
-     * @return the connection
+     * @return 
      */
     public Connection getConnection() {
-        return getEjbFacade().getConnection();
+        connection = CapacidadesAreasFacade.getConnection();
+        return connection;
     }
 
     /**
@@ -128,6 +130,10 @@ public class RelatorioContagem implements Serializable {
      */
     public void setConnection(Connection connection) {
         this.connection = connection;
+    }
+    
+    public void closeConnection() {
+        CapacidadesAreasFacade.closeConnection(connection);
     }
 
     /**

@@ -9,18 +9,13 @@ import com.ctex.ct.gcompet.modelo.Capacidades;
 import com.ctex.ct.gcompet.modelo.CapacidadesAreas;
 import com.ctex.ct.gcompet.modelo.Usuarios;
 import java.sql.Connection;
+import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.ejb.Stateless;
-import javax.naming.Context;
-import javax.naming.InitialContext;
-import javax.naming.NamingException;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
-import javax.sql.DataSource;
 
 /**
  *
@@ -65,7 +60,23 @@ public class CapacidadesAreasFacade extends AbstractFacade<CapacidadesAreas> {
         return lista;
     }
     
-    public Connection getConnection() {
+//    public Connection getConnection() {
+        
+    public static Connection getConnection() {
+        try {
+            Class.forName("com.mysql.jdbc.Driver");
+            Connection conn = DriverManager.getConnection("jdbc:mysql://localhost/gcompet",
+                    "root", "arv0702");
+            return conn;
+        } catch (ClassNotFoundException | SQLException ex) {
+            System.out.println("Database.getConnection() Error -->" + ex.getMessage());
+            return null;
+        }
+    }
+         
+        
+/*        
+        
         Context ctx;
         DataSource ds;
         Connection conn = null;
@@ -81,10 +92,21 @@ public class CapacidadesAreasFacade extends AbstractFacade<CapacidadesAreas> {
             } catch (SQLException ex) {
                 Logger.getLogger(CapacidadesAreasFacade.class.getName()).log(Level.SEVERE, null, ex);
            }
-*/
+
         }
+
+
+
         return conn;
     }
+*/
             
-    
+    public static void closeConnection(Connection conn) {
+        try {
+            conn.close();
+        } catch (Exception ex) {
+        }
+    }        
+ 
+
 }
