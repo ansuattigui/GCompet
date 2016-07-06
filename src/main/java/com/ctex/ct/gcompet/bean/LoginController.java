@@ -7,8 +7,11 @@ package com.ctex.ct.gcompet.bean;
 
 import com.ctex.ct.gcompet.bean.util.JsfUtil;
 import com.ctex.ct.gcompet.modelo.Usuarios;
+import java.io.IOException;
 import java.io.Serializable;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.ejb.EJB;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.context.FacesContext;
@@ -70,10 +73,14 @@ public class LoginController implements Serializable {
     }
     
     //logout event, invalidate session
-    public String logout() {        
-        
+    public void logout() {                
+        this.setUserLoggedIn(null);        
+        try {
+            FacesContext.getCurrentInstance().getExternalContext().redirect("../../login.xhtml");
+        } catch (IOException ex) {
+            Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
+        }
         FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
-        return  "login.xhtml";
     }    
 
     /**

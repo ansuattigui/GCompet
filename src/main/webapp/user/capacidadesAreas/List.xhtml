@@ -14,8 +14,7 @@
 
         <ui:define name="body">
             
-            <p:tabView id="tvCapac" class="ui-sem-borda">
-                
+            <p:tabView id="tvCapac" class="ui-sem-borda" effect="fade">                
                 <p:tab id="tabCapac" title="Capacidades">
                     <h:form id="CapacidadesListForm" prependId="false">
                         <p:panel class="ui-sem-borda">
@@ -28,7 +27,7 @@
                                          rows="12"
                                          rowsPerPageTemplate="5,10,15,20,25,30"  
                                          >
-                                <p:ajax event="rowSelect" listener="#{capacidadesAreasController.onCapacidadeSelect}" update="tvCapac:datalist:associaHeader tvCapac:datalist viewButton"/>
+                                <p:ajax event="rowSelect" listener="#{capacidadesAreasController.onCapacidadeSelect}" update="tvCapac:datalist tvCapac viewButton"/>
                                 <p:ajax event="rowUnselect" update="viewButton"/>
                                 
                                 <f:facet name="header">
@@ -52,12 +51,13 @@
                             </p:dataTable>
                         </p:panel>
                     </h:form>
-                </p:tab>
-                
-                <p:tab id="tabAAfins" title="Áreas Afins">
-            
+                </p:tab>                
+                <p:tab id="tabAAfins" title="Áreas Afins" disabled="#{capacidadesAreasController.capacidade eq null}">            
                     <h:form id="CapacidadesAreasListForm" prependId="false">
-                        <p:panel class="ui-sem-borda">
+                        <p:panel class="ui-sem-borda" >
+                            <f:facet name="header" >
+                                <h:outputText value="#{capacidadesAreasController.capacidade.nome}" style="font-size: 14px !important; font-variant-caps: small-caps; color: yellow !important;"/>
+                            </f:facet>
                             <p:dataTable id="datalist" value="#{capacidadesAreasController.itemsByUsuario}" var="item"
                                          selectionMode="single" selection="#{capacidadesAreasController.selected}"
                                          paginator="true"
@@ -71,7 +71,7 @@
                                 <p:ajax event="rowUnselect" update="associateButton "/>
 
                                 <f:facet name="header">
-                                    <h:outputText id="associaHeader" value="#{capacidadesAreasController.capacidade.nome} - Áreas Afins" />
+                                    <h:outputText id="associaHeader" value="Areas Afins" />
                                 </f:facet>  
                                 <p:column style="width: 5%;">
                                     <f:facet name="header">
