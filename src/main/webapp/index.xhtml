@@ -19,7 +19,7 @@
                         <p:column style="width: 50%;" class="ui-sem-borda">
                             <p:menubar class="ui-sem-borda">
                                 <p:menuitem value="#{bundle.Home}" outcome="/index" icon="ui-icon-home"/>
-                                <p:submenu label="#{bundle.Cadastro}">
+                                <p:submenu label="#{bundle.Cadastro}" rendered="#{loginController.userLoggedIn.perfil.nome eq 'ADMIN'}">
                                     <p:menuitem value="Areas" outcome="/admin/areas/List" />
                                     <p:menuitem value="Capacidades" outcome="/admin/capacidades/List" />
                                     <p:menuitem value="Empresas" outcome="/admin/empresas/List" />
@@ -27,10 +27,10 @@
                                     <p:menuitem value="Projetos" outcome="/admin/projetos/List" />
                                     <p:menuitem value="Usuarios" outcome="/admin/usuarios/List" />
                                 </p:submenu>
-                                <p:submenu label="#{bundle.Avaliacoes}">
+                                <p:submenu label="#{bundle.Avaliacoes}" rendered="#{loginController.userLoggedIn.perfil.nome eq 'RESP'}">
                                     <p:menuitem value="Visão Capacidades" outcome="/user/capacidadesAreas/List"/>
                                 </p:submenu>
-                                <p:submenu label="#{bundle.Relatorios}">
+                                <p:submenu label="#{bundle.Relatorios}" rendered="#{loginController.userLoggedIn.perfil.nome eq 'GEST'}">
                                     <p:menuitem ajax="false" value="Contagem das avaliações" action="#{relatorioContagem.getRelatorioContagemAvaliacoes}" update="@all" />                            
                                 </p:submenu>
                             </p:menubar>
