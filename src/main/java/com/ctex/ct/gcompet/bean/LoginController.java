@@ -7,11 +7,8 @@ package com.ctex.ct.gcompet.bean;
 
 import com.ctex.ct.gcompet.bean.util.JsfUtil;
 import com.ctex.ct.gcompet.modelo.Usuarios;
-import java.io.IOException;
 import java.io.Serializable;
 import java.util.ResourceBundle;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.ejb.EJB;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.context.FacesContext;
@@ -65,22 +62,18 @@ public class LoginController implements Serializable {
     public String validaUsuarioSenha() {        
         userLoggedIn = getEjbFacade().validate(usuario, senha);        
         if (userLoggedIn!=null) {
-            return "index.xhtml";
+            return "/index?faces-redirect=true";
         } else {
             JsfUtil.addErrorMessage(ResourceBundle.getBundle("/Bundle").getString("UserLoginFailed"));
-            return "login.xhtml";
+            return "/login?faces-redirect=true";
         }
     }
     
     //logout event, invalidate session
-    public void logout() {                
+    public String logout() {                
         this.setUserLoggedIn(null);        
-        try {
-            FacesContext.getCurrentInstance().getExternalContext().redirect("../../login.xhtml");
-        } catch (IOException ex) {
-            Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
-        }
         FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
+        return "/login?faces-redirect=true";
     }    
 
     /**

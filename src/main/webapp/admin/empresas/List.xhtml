@@ -12,11 +12,12 @@
             <h:form id="EmpresasListForm">
                 <p:panel header="#{bundle.ListEmpresasTitle}">
                     <p:dataTable id="datalist" value="#{empresasController.items}" var="item"
-                                 selectionMode="single" selection="#{empresasController.selected}"
+                                 selectionMode="single" 
+                                 selection="#{empresasController.selected}"
                                  paginator="true"
                                  paginatorPosition="bottom"
                                  rowKey="#{item.id}"
-                                 rows="10"
+                                 rows="15"
                                  rowsPerPageTemplate="10,20,30,40,50"
                                  >
 
