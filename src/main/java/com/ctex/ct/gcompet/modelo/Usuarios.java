@@ -35,7 +35,6 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Usuarios.findBySenha", query = "SELECT u FROM Usuarios u WHERE u.senha = :senha"),
     @NamedQuery(name = "Usuarios.findByLogin", query = "SELECT u FROM Usuarios u WHERE u.nomeUsuario = :pusername and u.senha = :ppassword")})
 public class Usuarios implements Serializable {
-
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -131,5 +130,5 @@ public class Usuarios implements Serializable {
     public void setPerfil(Perfil perfil) {
         this.perfil = perfil;
     }
-    
+
 }

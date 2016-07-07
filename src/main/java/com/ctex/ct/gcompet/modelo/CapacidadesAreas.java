@@ -12,6 +12,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
@@ -42,8 +43,10 @@ public class CapacidadesAreas implements Serializable {
     @Basic(optional = false)
     @Column(name = "id")
     private Integer id;   
+    @JoinColumn(name = "USUARIO_id", referencedColumnName = "id")    
     @ManyToOne
     private Usuarios usuario;    
+    @JoinColumn(name = "capacidade_id", referencedColumnName = "id")
     @ManyToOne
     private Capacidades capacidade;    
     @ManyToOne
