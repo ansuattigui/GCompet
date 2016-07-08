@@ -8,38 +8,38 @@
 
     <ui:composition>
 
-        <p:dialog id="AssociarProjetosAfinsDlg" widgetVar="AssociarProjetosAfinsDialog" modal="true" resizable="false" appendTo="@(body)" >
-            <h:form id="AssociarProjetosAfinsForm">
+        <p:dialog id="AssociarEmpresasAfinsDlg" widgetVar="AssociarEmpresasAfinsDialog" modal="true" resizable="false" appendTo="@(body)" >
+            <h:form id="AssociarEmpresasAfinsForm">
                 <p:panel style="width: 800px;" class="ui-sem-borda">
-                    <p:dataTable id="datalist" value="#{areasProjetosController.projetosCandidatos}" var="item"
-                                 selectionMode="single" selection="#{areasProjetosController.projeto}"
+                    <p:dataTable id="datalist" value="#{areasEmpresasController.empresasCandidatas}" var="item"
+                                 selectionMode="single" selection="#{areasEmpresasController.empresa}"
                                  paginator="true" 
                                  paginatorPosition="bottom"
-                                 rowKey="#{item.projeto.id}"
+                                 rowKey="#{item.empresa.id}"
                                  rows="10"
                                  rowsPerPageTemplate="10,20,30,40,50"
                                  >      
-                        <p:ajax event="rowSelect" listener="#{areasProjetosController.onProjetoSelect}" update="viewButton"/>
+                        <p:ajax event="rowSelect" listener="#{areasEmpresasController.onEmpresaSelect}" update="viewButton"/>
                         <p:ajax event="rowUnselect" update="viewButton"/>
                         
                         <f:facet name="header">
-                            <h:outputText id="associaHeader" value="#{areasProjetosController.area.nome} - Avaliação de Projetos Afins" />
+                            <h:outputText id="associaHeader" value="#{areasEmpresasController.area.nome} - Avaliação de Empresas Afins" />
                         </f:facet>                        
                         <p:column style="width: 5%;">
                             <f:facet name="header">
-                                <h:outputText value="#{bundle.ListProjetosTitle_num}"/>
+                                <h:outputText value="#{bundle.ListEmpresasTitle_num}"/>
                             </f:facet>
-                            <h:outputText value="#{item.projeto.id}"/>
+                            <h:outputText value="#{item.empresa.id}"/>
                         </p:column>
                         <p:column>
                             <f:facet name="header">
-                                <h:outputText value="#{bundle.ListProjetosTitle_nome}"/>
+                                <h:outputText value="#{bundle.ListEmpresasTitle_nome}"/>
                             </f:facet>
-                            <h:outputText value="#{item.projeto.nome}"/>
+                            <h:outputText value="#{item.empresa.nome}"/>
                         </p:column>
                         <p:column style="width:30%">
                             <f:facet name="header">
-                                <h:outputText value="#{bundle.ListAreasProjetosTitle_associacao}"/>
+                                <h:outputText value="#{bundle.ListAreasEmpresasTitle_associacao}"/>
                             </f:facet>
                             <p:selectOneRadio id="associaChoice" value="#{item.avaliacao}">
                                 <f:selectItem itemLabel="Sim" itemValue="1" />
@@ -49,9 +49,9 @@
                         </p:column>
                         
                         <f:facet name="footer">
-                            <p:commandButton id="viewButton"   icon="ui-icon-search" value="#{bundle.View}" update=":AreasViewForm" oncomplete="PF('AreasViewDialog').show()" disabled="#{empty areasProjetosController.projeto}"/>
-                            <p:commandButton id="confirmaButton" icon="ui-icon-plus"   value="#{bundle.Associate}" actionListener="#{areasProjetosController.salvaProjetosCandidatos}" 
-                                                update="tvArea:datalist,:growl" oncomplete="handleSubmit(args,'AssociarProjetosAfinsDialog');">
+                            <p:commandButton id="viewButton"   icon="ui-icon-search" value="#{bundle.View}" update=":AreasViewForm" oncomplete="PF('AreasViewDialog').show()" disabled="#{empty areasEmpresasController.empresa}"/>
+                            <p:commandButton id="confirmaButton" icon="ui-icon-plus"   value="#{bundle.Associate}" actionListener="#{areasEmpresasController.salvaEmpresasCandidatos}" 
+                                                update="tvArea:datalist,:growl" oncomplete="handleSubmit(args,'AssociarEmpresasAfinsDialog');">
                                 <p:confirm header="Confirmação" message="Confirma a associação do registro selecionado?" icon="ui-icon-alert" />
                             </p:commandButton>                                
                             <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
@@ -64,7 +64,7 @@
             </h:form>
         </p:dialog>
         
-        <ui:include src="ViewProjetos.xhtml"/>
+        <ui:include src="ViewEmpresas.xhtml"/>
         
     </ui:composition>
 

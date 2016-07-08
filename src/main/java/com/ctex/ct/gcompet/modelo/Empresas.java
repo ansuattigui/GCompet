@@ -28,7 +28,8 @@ import javax.xml.bind.annotation.XmlRootElement;
 @NamedQueries({
     @NamedQuery(name = "Empresas.findAll", query = "SELECT e FROM Empresas e"),
     @NamedQuery(name = "Empresas.findById", query = "SELECT e FROM Empresas e WHERE e.id = :id"),
-    @NamedQuery(name = "Empresas.findByNome", query = "SELECT e FROM Empresas e WHERE e.nome = :nome")})
+    @NamedQuery(name = "Empresas.findByNome", query = "SELECT e FROM Empresas e WHERE e.nome = :nome"),
+    @NamedQuery(name = "Empresas.findAllNaoAvaliadas", query = "SELECT e FROM Empresas e WHERE e.id NOT IN (SELECT ae.empresa.id FROM AreasEmpresas ae WHERE ae.area = :area and ae.usuario = :user)")})
 public class Empresas implements Serializable {
 
     private static final long serialVersionUID = 1L;

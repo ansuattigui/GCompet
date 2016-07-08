@@ -3,8 +3,8 @@ package com.ctex.ct.gcompet.bean;
 import com.ctex.ct.gcompet.bean.util.JsfUtil;
 import com.ctex.ct.gcompet.bean.util.JsfUtil.PersistAction;
 import com.ctex.ct.gcompet.modelo.Areas;
-import com.ctex.ct.gcompet.modelo.AreasProjetos;
-import com.ctex.ct.gcompet.modelo.Projetos;
+import com.ctex.ct.gcompet.modelo.AreasEmpresas;
+import com.ctex.ct.gcompet.modelo.Empresas;
 import com.ctex.ct.gcompet.modelo.Usuarios;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -22,28 +22,28 @@ import javax.faces.convert.FacesConverter;
 import javax.inject.Named;
 import org.primefaces.event.SelectEvent;
 
-@Named("areasProjetosController")
+@Named("areasEmpresasController")
 @SessionScoped
-public class AreasProjetosController implements Serializable {
+public class AreasEmpresasController implements Serializable {
 
     @EJB
-    private AreasProjetosFacade ejbFacade;
+    private AreasEmpresasFacade ejbFacade;
     @EJB
-    private ProjetosFacade ejbProjetosFacade;
+    private EmpresasFacade ejbEmpresasFacade;
     
-    private List<AreasProjetos> items = null;
-    private AreasProjetos selected;
-    private ProjetosCandidatos projeto;
+    private List<AreasEmpresas> items = null;
+    private AreasEmpresas selected;
+    private EmpresasCandidatas empresa;
     private Areas area;
 
-    public AreasProjetosController() {
+    public AreasEmpresasController() {
     }
 
-    public AreasProjetos getSelected() {
+    public AreasEmpresas getSelected() {
         return selected;
     }
 
-    public void setSelected(AreasProjetos selected) {
+    public void setSelected(AreasEmpresas selected) {
         this.selected = selected;
     }
 
@@ -53,48 +53,48 @@ public class AreasProjetosController implements Serializable {
     protected void initializeEmbeddableKey() {
     }
 
-    private AreasProjetosFacade getFacade() {
+    private AreasEmpresasFacade getFacade() {
         return ejbFacade;
     }
 
-    public AreasProjetos prepareCreate() {
-        selected = new AreasProjetos();
+    public AreasEmpresas prepareCreate() {
+        selected = new AreasEmpresas();
         initializeEmbeddableKey();
         return selected;
     }
 
     public void create() {
-        persist(PersistAction.CREATE, ResourceBundle.getBundle("/Bundle").getString("AreasProjetosCreated"));
+        persist(PersistAction.CREATE, ResourceBundle.getBundle("/Bundle").getString("AreasEmpresasCreated"));
         if (!JsfUtil.isValidationFailed()) {
             items = null;    // Invalidate list of items to trigger re-query.
         }
     }
 
     public void update() {
-        persist(PersistAction.UPDATE, ResourceBundle.getBundle("/Bundle").getString("AreasProjetosUpdated"));
+        persist(PersistAction.UPDATE, ResourceBundle.getBundle("/Bundle").getString("AreasEmpresasUpdated"));
     }
 
     public void destroy() {
-        persist(PersistAction.DELETE, ResourceBundle.getBundle("/Bundle").getString("AreasProjetosDeleted"));
+        persist(PersistAction.DELETE, ResourceBundle.getBundle("/Bundle").getString("AreasEmpresasDeleted"));
         if (!JsfUtil.isValidationFailed()) {
             selected = null; // Remove selection
             items = null;    // Invalidate list of items to trigger re-query.
         }
     }
 
-    public List<AreasProjetos> getItems() {
+    public List<AreasEmpresas> getItems() {
         if (items == null) {
             items = getFacade().findAll();
         }
         return items;
     }
     
-    public List<AreasProjetos> getItemsByArea() {
+    public List<AreasEmpresas> getItemsByArea() {
         Usuarios user = LoginController.returnUserLoggedIn();
         return getFacade().findAll(area);
     }
     
-    public List<AreasProjetos> getItemsByUsuario() {
+    public List<AreasEmpresas> getItemsByUsuario() {
         Usuarios user = LoginController.returnUserLoggedIn();
         return getFacade().findAll(area,user);
     }
@@ -128,7 +128,7 @@ public class AreasProjetosController implements Serializable {
         }
     }
     
-    private void persist(PersistAction persistAction, AreasProjetos selected) {
+    private void persist(PersistAction persistAction, AreasEmpresas selected) {
         if (selected != null) {
             setEmbeddableKeys();
             try {
@@ -150,15 +150,15 @@ public class AreasProjetosController implements Serializable {
     }
     
 
-    public AreasProjetos getAreasProjetos(java.lang.Integer id) {
+    public AreasEmpresas getAreasEmpresas(Integer id) {
         return getFacade().find(id);
     }
 
-    public List<AreasProjetos> getItemsAvailableSelectMany() {
+    public List<AreasEmpresas> getItemsAvailableSelectMany() {
         return getFacade().findAll();
     }
 
-    public List<AreasProjetos> getItemsAvailableSelectOne() {
+    public List<AreasEmpresas> getItemsAvailableSelectOne() {
         return getFacade().findAll();
     }
 
@@ -177,53 +177,53 @@ public class AreasProjetosController implements Serializable {
     }
 
     /**
-     * @return the ejbProjetosFacade
+     * @return the ejbEmpresasFacade
      */
-    public ProjetosFacade getEjbProjetosFacade() {
-        return ejbProjetosFacade;
+    public EmpresasFacade getEjbEmpresasFacade() {
+        return ejbEmpresasFacade;
     }
 
     /**
-     * @param ejbProjetosFacade
+     * @param ejbEmpresasFacade
      */
-    public void setEjbProjetosFacade(ProjetosFacade ejbProjetosFacade) {
-        this.ejbProjetosFacade = ejbProjetosFacade;
+    public void setEjbEmpresasFacade(EmpresasFacade ejbEmpresasFacade) {
+        this.ejbEmpresasFacade = ejbEmpresasFacade;
     }
 
     /**
-     * @return the projeto
+     * @return the item
      */
-    public ProjetosCandidatos getProjeto() {
-        return projeto;
+    public EmpresasCandidatas getEmpresa() {
+        return empresa;
     }
 
     /**
-     * @param projeto the projeto to set
+     * @param empresa the item to set
      */
-    public void setProjeto(ProjetosCandidatos projeto) {
-        this.projeto = projeto;
+    public void setEmpresa(EmpresasCandidatas empresa) {
+        this.empresa = empresa;
     }
 
-    @FacesConverter(forClass = AreasProjetos.class)
-    public static class AreasProjetosControllerConverter implements Converter {
+    @FacesConverter(forClass = AreasEmpresas.class)
+    public static class AreasEmpresasControllerConverter implements Converter {
 
         @Override
         public Object getAsObject(FacesContext facesContext, UIComponent component, String value) {
             if (value == null || value.length() == 0) {
                 return null;
             }
-            AreasProjetosController controller = (AreasProjetosController) facesContext.getApplication().getELResolver().
+            AreasEmpresasController controller = (AreasEmpresasController) facesContext.getApplication().getELResolver().
                     getValue(facesContext.getELContext(), null, "areasProjetosController");
-            return controller.getAreasProjetos(getKey(value));
+            return controller.getAreasEmpresas(getKey(value));
         }
 
         java.lang.Integer getKey(String value) {
-            java.lang.Integer key;
+            Integer key;
             key = Integer.valueOf(value);
             return key;
         }
 
-        String getStringKey(java.lang.Integer value) {
+        String getStringKey(Integer value) {
             StringBuilder sb = new StringBuilder();
             sb.append(value);
             return sb.toString();
@@ -234,11 +234,11 @@ public class AreasProjetosController implements Serializable {
             if (object == null) {
                 return null;
             }
-            if (object instanceof AreasProjetos) {
-                AreasProjetos o = (AreasProjetos) object;
+            if (object instanceof AreasEmpresas) {
+                AreasEmpresas o = (AreasEmpresas) object;
                 return getStringKey(o.getId());
             } else {
-                Logger.getLogger(this.getClass().getName()).log(Level.SEVERE, "object {0} is of type {1}; expected type: {2}", new Object[]{object, object.getClass().getName(), AreasProjetos.class.getName()});
+                Logger.getLogger(this.getClass().getName()).log(Level.SEVERE, "object {0} is of type {1}; expected type: {2}", new Object[]{object, object.getClass().getName(), AreasEmpresas.class.getName()});
                 return null;
             }
         }        
@@ -248,63 +248,63 @@ public class AreasProjetosController implements Serializable {
         Classe de Projetos Candidatos a Associação
     *********************************************/
     
-    private List<ProjetosCandidatos> projetosCandidatos;
-    private ProjetosCandidatos pcSelected;
+    private List<EmpresasCandidatas> empresasCandidatas;
+    private EmpresasCandidatas pcSelected;
 
-    public void geraProjetosCandidatos() {
+    public void geraEmpresasCandidatas() {
         Usuarios user = LoginController.returnUserLoggedIn();
-        projetosCandidatos = new ArrayList<>();
-        List<Projetos> projetos = getEjbProjetosFacade().findAll(area,user);        
-        for(Projetos item: projetos) {
-            ProjetosCandidatos pc = new ProjetosCandidatos();
-            pc.setProjeto(item);
+        empresasCandidatas = new ArrayList<>();
+        List<Empresas> empresas = getEjbEmpresasFacade().findAll(area,user);        
+        for(Empresas item: empresas) {
+            EmpresasCandidatas pc = new EmpresasCandidatas();
+            pc.setEmpresa(item);
             pc.setArea(area);
-            projetosCandidatos.add(pc);
+            empresasCandidatas.add(pc);
         }        
     }
     
-    public void salvaProjetosCandidatos() {
-        for (ProjetosCandidatos pc: projetosCandidatos) {
-            if (pc.getAvaliacao()!=-1) {
-                AreasProjetos ap = new AreasProjetos();
-                ap.setUsuario(pc.getUsuario());
-                ap.setProjeto(pc.getProjeto());
-                ap.setArea(pc.getArea());
-                ap.setAvaliacao(pc.getAvaliacao());
-                ap.setAvaliada(true);                
-                persist(PersistAction.CREATE, ap);
+    public void salvaEmpresasCandidatas() {
+        for (EmpresasCandidatas ec: empresasCandidatas) {
+            if (ec.getAvaliacao()!=-1) {
+                AreasEmpresas ae = new AreasEmpresas();
+                ae.setUsuario(ec.getUsuario());
+                ae.setEmpresa(ec.getEmpresa());
+                ae.setArea(ec.getArea());
+                ae.setAvaliacao(ec.getAvaliacao());
+                ae.setAvaliada(true);                
+                persist(PersistAction.CREATE, ae);
             }
         }
     }
     
     
-    public List<ProjetosCandidatos> getProjetosCandidatos() {
-        return projetosCandidatos;
+    public List<EmpresasCandidatas> getEmpresasCandidatas() {
+        return empresasCandidatas;
     }
     
-    public void setProjetosCandidatos(List<ProjetosCandidatos> projetosCandidatos) {
-        this.projetosCandidatos = projetosCandidatos;
+    public void setEmpresasCandidatas(List<EmpresasCandidatas> empresasCandidatas) {
+        this.empresasCandidatas = empresasCandidatas;
     }
     
     
-    public ProjetosCandidatos getPcSelected() {
+    public EmpresasCandidatas getPcSelected() {
         return pcSelected;
     }
     
     
-    public void setPcSelected(ProjetosCandidatos pcSelected) {
+    public void setPcSelected(EmpresasCandidatas pcSelected) {
         this.pcSelected = pcSelected;
     }
     
-    public class ProjetosCandidatos {
+    public class EmpresasCandidatas {
         private int id;
         private Usuarios usuario;
         private Areas area;
-        private Projetos projeto;
+        private Empresas empresa;
         private Boolean avaliada;
         private short avaliacao;
 
-        private ProjetosCandidatos() {
+        private EmpresasCandidatas() {
             usuario = LoginController.returnUserLoggedIn();
             avaliada = false;
             avaliacao = -1;
@@ -353,17 +353,17 @@ public class AreasProjetosController implements Serializable {
         }
 
         /**
-         * @return the projeto
+         * @return the item
          */
-        public Projetos getProjeto() {
-            return projeto;
+        public Empresas getEmpresa() {
+            return empresa;
         }
 
         /**
-         * @param projeto the projeto to set
+         * @param empresa the item to set
          */
-        public void setProjeto(Projetos projeto) {
-            this.projeto = projeto;
+        public void setEmpresa(Empresas empresa) {
+            this.empresa = empresa;
         }
 
         /**
@@ -400,8 +400,8 @@ public class AreasProjetosController implements Serializable {
         this.area = ((Areas) event.getObject());
     }    
 
-    public void onProjetoSelect(SelectEvent event) {
-        this.setProjeto((ProjetosCandidatos) event.getObject());
+    public void onEmpresaSelect(SelectEvent event) {
+        this.setEmpresa((EmpresasCandidatas) event.getObject());
     }    
     
     

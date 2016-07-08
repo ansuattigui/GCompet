@@ -5,10 +5,14 @@
  */
 package com.ctex.ct.gcompet.bean;
 
+import com.ctex.ct.gcompet.modelo.Areas;
 import com.ctex.ct.gcompet.modelo.Empresas;
+import com.ctex.ct.gcompet.modelo.Usuarios;
+import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.TypedQuery;
 
 /**
  *
@@ -29,4 +33,12 @@ public class EmpresasFacade extends AbstractFacade<Empresas> {
         super(Empresas.class);
     }
     
+    public List<Empresas> findAll(Areas area, Usuarios user) {       
+        TypedQuery<Empresas> tq;
+        tq = getEntityManager().createNamedQuery("Empresas.findAllNaoAvaliadas", Empresas.class);
+        tq.setParameter("area", area);        
+        tq.setParameter("user", user);
+        List<Empresas> lista = tq.getResultList();
+        return lista;
+    }    
 }
