@@ -30,8 +30,6 @@ public class CapacidadesAreasController implements Serializable {
     private CapacidadesAreasFacade ejbFacade;
     @EJB
     private AreasFacade ejbAreasFacade;
-    
-    
     private List<CapacidadesAreas> items = null;
     private CapacidadesAreas selected;
     private Capacidades capacidade;

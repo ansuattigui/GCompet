@@ -6,76 +6,107 @@
       xmlns:f="http://xmlns.jcp.org/jsf/core"
       xmlns:p="http://primefaces.org/ui">
 
-    <ui:composition template="/template.xhtml">
-
+    <ui:composition template="../../index.xhtml">
 
         <ui:define name="title">
             <h:outputText value="#{bundle.ListAreasProjetosTitle}"></h:outputText>
         </ui:define>
 
         <ui:define name="body">
-            <h:form id="AreasProjetosListForm">
-                <p:panel header="#{bundle.ListAreasProjetosTitle}">
-                    <p:dataTable id="datalist" value="#{areasProjetosController.items}" var="item"
-                                 selectionMode="single" selection="#{areasProjetosController.selected}"
-                                 paginator="true"
-                                 rowKey="#{item.id}"
-                                 rows="10"
-                                 rowsPerPageTemplate="10,20,30,40,50"
-                                 >
+            <p:tabView id="tvArea" class="ui-sem-borda" effect="fade">                
+                <p:tab id="tabArea" title="Areas">
+                    <h:form id="AreasListForm" prependId="false">
+                        <p:panel class="ui-sem-borda">
+                            <p:dataTable value="#{areasController.items}" var="area"
+                                         selectionMode="single" 
+                                         selection="#{areasProjetosController.selected}"
+                                         paginator="true"
+                                         paginatorPosition="bottom"
+                                         rowKey="#{area.id}"
+                                         rows="12"
+                                         rowsPerPageTemplate="10,20,30,40,50"
+                                         >
 
-                        <p:ajax event="rowSelect"   update="createButton viewButton editButton deleteButton"/>
-                        <p:ajax event="rowUnselect" update="createButton viewButton editButton deleteButton"/>
+                                <p:ajax event="rowSelect" listener="#{areasProjetosController.onAreaSelect}"  update="tvArea viewButton"/>
+                                <p:ajax event="rowUnselect" update="viewButton"/>
 
-                        <p:column>
-                            <f:facet name="header">
-                                <h:outputText value="#{bundle.ListAreasProjetosTitle_id}"/>
+                                <f:facet name="header">
+                                    <h:outputText id="associaHeader" value="#{bundle.ListAreasTitle}"/>
+                                </f:facet>
+                                <p:column style="width: 5%;">
+                                    <f:facet name="header">
+                                        <h:outputText value="#{bundle.ListAreasTitle_num}"/>
+                                    </f:facet>
+                                    <h:outputText value="#{area.id}"/>
+                                </p:column>
+                                <p:column>
+                                    <f:facet name="header">
+                                        <h:outputText value="#{bundle.ListAreasTitle_nome}"/>
+                                    </f:facet>
+                                    <h:outputText value="#{area.nome}"/>
+                                </p:column>
+                                <f:facet name="footer">
+                                    <p:commandButton id="viewButton"   icon="ui-icon-search" value="#{bundle.View}" update=":AreasViewForm" oncomplete="PF('AreasViewDialog').show()" disabled="#{empty areasProjetosController.area}"/>
+                                </f:facet>
+                            </p:dataTable>
+                        </p:panel>
+                    </h:form>
+                </p:tab>
+                <p:tab id="tabPAfins" title="Projetos Afins" disabled="#{areasProjetosController.area eq null}">            
+                    <h:form id="AreasProjetosListForm" prependId="false">
+                        <p:panel class="ui-sem-borda" >
+                            <f:facet name="header" >
+                                <h:outputText value="#{areasProjetosController.area.nome}" style="font-size: 14px !important; font-variant-caps: small-caps; color: yellow !important;"/>
                             </f:facet>
-                            <h:outputText value="#{item.id}"/>
-                        </p:column>
-                        <p:column>
-                            <f:facet name="header">
-                                <h:outputText value="#{bundle.ListAreasProjetosTitle_avaliacao}"/>
-                            </f:facet>
-                            <h:outputText value="#{item.avaliacao}"/>
-                        </p:column>
-                        <p:column>
-                            <f:facet name="header">
-                                <h:outputText value="#{bundle.ListAreasProjetosTitle_avaliada}"/>
-                            </f:facet>
-                            <p:selectBooleanCheckbox value="#{item.avaliada}" disabled="true"/>
-                        </p:column>
-                        <p:column>
-                            <f:facet name="header">
-                                <h:outputText value="#{bundle.ListAreasProjetosTitle_usuario}"/>
-                            </f:facet>
-                            <h:outputText value="#{item.usuario}"/>
-                        </p:column>
-                        <p:column>
-                            <f:facet name="header">
-                                <h:outputText value="#{bundle.ListAreasProjetosTitle_area}"/>
-                            </f:facet>
-                            <h:outputText value="#{item.area}"/>
-                        </p:column>
-                        <p:column>
-                            <f:facet name="header">
-                                <h:outputText value="#{bundle.ListAreasProjetosTitle_projeto}"/>
-                            </f:facet>
-                            <h:outputText value="#{item.projeto}"/>
-                        </p:column>
-                        <f:facet name="footer">
-                            <p:commandButton id="createButton" icon="ui-icon-plus"   value="#{bundle.Create}" actionListener="#{areasProjetosController.prepareCreate}" update=":AreasProjetosCreateForm" oncomplete="PF('AreasProjetosCreateDialog').show()"/>
-                            <p:commandButton id="viewButton"   icon="ui-icon-search" value="#{bundle.View}" update=":AreasProjetosViewForm" oncomplete="PF('AreasProjetosViewDialog').show()" disabled="#{empty areasProjetosController.selected}"/>
-                            <p:commandButton id="editButton"   icon="ui-icon-pencil" value="#{bundle.Edit}" update=":AreasProjetosEditForm" oncomplete="PF('AreasProjetosEditDialog').show()" disabled="#{empty areasProjetosController.selected}"/>
-                            <p:commandButton id="deleteButton" icon="ui-icon-trash"  value="#{bundle.Delete}" actionListener="#{areasProjetosController.destroy}" update=":growl,datalist" disabled="#{empty areasProjetosController.selected}"/>
-                        </f:facet>
-                    </p:dataTable>
-                </p:panel>
-            </h:form>
+                            <p:dataTable id="datalist" value="#{areasProjetosController.itemsByUsuario}" var="item"
+                                         selectionMode="single" selection="#{areasProjetosController.selected}"
+                                         paginator="true"
+                                         paginatorPosition="bottom"
+                                         rowKey="#{item.id}"
+                                         rows="8"
+                                         rowsPerPageTemplate="8,16,24,32,40,48"
+                                         >
 
+                                <p:ajax event="rowSelect"   update="associateButton "/>
+                                <p:ajax event="rowUnselect" update="associateButton "/>
+
+                                <f:facet name="header">
+                                    <h:outputText id="associaHeader" value="Projetos Afins" />
+                                </f:facet>  
+                                <p:column style="width: 5%;">
+                                    <f:facet name="header">
+                                        <h:outputText value="#{bundle.ListAreasProjetosTitle_num}"/>
+                                    </f:facet>
+                                    <h:outputText value="#{item.projeto.id}"/>
+                                </p:column>
+                                <p:column style="width: 55%;">
+                                    <f:facet name="header">
+                                        <h:outputText value="#{bundle.ListAreasProjetosTitle_projeto}"/>
+                                    </f:facet>
+                                    <h:outputText value="#{item.projeto.nome}"/>
+                                </p:column>
+                                <p:column style="width: 18%;">
+                                    <f:facet name="header">
+                                        <h:outputText value="#{bundle.ListAreasProjetosTitle_associado}"/>
+                                    </f:facet>
+                                    <p:selectOneRadio value="#{item.avaliacao}" disabled="false">
+                                        <f:selectItem itemLabel="Sim" itemValue="1" itemDisabled="#{item.avaliacao==0}"/>
+                                        <f:selectItem itemLabel="Não" itemValue="0" itemDisabled="#{item.avaliacao==1}"/>
+                                    </p:selectOneRadio>                                
+                                </p:column>
+                                <f:facet name="footer">
+                                    <p:commandButton id="associateButton" icon="ui-icon-plus"   value="#{bundle.Associate}" actionListener="#{areasProjetosController.geraProjetosCandidatos}" update=":AssociarProjetosAfinsForm" oncomplete="PF('AssociarProjetosAfinsDialog').show()"/>
+                                </f:facet>
+                            </p:dataTable>
+                        </p:panel>
+                    </h:form>
+                </p:tab>
+            </p:tabView>
+                
+            <ui:include src="AssociarProjetosAfins.xhtml"/>
             <ui:include src="Create.xhtml"/>
             <ui:include src="Edit.xhtml"/>
-            <ui:include src="View.xhtml"/>
+            <ui:include src="ViewArea.xhtml"/>
         </ui:define>
     </ui:composition>
 

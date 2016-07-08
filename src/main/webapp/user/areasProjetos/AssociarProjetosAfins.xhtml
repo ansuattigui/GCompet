@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="AssociarProjetosAfinsDlg" widgetVar="AssociarProjetosAfinsDialog" modal="true" resizable="false" appendTo="@(body)" >
+            <h:form id="AssociarProjetosAfinsForm">
+                <p:panel style="width: 800px;" class="ui-sem-borda">
+                    <p:dataTable id="datalist" value="#{areasProjetosController.projetosCandidatos}" var="item"
+                                 selectionMode="single" selection="#{areasProjetosController.projeto}"
+                                 paginator="true" 
+                                 paginatorPosition="bottom"
+                                 rowKey="#{item.projeto.id}"
+                                 rows="10"
+                                 rowsPerPageTemplate="10,20,30,40,50"
+                                 >      
+                        <p:ajax event="rowSelect" listener="#{areasProjetosController.onProjetoSelect}" update="viewButton"/>
+                        <p:ajax event="rowUnselect" update="viewButton"/>
+                        
+                        <f:facet name="header">
+                            <h:outputText id="associaHeader" value="#{areasProjetosController.area.nome} - Avaliação de Projetos Afins" />
+                        </f:facet>                        
+                        <p:column style="width: 5%;">
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListProjetosTitle_num}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.projeto.id}"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListProjetosTitle_nome}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.projeto.nome}"/>
+                        </p:column>
+                        <p:column style="width:30%">
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListAreasProjetosTitle_associacao}"/>
+                            </f:facet>
+                            <p:selectOneRadio id="associaChoice" value="#{item.avaliacao}">
+                                <f:selectItem itemLabel="Sim" itemValue="1" />
+                                <f:selectItem itemLabel="Não" itemValue="0" />
+                                <f:selectItem itemLabel="N.A." itemValue="-1" />
+                            </p:selectOneRadio>                            
+                        </p:column>
+                        
+                        <f:facet name="footer">
+                            <p:commandButton id="viewButton"   icon="ui-icon-search" value="#{bundle.View}" update=":AreasViewForm" oncomplete="PF('AreasViewDialog').show()" disabled="#{empty capacidadesAreasController.area}"/>
+                            <p:commandButton id="confirmaButton" icon="ui-icon-plus"   value="#{bundle.Associate}" actionListener="#{areasProjetosController.salvaProjetosCandidatos}" 
+                                                update="tvArea:datalist,:growl" oncomplete="handleSubmit(args,'AssociarProjetosAfinsDialog');">
+                                <p:confirm header="Confirmação" message="Confirma a associação do registro selecionado?" icon="ui-icon-alert" />
+                            </p:commandButton>                                
+                            <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+                                <p:commandButton value="Sim" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+                                <p:commandButton value="Não" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+                            </p:confirmDialog>  
+                        </f:facet>
+                    </p:dataTable>
+                </p:panel>
+            </h:form>
+        </p:dialog>
+        
+        <ui:include src="ViewProjetos.xhtml"/>
+        
+    </ui:composition>
+
+</html>

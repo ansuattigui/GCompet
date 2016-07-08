@@ -89,7 +89,7 @@ public class AreasProjetos implements Serializable {
         return usuario;
     }
 
-    public void setUuario(Usuarios usuario) {
+    public void setUsuario(Usuarios usuario) {
         this.usuario = usuario;
     }
 

@@ -29,7 +29,8 @@ import javax.xml.bind.annotation.XmlRootElement;
 @NamedQueries({
     @NamedQuery(name = "Projetos.findAll", query = "SELECT p FROM Projetos p"),
     @NamedQuery(name = "Projetos.findById", query = "SELECT p FROM Projetos p WHERE p.id = :id"),
-    @NamedQuery(name = "Projetos.findByNome", query = "SELECT p FROM Projetos p WHERE p.nome = :nome")})
+    @NamedQuery(name = "Projetos.findByNome", query = "SELECT p FROM Projetos p WHERE p.nome = :nome"),
+    @NamedQuery(name = "Projetos.findAllNaoAvaliados", query = "SELECT p FROM Projetos p WHERE p.id NOT IN (SELECT ap.projeto.id FROM AreasProjetos ap WHERE ap.area = :area and ap.usuario = :user)")})
 public class Projetos implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id

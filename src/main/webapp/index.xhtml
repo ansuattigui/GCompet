@@ -29,7 +29,7 @@
                                 </p:submenu>
                                 <p:submenu label="#{bundle.Avaliacoes}" rendered="#{loginController.userLoggedIn.perfil.nome eq 'RESP'}">
                                     <p:menuitem value="Visão Capacidades" outcome="/user/capacidadesAreas/List"/>
-                                    <p:menuitem value="Visão Areas" outcome="/user/AreasProjetos/List"/>
+                                    <p:menuitem value="Visão Areas" outcome="/user/areasProjetos/List"/>
                                 </p:submenu>
                                 <p:submenu label="#{bundle.Relatorios}" rendered="#{loginController.userLoggedIn.perfil.nome eq 'GEST'}">
                                     <p:menuitem ajax="false" value="Contagem das avaliações" action="#{relatorioContagem.getRelatorioContagemAvaliacoes}" update="@all" />                            
