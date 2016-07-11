@@ -13,20 +13,20 @@
         </ui:define>
         
         <ui:define name="menuhor">
+            <h:form id="menuForm" prependId="false">
+                <p:panelGrid class="ui-sem-borda">
+                    <p:row class="ui-sem-borda">
                         <p:column style="width: 50%;" class="ui-sem-borda">
-                            <h:form>
-                            <p:megaMenu orientation="horizontal" >
+                            <p:megaMenu class="ui-sem-borda">
                                 <p:menuitem value="#{bundle.Home}" outcome="/index" icon="ui-icon-home"/>
-                                <p:column>
-                                    <p:submenu label="#{bundle.Cadastro}" rendered="#{loginController.userLoggedIn.perfil.nome eq 'ADMIN'}">
-                                        <p:menuitem value="Areas" outcome="/admin/areas/List" />
-                                        <p:menuitem value="Capacidades" outcome="/admin/capacidades/List" />
-                                        <p:menuitem value="Empresas" outcome="/admin/empresas/List" />
-                                        <p:menuitem value="Perfil" outcome="/perfil/List" rendered="false"/>
-                                        <p:menuitem value="Projetos" outcome="/admin/projetos/List" />
-                                        <p:menuitem value="Usuarios" outcome="/admin/usuarios/List" />
-                                    </p:submenu>
-                                </p:column>
+                                <p:submenu label="#{bundle.Cadastro}" rendered="#{loginController.userLoggedIn.perfil.nome eq 'ADMIN'}">
+                                    <p:menuitem value="Areas" outcome="/admin/areas/List" />
+                                    <p:menuitem value="Capacidades" outcome="/admin/capacidades/List" />
+                                    <p:menuitem value="Empresas" outcome="/admin/empresas/List" />
+                                    <p:menuitem value="Perfil" outcome="/perfil/List" rendered="false"/>
+                                    <p:menuitem value="Projetos" outcome="/admin/projetos/List" />
+                                    <p:menuitem value="Usuarios" outcome="/admin/usuarios/List" />
+                                </p:submenu>
                                 <p:submenu label="#{bundle.Avaliacoes}" rendered="#{loginController.userLoggedIn.perfil.nome eq 'RESP'}">
                                     <p:menuitem value="Capacidades --> Areas" outcome="/user/capacidadesAreas/List"/>
                                     <p:menuitem value="Areas --> Projetos" outcome="/user/areasProjetos/List"/>
@@ -35,13 +35,15 @@
                                 <p:submenu label="#{bundle.Relatorios}" rendered="#{loginController.userLoggedIn.perfil.nome eq 'GEST'}">
                                     <p:menuitem ajax="false" value="Contagem das avaliações" action="#{relatorioContagem.getRelatorioContagemAvaliacoes}" update="@all" />                            
                                 </p:submenu>
-                                <p:menuitem value="#{bundle.UserLogout}" action="#{loginController.logout}" icon="ui-icon-close"/>
-                            </p:megaMenu>
-                            </h:form>
+                                <p:menuitem value="#{bundle.UserLogout}" action="#{loginController.logout}"/>
+                            </p:megaMenu>>
                         </p:column>                        
                         <p:column style="width: 25%;" class="ui-sem-borda">
                             <p:outputLabel value="Usuario: #{loginController.userLoggedIn.nomeCompleto}" styleClass="ui-sem-borda"/>
                         </p:column>
+                    </p:row>
+                </p:panelGrid>
+            </h:form>
         </ui:define>
         <ui:define name="center">                        
             <ui:insert name="body">
