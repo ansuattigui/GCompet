@@ -21,7 +21,7 @@
                             <p:outputLabel value="#{bundle.LoginGCompet_Senha}" for="password" />
                             <p:password id="password" value="#{loginController.senha}" title="#{bundle.LoginGCompet_Senha}" required="true" requiredMessage="Informe a senha"/>
                         </p:panelGrid>
-                        <p:commandButton action="#{loginController.validaUsuarioSenha}" value="#{bundle.LoginGCompet_Login}" update="display,:growl"/>
+                        <p:commandButton action="#{loginController.login}" value="#{bundle.LoginGCompet_Login}" update="display,:growl"/>
                     </h:panelGroup>
                 </h:form>
             </p:panel>

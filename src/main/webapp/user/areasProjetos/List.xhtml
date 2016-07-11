@@ -19,7 +19,7 @@
                         <p:panel class="ui-sem-borda">
                             <p:dataTable value="#{areasController.items}" var="area"
                                          selectionMode="single" 
-                                         selection="#{areasProjetosController.selected}"
+                                         selection="#{areasProjetosController.area}"
                                          paginator="true"
                                          paginatorPosition="bottom"
                                          rowKey="#{area.id}"
@@ -27,7 +27,7 @@
                                          rowsPerPageTemplate="10,20,30,40,50"
                                          >
 
-                                <p:ajax event="rowSelect" listener="#{areasProjetosController.onAreaSelect}"  update="tvArea viewButton"/>
+                                <p:ajax event="rowSelect" listener="#{areasProjetosController.onAreaSelect}"  update="tvArea:datalist tvArea viewButton"/>
                                 <p:ajax event="rowUnselect" update="viewButton"/>
 
                                 <f:facet name="header">

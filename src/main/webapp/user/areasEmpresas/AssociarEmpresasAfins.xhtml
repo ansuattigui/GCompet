@@ -50,7 +50,7 @@
                         
                         <f:facet name="footer">
                             <p:commandButton id="viewButton"   icon="ui-icon-search" value="#{bundle.View}" update=":AreasViewForm" oncomplete="PF('AreasViewDialog').show()" disabled="#{empty areasEmpresasController.empresa}"/>
-                            <p:commandButton id="confirmaButton" icon="ui-icon-plus"   value="#{bundle.Associate}" actionListener="#{areasEmpresasController.salvaEmpresasCandidatos}" 
+                            <p:commandButton id="confirmaButton" icon="ui-icon-plus"   value="#{bundle.Associate}" actionListener="#{areasEmpresasController.salvaEmpresasCandidatas}" 
                                                 update="tvArea:datalist,:growl" oncomplete="handleSubmit(args,'AssociarEmpresasAfinsDialog');">
                                 <p:confirm header="Confirmação" message="Confirma a associação do registro selecionado?" icon="ui-icon-alert" />
                             </p:commandButton>                                

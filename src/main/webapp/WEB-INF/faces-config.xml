@@ -8,5 +8,8 @@
             <base-name>/Bundle</base-name>
             <var>bundle</var>
         </resource-bundle>
+        <lifecycle>
+            <phase-listener>com.ctex.ct.gcompet.util.Autorizador</phase-listener>
+        </lifecycle>
     </application>
 </faces-config>

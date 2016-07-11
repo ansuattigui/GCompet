@@ -35,14 +35,14 @@ public class AreasEmpresasFacade extends AbstractFacade<AreasEmpresas> {
     @Override
     public List<AreasEmpresas> findAll() {
         TypedQuery<AreasEmpresas> tq;
-        tq = getEntityManager().createNamedQuery("AreasProjetos.findAll",AreasEmpresas.class);
+        tq = getEntityManager().createNamedQuery("AreasEmpresas.findAll",AreasEmpresas.class);
         List<AreasEmpresas> lista = tq.getResultList();
         return lista;
     }
 
     public List<AreasEmpresas> findAll(Areas area) {
         TypedQuery<AreasEmpresas> tq;
-        tq = getEntityManager().createNamedQuery("AreasProjetos.findAllByArea", AreasEmpresas.class);
+        tq = getEntityManager().createNamedQuery("AreasEmpresas.findAllByArea", AreasEmpresas.class);
         tq.setParameter("area", area);
         List<AreasEmpresas> lista = tq.getResultList();
         return lista;
@@ -50,7 +50,7 @@ public class AreasEmpresasFacade extends AbstractFacade<AreasEmpresas> {
 
     public List<AreasEmpresas> findAll(Areas area, Usuarios user) {
         TypedQuery<AreasEmpresas> tq;
-        tq = getEntityManager().createNamedQuery("AreasProjetos.findAllByUsuario", AreasEmpresas.class);
+        tq = getEntityManager().createNamedQuery("AreasEmpresas.findAllByUsuario", AreasEmpresas.class);
         tq.setParameter("area", area);
         tq.setParameter("user", user);
         List<AreasEmpresas> lista = tq.getResultList();
