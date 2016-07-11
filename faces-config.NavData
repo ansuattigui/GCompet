@@ -1,6 +1,54 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Scene Scope="Project" version="2">
     <Scope Scope="Faces Configuration Only"/>
-    <Scope Scope="Project"/>
+    <Scope Scope="Project">
+        <Node id="user/areasProjetos/ViewArea.xhtml" x="150" y="750" zoom="true"/>
+        <Node id="admin/empresas/Create.xhtml" x="1150" y="450" zoom="true"/>
+        <Node id="user/areasEmpresas/View.xhtml" x="150" y="600" zoom="true"/>
+        <Node id="user/capacidadesAreas/Create.xhtml" x="150" y="900" zoom="true"/>
+        <Node id="admin/areas/View.xhtml" x="2150" y="300" zoom="true"/>
+        <Node id="admin/empresas/Edit.xhtml" x="1150" y="600" zoom="true"/>
+        <Node id="user/capacidadesAreas/ViewCapacidade.xhtml" x="900" y="750" zoom="true"/>
+        <Node id="user/areasEmpresas/List.xhtml" x="1650" y="300" zoom="true"/>
+        <Node id="admin/usuarios/Edit.xhtml" x="400" y="750" zoom="true"/>
+        <Node id="admin/usuarios/View.xhtml" x="1400" y="450" zoom="true"/>
+        <Node id="admin/capacidades/Create.xhtml" x="650" y="300" zoom="true"/>
+        <Node id="user/relatorios/capacidadeArea.xhtml" x="400" y="150" zoom="true"/>
+        <Node id="user/areasProjetos/ViewProjetos.xhtml" x="1150" y="300" zoom="true"/>
+        <Node id="perfil/Create.xhtml" x="1900" y="300" zoom="true"/>
+        <Node id="user/capacidadesAreas/Edit.xhtml" x="1900" y="150" zoom="true"/>
+        <Node id="admin/projetos/View.xhtml" x="650" y="450" zoom="true"/>
+        <Node id="admin/projetos/Edit.xhtml" x="2150" y="150" zoom="true"/>
+        <Node id="perfil/List.xhtml" x="650" y="1050" zoom="true"/>
+        <Node id="admin/projetos/Create.xhtml" x="900" y="150" zoom="true"/>
+        <Node id="template.xhtml" x="400" y="600" zoom="true"/>
+        <Node id="admin/areas/Create.xhtml" x="900" y="300" zoom="true"/>
+        <Node id="perfil/Edit.xhtml" x="400" y="450" zoom="true"/>
+        <Node id="admin/projetos/List.xhtml" x="150" y="1350" zoom="true"/>
+        <Node id="perfil/View.xhtml" x="2400" y="150" zoom="true"/>
+        <Node id="user/areasProjetos/View.xhtml" x="1400" y="150" zoom="true"/>
+        <Node id="index.xhtml" x="1400" y="300" zoom="true"/>
+        <Node id="user/capacidadesAreas/ViewAreas.xhtml" x="900" y="600" zoom="true"/>
+        <Node id="user/areasProjetos/List.xhtml" x="400" y="1050" zoom="true"/>
+        <Node id="user/capacidadesAreas/AssociarAreasAfins.xhtml" x="1150" y="150" zoom="true"/>
+        <Node id="user/areasProjetos/AssociarProjetosAfins.xhtml" x="400" y="1200" zoom="true"/>
+        <Node id="user/areasEmpresas/ViewEmpresas.xhtml" x="1150" y="750" zoom="true"/>
+        <Node id="user/capacidadesAreas/View.xhtml" x="650" y="900" zoom="true"/>
+        <Node id="admin/empresas/List.xhtml" x="150" y="450" zoom="true"/>
+        <Node id="admin/empresas/View.xhtml" x="150" y="300" zoom="true"/>
+        <Node id="user/capacidadesAreas/List.xhtml" x="1400" y="600" zoom="true"/>
+        <Node id="report.xhtml" x="150" y="150" zoom="true"/>
+        <Node id="login.xhtml" x="150" y="1050" zoom="true"/>
+        <Node id="user/areasEmpresas/AssociarEmpresasAfins.xhtml" x="650" y="750" zoom="true"/>
+        <Node id="admin/capacidades/View.xhtml" x="900" y="450" zoom="true"/>
+        <Node id="admin/capacidades/Edit.xhtml" x="650" y="150" zoom="true"/>
+        <Node id="admin/usuarios/List.xhtml" x="150" y="1200" zoom="true"/>
+        <Node id="admin/areas/Edit.xhtml" x="900" y="900" zoom="true"/>
+        <Node id="user/areasEmpresas/ViewArea.xhtml" x="400" y="300" zoom="true"/>
+        <Node id="admin/usuarios/Create.xhtml" x="400" y="900" zoom="true"/>
+        <Node id="login_fail.xhtml" x="1650" y="450" zoom="true"/>
+        <Node id="admin/capacidades/List.xhtml" x="650" y="600" zoom="true"/>
+        <Node id="admin/areas/List.xhtml" x="1650" y="150" zoom="true"/>
+    </Scope>
     <Scope Scope="All Faces Configurations"/>
 </Scene>

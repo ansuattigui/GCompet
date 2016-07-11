@@ -23,7 +23,7 @@
                         <p:ajax event="rowUnselect" update="viewButton"/>
                         
                         <f:facet name="header">
-                            <h:outputText id="associaHeader" value="#{areasEmpresasController.area.nome} - Avaliação de Empresas Afins" />
+                            <h:outputText id="associaHeader" value="#{areasEmpresasController.area.nome} - vinculação de Empresas Afins" />
                         </f:facet>                        
                         <p:column style="width: 5%;">
                             <f:facet name="header">
@@ -52,7 +52,7 @@
                             <p:commandButton id="viewButton"   icon="ui-icon-search" value="#{bundle.View}" update=":AreasViewForm" oncomplete="PF('AreasViewDialog').show()" disabled="#{empty areasEmpresasController.empresa}"/>
                             <p:commandButton id="confirmaButton" icon="ui-icon-plus"   value="#{bundle.Associate}" actionListener="#{areasEmpresasController.salvaEmpresasCandidatas}" 
                                                 update="tvArea:datalist,:growl" oncomplete="handleSubmit(args,'AssociarEmpresasAfinsDialog');">
-                                <p:confirm header="Confirmação" message="Confirma a associação do registro selecionado?" icon="ui-icon-alert" />
+                                <p:confirm header="Confirmação" message="Confirma a avaliação do registro selecionado?" icon="ui-icon-alert" />
                             </p:commandButton>                                
                             <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
                                 <p:commandButton value="Sim" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
