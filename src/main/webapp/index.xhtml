@@ -17,7 +17,7 @@
                 <p:panelGrid class="ui-sem-borda">
                     <p:row class="ui-sem-borda">
                         <p:column style="width: 50%;" class="ui-sem-borda">
-                            <p:megaMenu class="ui-sem-borda">
+                            <p:menubar class="ui-sem-borda">
                                 <p:menuitem value="#{bundle.Home}" outcome="/index" icon="ui-icon-home"/>
                                 <p:submenu label="#{bundle.Cadastro}" rendered="#{loginController.userLoggedIn.perfil.nome eq 'ADMIN'}">
                                     <p:menuitem value="Areas" outcome="/admin/areas/List" />
@@ -36,7 +36,7 @@
                                     <p:menuitem ajax="false" value="Contagem das avaliações" action="#{relatorioContagem.getRelatorioContagemAvaliacoes}" update="@all" />                            
                                 </p:submenu>
                                 <p:menuitem value="#{bundle.UserLogout}" action="#{loginController.logout}"/>
-                            </p:megaMenu>>
+                            </p:menubar>
                         </p:column>                        
                         <p:column style="width: 25%;" class="ui-sem-borda">
                             <p:outputLabel value="Usuario: #{loginController.userLoggedIn.nomeCompleto}" styleClass="ui-sem-borda"/>
