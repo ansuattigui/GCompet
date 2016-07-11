@@ -11,11 +11,13 @@
         <p:dialog id="CapacidadesViewDlg" widgetVar="CapacidadesViewDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.ViewCapacidadesTitle}">
             <h:form id="CapacidadesViewForm">
                 <h:panelGroup id="display">
-                    <p:panelGrid columns="2" rendered="#{capacidadesController.selected != null}">
+                    <p:panelGrid columns="2" rendered="#{capacidadesController.selected != null}" style="width: 600px;">
                         <h:outputText value="#{bundle.ViewCapacidadesLabel_id}"/>
                         <h:outputText value="#{capacidadesController.selected.id}" title="#{bundle.ViewCapacidadesTitle_id}"/>
                         <h:outputText value="#{bundle.ViewCapacidadesLabel_nome}"/>
                         <h:outputText value="#{capacidadesController.selected.nome}" title="#{bundle.ViewCapacidadesTitle_nome}"/>
+                        <h:outputText value="#{bundle.ViewCapacidadesLabel_descricao}"/>
+                        <h:outputText value="#{capacidadesController.selected.descricao}" title="#{bundle.ViewCapacidadesTitle_descricao}"/>
                     </p:panelGrid>
                     <p:commandButton value="#{bundle.Close}" onclick="CapacidadesViewDialog.hide()"/>
                 </h:panelGroup>

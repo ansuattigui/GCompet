@@ -11,11 +11,13 @@
         <p:dialog id="AreasViewDlg" widgetVar="AreasViewDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.ViewAreasTitle}">
             <h:form id="AreasViewForm">
                 <h:panelGroup id="display">
-                    <p:panelGrid columns="2" rendered="#{areasController.selected != null}">
+                    <p:panelGrid columns="2" rendered="#{areasController.selected != null}" style="width: 600px;">
                         <h:outputText value="#{bundle.ViewAreasLabel_id}"/>
                         <h:outputText value="#{areasController.selected.id}" title="#{bundle.ViewAreasTitle_id}"/>
                         <h:outputText value="#{bundle.ViewAreasLabel_nome}"/>
                         <h:outputText value="#{areasController.selected.nome}" title="#{bundle.ViewAreasTitle_nome}"/>
+                        <h:outputText value="#{bundle.ViewAreasLabel_descricao}"/>
+                        <h:outputText value="#{areasController.selected.descricao}" title="#{bundle.ViewAreasTitle_descricao}"/>
                     </p:panelGrid>
                     <p:commandButton value="#{bundle.Close}" onclick="AreasViewDialog.hide()"/>
                 </h:panelGroup>
