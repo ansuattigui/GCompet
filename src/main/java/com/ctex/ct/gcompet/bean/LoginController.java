@@ -5,6 +5,7 @@
  */
 package com.ctex.ct.gcompet.bean;
 
+import com.ctex.ct.gcompet.modelo.Perfil;
 import com.ctex.ct.gcompet.modelo.Usuarios;
 import java.io.Serializable;
 import javax.ejb.EJB;
@@ -26,7 +27,8 @@ public class LoginController implements Serializable {
     private String senha;
     private String msg;
     private String usuario;
-    private static Usuarios userLoggedIn;
+    private Usuarios userLoggedIn;
+    private Perfil perfilLogged;
  
     private static final long serialVersionUID = 1094801825228386363L;
     
@@ -59,10 +61,12 @@ public class LoginController implements Serializable {
  
     //validate login
     public String login() {        
-        userLoggedIn = getEjbFacade().validate(usuario, senha);            
+        Usuarios user = getEjbFacade().validate(usuario, senha);   
         FacesContext context = FacesContext.getCurrentInstance();
-        if (userLoggedIn!=null) {
-            context.getExternalContext().getSessionMap().put("usuarioLogado",userLoggedIn);
+        if (user!=null) {
+            userLoggedIn = user;
+            perfilLogged = user.getPerfil();
+            context.getExternalContext().getSessionMap().put("usuarioLogado",user);
             return "index?faces-redirect=true";
         } else {
             context.getExternalContext().getFlash().setKeepMessages(true);
@@ -88,7 +92,7 @@ public class LoginController implements Serializable {
     /**
      * @return the userLoggedIn
      */
-    public static Usuarios returnUserLoggedIn() {
+    public Usuarios returnUserLoggedIn() {
         return userLoggedIn;
     }
 
@@ -100,7 +104,21 @@ public class LoginController implements Serializable {
      * @param userLoggedIn the userLoggedIn to set
      */
     public void setUserLoggedIn(Usuarios userLoggedIn) {
-        LoginController.userLoggedIn = userLoggedIn;
+        this.userLoggedIn = userLoggedIn;
+    }
+
+    /**
+     * @return the perfilLogged
+     */
+    public Perfil getPerfilLogged() {
+        return perfilLogged;
+    }
+
+    /**
+     * @param perfilLogged the perfilLogged to set
+     */
+    public void setPerfilLogged(Perfil perfilLogged) {
+        this.perfilLogged = perfilLogged;
     }
 
 }
