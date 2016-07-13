@@ -90,12 +90,14 @@ public class CapacidadesAreasController implements Serializable {
     }
 
     public List<CapacidadesAreas> getItemsByCapacidade() {
-        Usuarios user = LoginController.returnUserLoggedIn();
+//        Usuarios user = LoginController.returnUserLoggedIn();
+        Usuarios user = (Usuarios) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("usuarioLogado");
         return getFacade().findAll(capacidade);
     }
     
     public List<CapacidadesAreas> getItemsByUsuario() {
-        Usuarios user = LoginController.returnUserLoggedIn();
+//        Usuarios user = LoginController.returnUserLoggedIn();
+        Usuarios user = (Usuarios) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("usuarioLogado");
         return getFacade().findAll(capacidade,user);
     }
 
@@ -268,7 +270,8 @@ public class CapacidadesAreasController implements Serializable {
     private AreasCandidatas acSelected;
 
     public void geraAreasCandidatas() {
-        Usuarios user = LoginController.returnUserLoggedIn();
+//        Usuarios user = LoginController.returnUserLoggedIn();
+        Usuarios user = (Usuarios) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("usuarioLogado");
         areasCandidatas = new ArrayList<>();
         List<Areas> areas = getEjbAreasFacade().findAll(capacidade,user);        
         for(Areas area: areas) {
@@ -332,7 +335,8 @@ public class CapacidadesAreasController implements Serializable {
         private short avaliacao;
 
         private AreasCandidatas() {
-            usuario = LoginController.returnUserLoggedIn();
+            //usuario = LoginController.returnUserLoggedIn();
+            usuario = (Usuarios) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("usuarioLogado");
             avaliada = false;
             avaliacao = -1;
         }

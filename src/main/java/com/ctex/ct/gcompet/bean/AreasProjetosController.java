@@ -90,12 +90,14 @@ public class AreasProjetosController implements Serializable {
     }
     
     public List<AreasProjetos> getItemsByArea() {
-        Usuarios user = LoginController.returnUserLoggedIn();
+//        Usuarios user = LoginController.returnUserLoggedIn();
+        Usuarios user = (Usuarios) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("usuarioLogado");
         return getFacade().findAll(area);
     }
     
     public List<AreasProjetos> getItemsByUsuario() {
-        Usuarios user = LoginController.returnUserLoggedIn();
+//        Usuarios user = LoginController.returnUserLoggedIn();
+        Usuarios user = (Usuarios) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("usuarioLogado");
         return getFacade().findAll(area,user);
     }
     
@@ -252,7 +254,8 @@ public class AreasProjetosController implements Serializable {
     private ProjetosCandidatos pcSelected;
 
     public void geraProjetosCandidatos() {
-        Usuarios user = LoginController.returnUserLoggedIn();
+//        Usuarios user = LoginController.returnUserLoggedIn();
+        Usuarios user = (Usuarios) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("usuarioLogado");
         projetosCandidatos = new ArrayList<>();
         List<Projetos> projetos = getEjbProjetosFacade().findAll(area,user);        
         for(Projetos item: projetos) {
@@ -305,7 +308,8 @@ public class AreasProjetosController implements Serializable {
         private short avaliacao;
 
         private ProjetosCandidatos() {
-            usuario = LoginController.returnUserLoggedIn();
+//            usuario = LoginController.returnUserLoggedIn();
+            usuario = (Usuarios) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("usuarioLogado");
             avaliada = false;
             avaliacao = -1;
         }
