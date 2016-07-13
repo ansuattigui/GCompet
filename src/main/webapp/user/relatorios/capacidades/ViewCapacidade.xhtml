@@ -12,13 +12,13 @@
             resizable="false" appendTo="@(body)" header="#{bundle.ViewCapacidadesTitle}">
             <h:form id="CapacidadesViewForm">
                 <h:panelGroup id="display" >
-                    <p:panelGrid columns="2" rendered="#{capacidadesAreasController.capacidade != null}" style="width: 600px;">
+                    <p:panelGrid columns="2" rendered="#{relatorioAvaliacaoCapacidade.capacidade!= null}" style="width: 600px;">
                         <h:outputText value="#{bundle.ViewCapacidadesLabel_num}"/>
-                        <h:outputText value="#{capacidadesAreasController.capacidade.id}" title="#{bundle.ViewCapacidadesTitle_id}"/>
+                        <h:outputText value="#{relatorioAvaliacaoCapacidade.capacidade.id}" title="#{bundle.ViewCapacidadesTitle_id}"/>
                         <h:outputText value="#{bundle.ViewCapacidadesLabel_nome}"/>
-                        <h:outputText value="#{capacidadesAreasController.capacidade.nome}" title="#{bundle.ViewCapacidadesTitle_nome}"/>
+                        <h:outputText value="#{relatorioAvaliacaoCapacidade.capacidade.nome}" title="#{bundle.ViewCapacidadesTitle_nome}"/>
                         <h:outputText value="#{bundle.ViewCapacidadesLabel_descricao}"/>
-                        <h:inputTextarea value="#{capacidadesAreasController.capacidade.descricao}" title="#{bundle.ViewCapacidadesTitle_nome}" readonly="true" rows="5" style="width:500px;"/>
+                        <h:inputTextarea value="#{relatorioAvaliacaoCapacidade.capacidade.descricao}" title="#{bundle.ViewCapacidadesTitle_nome}" readonly="true" rows="5" style="width:500px;"/>
                     </p:panelGrid>
                 </h:panelGroup>
             </h:form>

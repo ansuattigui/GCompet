@@ -1,9 +1,8 @@
 package com.ctex.ct.gcompet.bean;
 
-import com.ctex.ct.gcompet.modelo.Capacidades;
 import com.ctex.ct.gcompet.bean.util.JsfUtil;
 import com.ctex.ct.gcompet.bean.util.JsfUtil.PersistAction;
-
+import com.ctex.ct.gcompet.modelo.Capacidades;
 import java.io.Serializable;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -11,12 +10,12 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.ejb.EJB;
 import javax.ejb.EJBException;
-import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
+import javax.inject.Named;
 
 @Named("capacidadesController")
 @SessionScoped
@@ -41,7 +40,7 @@ public class CapacidadesController implements Serializable {
     protected void setEmbeddableKeys() {
     }
 
-    protected void initializeEmbeddableKey() {
+    protected void initializeEmbeddableKey() {        
     }
 
     private CapacidadesFacade getFacade() {

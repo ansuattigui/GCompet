@@ -10,7 +10,7 @@
 
         <ui:define name="body">        
         
-            <h:form id="SelecionaCapacidadeForm">
+            <h:form id="SelecionaCapacidadeForm" prependId="false">
                 <p:panel style="width: 800px;" class="ui-sem-borda">
 
                     <f:facet name="header" >
@@ -18,14 +18,15 @@
                     </f:facet>
                                         
                     <p:dataTable id="datalist" value="#{capacidadesController.items}" var="item"
-                                 selectionMode="single" selection="#{capacidadesController.selected}"
-                                 paginator="true" 
-                                 paginatorPosition="bottom"
-                                 rowKey="#{item.id}"
-                                 rows="10"
-                                 rowsPerPageTemplate="10,20,30,40,50"
-                                 >      
-                        <p:ajax event="rowSelect"  update="viewButton"/>
+                        selectionMode="single" 
+                        selection="#{relatorioAvaliacaoCapacidade.capacidade}"
+                        paginator="true" 
+                        paginatorPosition="bottom"
+                        rowKey="#{item.id}"
+                        rows="10"
+                        rowsPerPageTemplate="10,20,30,40,50"
+                        >      
+                        <p:ajax event="rowSelect" update="viewButton"/>
                         <p:ajax event="rowUnselect" update="viewButton"/>
                         
                         <f:facet name="header">
@@ -45,22 +46,18 @@
                         </p:column>
                         
                         <f:facet name="footer">
-                            <p:commandButton id="viewButton"   icon="ui-icon-search" value="#{bundle.View}" update=":CapacidadesViewForm" oncomplete="PF('CapacidadesViewDialog').show()" disabled="#{empty capacidadesController.selected}"/>
-                            <p:commandButton id="confirmaButton" icon="ui-icon-plus"   value="#{bundle.Select}" >
-                                <p:confirm header="Confirmação" message="Confirma a seleção desejada?" icon="ui-icon-alert" />
+                            <p:commandButton id="viewButton"  update=":CapacidadesViewForm" icon="ui-icon-search" value="#{bundle.View}" oncomplete="PF('CapacidadesViewDialog').show()" />
+                            <p:commandButton id="confirmaButton" icon="ui-icon-plus"   value="#{bundle.Select}" ajax="true" action="#{relatorioAvaliacaoCapacidade.relatorioAC}" update="@all">
                             </p:commandButton>                                
-                            <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
-                                <p:commandButton value="Sim" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
-                                <p:commandButton value="Não" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
-                            </p:confirmDialog>  
                         </f:facet>
                     </p:dataTable>
                 </p:panel>
             </h:form>
+            
+            <ui:include src="ViewCapacidade.xhtml"/>
 
         </ui:define>
      
-        <ui:include src="ViewCapacidade.xhtml"/>
         
     </ui:composition>
 
