@@ -34,7 +34,7 @@
                                 </p:submenu>
                                 <p:submenu label="#{bundle.Relatorios}" rendered="#{loginController.userLoggedIn.perfil.nome eq 'GESTOR'}">
                                     <p:menuitem ajax="false" value="Contagem das avaliações" action="#{relatorioContagem.getRelatorioContagemAvaliacoes}" update="@all" />                            
-                                    <p:menuitem />
+                                    <p:menuitem  /> 
                                     <p:menuitem ajax="false" value="Capacidades" outcome="/user/relatorios/capacidades/RelatorioCapacidades" />                            
                                 </p:submenu>
                                 <p:menuitem value="#{bundle.UserLogout}" action="#{loginController.logout}"/>

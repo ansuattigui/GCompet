@@ -47,8 +47,13 @@
                         
                         <f:facet name="footer">
                             <p:commandButton id="viewButton"  update=":CapacidadesViewForm" icon="ui-icon-search" value="#{bundle.View}" oncomplete="PF('CapacidadesViewDialog').show()" />
-                            <p:commandButton id="confirmaButton" icon="ui-icon-plus"   value="#{bundle.Select}" ajax="true" action="#{relatorioAvaliacaoCapacidade.relatorioAC}" update="@all">
+                            <p:commandButton id="confirmaButton" icon="ui-icon-plus"   value="#{bundle.Select}" action="#{relatorioAvaliacaoCapacidade.getRelatorioAC}">
+                                <p:confirm header="Confirmação" message="Confirma a seleção desejada?" icon="ui-icon-alert" />
                             </p:commandButton>                                
+                            <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+                                <p:commandButton value="Sim" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+                                <p:commandButton value="Não" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+                            </p:confirmDialog>  
                         </f:facet>
                     </p:dataTable>
                 </p:panel>
