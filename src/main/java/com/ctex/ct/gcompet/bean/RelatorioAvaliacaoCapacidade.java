@@ -86,7 +86,7 @@ public class RelatorioAvaliacaoCapacidade implements Serializable {
         ImageIcon logotipo = new ImageIcon(getContext().getRealPath("resources/img/logo-ctex.png"));                
         HashMap hm = new HashMap<>();
         hm.put("par_logotipo",logotipo.getImage());        
-        hm.put("par_nomerelat","Avaliação de Capacidades Operacionais");  
+        hm.put("par_nomerelat","Avaliação de Capacidades Operacionais: "+capacidade.getNome().toUpperCase());  
         hm.put("par_capacidade", capacidade.getId());
         try {   
             jasperPrint = JasperFillManager.fillReport(getJasper(),hm, getConnection());
@@ -163,7 +163,7 @@ public class RelatorioAvaliacaoCapacidade implements Serializable {
         } catch (JRException ex) {
             Logger.getLogger(RelatorioAvaliacaoCapacidade.class.getName()).log(Level.SEVERE, null, ex);
         }
-        relatorioAC = "user/relatorios/capacidades/AvaliacaoCapacidade";
+        relatorioAC = "/user/relatorios/capacidades/AvaliacaoCapacidade";
         return relatorioAC;
     }
 
