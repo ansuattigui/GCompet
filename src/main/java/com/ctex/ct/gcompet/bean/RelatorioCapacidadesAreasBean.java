@@ -94,7 +94,9 @@ public class RelatorioCapacidadesAreasBean implements Serializable {
     
     public RelatorioCapacidadesAreas[] getArrayRelatorio() {
         List<Object[]> lista;
-        lista = ejbFacade.findAll(capacidade);
+        lista = ejbFacade.findAll(capacidade);        
+        arrayRelatorio = new RelatorioCapacidadesAreas[lista.size()];
+        
         int i = 0;
         for (Object[] item : lista) {            
             Integer area_id = (Integer) item[0];
