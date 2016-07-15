@@ -6,11 +6,12 @@
 package com.ctex.ct.gcompet.bean;
 
 import com.ctex.ct.gcompet.modelo.Capacidades;
+import com.ctex.ct.gcompet.modelo.relatorios.RelatorioAreasEmpresas;
+import com.ctex.ct.gcompet.modelo.relatorios.RelatorioAreasProjetos;
 import com.ctex.ct.gcompet.modelo.relatorios.RelatorioCapacidadesAreas;
 import java.io.Serializable;
 import java.sql.Connection;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -44,7 +45,9 @@ public class RelatorioCapacidadesAreasBean implements Serializable {
     private String contentType;
     private String relatorioAC;
     private Capacidades capacidade;
-    private RelatorioCapacidadesAreas[] arrayRelatorio;
+    private RelatorioCapacidadesAreas[] arrayCapacidadesAreas;
+    private RelatorioAreasProjetos[] arrayAreasProjetos;
+    private RelatorioAreasEmpresas[] arrayAreasEmpresas;
         
     @EJB 
     private RelatorioCapacidadesAreasFacade ejbFacade;
@@ -88,14 +91,14 @@ public class RelatorioCapacidadesAreasBean implements Serializable {
     
     public JRDataSource getJrDataSource() {
         
-        jrDataSource = new JRBeanArrayDataSource(getArrayRelatorio());
+        jrDataSource = new JRBeanArrayDataSource(getArrayCapacidadesAreas());
         return jrDataSource;
     }
     
-    public RelatorioCapacidadesAreas[] getArrayRelatorio() {
+    public RelatorioCapacidadesAreas[] getArrayCapacidadesAreas() {
         List<Object[]> lista;
         lista = ejbFacade.findAll(capacidade);        
-        arrayRelatorio = new RelatorioCapacidadesAreas[lista.size()];
+        arrayCapacidadesAreas = new RelatorioCapacidadesAreas[lista.size()];
         
         int i = 0;
         for (Object[] item : lista) {            
@@ -110,17 +113,17 @@ public class RelatorioCapacidadesAreasBean implements Serializable {
             rca.setAvaliadores(avaliadores);
             rca.setAvaliacao(avaliacao);
             
-            arrayRelatorio[i] = rca;
+            arrayCapacidadesAreas[i] = rca;
             i++;
         }
-        return arrayRelatorio;
+        return arrayCapacidadesAreas;
     }
 
     /**
-     * @param arrayRelatorio the arrayRelatorio to set
+     * @param arrayCapacidadesAreas the arrayCapacidadesAreas to set
      */
-    public void setArrayRelatorio(RelatorioCapacidadesAreas[] arrayRelatorio) {
-        this.arrayRelatorio = arrayRelatorio;
+    public void setArrayCapacidadesAreas(RelatorioCapacidadesAreas[] arrayCapacidadesAreas) {
+        this.arrayCapacidadesAreas = arrayCapacidadesAreas;
     }
     
     /**
@@ -229,6 +232,34 @@ public class RelatorioCapacidadesAreasBean implements Serializable {
      */
     public void setCapacidade(Capacidades capacidade) {
         this.capacidade = capacidade;
+    }
+
+    /**
+     * @return the arrayAreasProjetos
+     */
+    public RelatorioAreasProjetos[] getArrayAreasProjetos() {
+        return arrayAreasProjetos;
+    }
+
+    /**
+     * @param arrayAreasProjetos the arrayAreasProjetos to set
+     */
+    public void setArrayAreasProjetos(RelatorioAreasProjetos[] arrayAreasProjetos) {
+        this.arrayAreasProjetos = arrayAreasProjetos;
+    }
+
+    /**
+     * @return the arrayAreasEmpresas
+     */
+    public RelatorioAreasEmpresas[] getArrayAreasEmpresas() {
+        return arrayAreasEmpresas;
+    }
+
+    /**
+     * @param arrayAreasEmpresas the arrayAreasEmpresas to set
+     */
+    public void setArrayAreasEmpresas(RelatorioAreasEmpresas[] arrayAreasEmpresas) {
+        this.arrayAreasEmpresas = arrayAreasEmpresas;
     }
 
 

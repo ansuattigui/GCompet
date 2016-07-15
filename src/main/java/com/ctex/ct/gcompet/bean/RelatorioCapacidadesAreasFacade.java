@@ -7,9 +7,6 @@ package com.ctex.ct.gcompet.bean;
 
 import com.ctex.ct.gcompet.modelo.Capacidades;
 import com.ctex.ct.gcompet.modelo.relatorios.RelatorioCapacidadesAreas;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -62,53 +59,30 @@ public class RelatorioCapacidadesAreasFacade extends AbstractFacade<RelatorioCap
         return lista;
     }
     
-//    public Connection getConnection() {
+    public List<Object[]> findAllAreasProjetos() {
+                
+        String sqlString = "SELECT ap.projeto_id, pj.nome as projeto,ap.AREA_id,a.nome as area, "+
+        "count(ap.PROJETO_id) as avaliadores, "+
+        "(SELECT count(ap1.PROJETO_id) FROM gcompet.areas_projetos ap1 "+
+        " WHERE ap1.AREA_id = ap.AREA_id AND ap.PROJETO_id = ap1.PROJETO_id "+
+        " AND ap1.avaliacao = 1 GROUP BY ap.AREA_id, ap.PROJETO_id) as avaliacao "+
+        " FROM gcompet.areas_projetos ap, gcompet.projetos pj, gcompet.areas a "+
+        " WHERE ap.PROJETO_id=PJ.id and ap.AREA_id=a.id "+
+        " GROUP BY ap.AREA_id, ap.PROJETO_id "+
+        " HAVING avaliacao > 0 "+
+        " ORDER BY ap.PROJETO_id, ap.AREA_id ";
         
-    public static Connection getConnection() {
-        try {
-            Class.forName("com.mysql.jdbc.Driver");
-            Connection conn = DriverManager.getConnection("jdbc:mysql://localhost/gcompet",
-                    "root", "arv0702");
-            return conn;
-        } catch (ClassNotFoundException | SQLException ex) {
-            System.out.println("Database.getConnection() Error -->" + ex.getMessage());
-            return null;
-        }
+        Query qr = getEntityManager().createNativeQuery(sqlString);
+        List<Object[]> lista = qr.getResultList();        
+        return lista;
     }
-         
-        
-/*        
-        
-        Context ctx;
-        DataSource ds;
-        Connection conn = null;
-        try {
-            ctx = new InitialContext();
-            ds = (DataSource) ctx.lookup("jdbc/gcompet");
-            conn = ds.getConnection("root","arv0702");
-        } catch (NamingException | SQLException ex) {
-            Logger.getLogger(CapacidadesAreasFacade.class.getName()).log(Level.SEVERE, null, ex);
-        } finally {
-/*            if (conn!= null) try {
-                conn.close();
-            } catch (SQLException ex) {
-                Logger.getLogger(CapacidadesAreasFacade.class.getName()).log(Level.SEVERE, null, ex);
-           }
-
-        }
-
-
-
-        return conn;
-    }
-*/
-            
-    public static void closeConnection(Connection conn) {
-        try {
-            conn.close();
-        } catch (Exception ex) {
-        }
-    }        
- 
-
+    
+    
+    
+    
+    
+    
+    
+    
+    
 }
