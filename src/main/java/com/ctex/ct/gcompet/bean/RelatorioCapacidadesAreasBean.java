@@ -36,11 +36,11 @@ import net.sf.jasperreports.engine.data.JRBeanArrayDataSource;
 @SessionScoped
 public class RelatorioCapacidadesAreasBean implements Serializable {
     
-    private String jasper;
+    private String jasperCapacidadesAreas;
     private String relatorio;
     private ExternalContext context;
     private JRDataSource jrDataSource;
-    private JasperPrint jasperPrint;
+    private JasperPrint jasperPrintCapacidadesAreas;
     private Connection connection;
     private String contentType;
     private String relatorioAC;
@@ -60,18 +60,18 @@ public class RelatorioCapacidadesAreasBean implements Serializable {
     }    
 
     /**
-     * @return the jasper
+     * @return the jasperCapacidadesAreas
      */
-    public String getJasper() {
-        jasper = getContext().getRealPath("user/relatorios/capacidades/RelatorioCapacidadeAreas.jasper");
-        return jasper;
+    public String getJasperCapacidadesAreas() {
+        jasperCapacidadesAreas = getContext().getRealPath("user/relatorios/capacidades/RelatorioCapacidadeAreas.jasper");
+        return jasperCapacidadesAreas;
     }
 
     /**
-     * @param jasper the jasper to set
+     * @param jasperCapacidadesAreas the jasperCapacidadesAreas to set
      */
-    public void setJasper(String jasper) {
-        this.jasper = jasper;
+    public void setJasperCapacidadesAreas(String jasperCapacidadesAreas) {
+        this.jasperCapacidadesAreas = jasperCapacidadesAreas;
     }
 
     /**
@@ -127,27 +127,27 @@ public class RelatorioCapacidadesAreasBean implements Serializable {
     }
     
     /**
-     * @return the jasperPrint
+     * @return the jasperPrintCapacidadesAreas
      */
-    public JasperPrint getJasperPrint() {  
+    public JasperPrint getJasperPrintCapacidadesAreas() {  
         ImageIcon logotipo = new ImageIcon(getContext().getRealPath("resources/img/logo-ctex.png"));                
         HashMap hm = new HashMap<>();
         hm.put("par_logotipo",logotipo.getImage());        
         hm.put("par_nomerelat","Avaliação de Capacidades Operacionais: "+capacidade.getNome().toUpperCase());  
         hm.put("par_capacidade", capacidade.getId());
         try {   
-            jasperPrint = JasperFillManager.fillReport(getJasper(),hm,getJrDataSource());
+            jasperPrintCapacidadesAreas = JasperFillManager.fillReport(getJasperCapacidadesAreas(),hm,getJrDataSource());
         } catch (JRException ex) {
             Logger.getLogger(RelatorioCapacidadesAreasBean.class.getName()).log(Level.SEVERE, null, ex);
         }        
-        return jasperPrint;
+        return jasperPrintCapacidadesAreas;
     }
 
     /**
-     * @param jasperPrint the jasperPrint to set
+     * @param jasperPrintCapacidadesAreas the jasperPrintCapacidadesAreas to set
      */
-    public void setJasperPrint(JasperPrint jasperPrint) {
-        this.jasperPrint = jasperPrint;
+    public void setJasperPrintCapacidadesAreas(JasperPrint jasperPrintCapacidadesAreas) {
+        this.jasperPrintCapacidadesAreas = jasperPrintCapacidadesAreas;
     }
     
     /**
@@ -205,7 +205,7 @@ public class RelatorioCapacidadesAreasBean implements Serializable {
     public String getRelatorioAC() {
         relatorio = "/reports/capacidade/CapacidadesAreas.pdf";
         try {                
-            JasperExportManager.exportReportToPdfFile(getJasperPrint(), getContext().getRealPath(relatorio));
+            JasperExportManager.exportReportToPdfFile(getJasperPrintCapacidadesAreas(), getContext().getRealPath(relatorio));
         } catch (JRException ex) {
             Logger.getLogger(RelatorioCapacidadesAreasBean.class.getName()).log(Level.SEVERE, null, ex);
         }
