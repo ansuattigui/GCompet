@@ -134,7 +134,6 @@ public class RelatorioCapacidadesAreasBean implements Serializable {
         HashMap hm = new HashMap<>();
         hm.put("par_logotipo",logotipo.getImage());        
         hm.put("par_nomerelat","Avaliação de Capacidades Operacionais: "+capacidade.getNome().toUpperCase());  
-        hm.put("par_capacidade", capacidade.getId());
         try {   
             jasperPrintCapacidadesAreas = JasperFillManager.fillReport(getJasperCapacidadesAreas(),hm,getJrDataSource());
         } catch (JRException ex) {
