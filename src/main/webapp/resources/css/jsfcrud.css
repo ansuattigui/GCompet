@@ -73,3 +73,8 @@
     padding: 0 !important;
 }
 
+.ui-text-header {
+    font-size: 14px !important; 
+    font-variant-caps: small-caps; 
+    color: yellow !important;
+}

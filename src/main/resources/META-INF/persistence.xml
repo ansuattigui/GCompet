@@ -12,6 +12,8 @@
     <class>com.ctex.ct.gcompet.modelo.AreasProjetos</class>
     <class>com.ctex.ct.gcompet.modelo.AreasEmpresas</class>
     <class>com.ctex.ct.gcompet.modelo.relatorios.RelatorioCapacidadesAreas</class>
+    <class>com.ctex.ct.gcompet.modelo.relatorios.RelatorioAreasEmpresas</class>
+    <class>com.ctex.ct.gcompet.modelo.relatorios.RelatorioAreasProjetos</class>
     <exclude-unlisted-classes>true</exclude-unlisted-classes>
     <properties>
       <property name="javax.persistence.schema-generation.database.action" value="create"/>

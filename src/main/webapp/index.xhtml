@@ -20,12 +20,12 @@
                             <p:menubar class="ui-sem-borda">
                                 <p:menuitem value="#{bundle.Home}" outcome="/index" icon="ui-icon-home"/>
                                 <p:submenu label="#{bundle.Cadastro}" rendered="#{loginController.perfilLogged.nome eq 'ADMINISTRADOR'}">
-                                    <p:menuitem value="Areas" outcome="/admin/areas/List" />
-                                    <p:menuitem value="Capacidades" outcome="/admin/capacidades/List" />
-                                    <p:menuitem value="Empresas" outcome="/admin/empresas/List" />
-                                    <p:menuitem value="Perfil" outcome="/perfil/List" rendered="false"/>
-                                    <p:menuitem value="Projetos" outcome="/admin/projetos/List" />
-                                    <p:menuitem value="Usuarios" outcome="/admin/usuarios/List" />
+                                    <p:menuitem value="#{bundle.Capacidades}" outcome="/admin/capacidades/List" />
+                                    <p:menuitem value="#{bundle.Areas}" outcome="/admin/areas/List" />
+                                    <p:menuitem value="#{bundle.Projetos}" outcome="/admin/projetos/List" />
+                                    <p:menuitem value="#{bundle.Empresas}" outcome="/admin/empresas/List" />
+                                    <p:menuitem value="#{bundle.Perfis}" outcome="/perfil/List" rendered="false"/>
+                                    <p:menuitem value="#{bundle.Usuarios}" outcome="/admin/usuarios/List" />
                                 </p:submenu>
                                 <p:submenu label="#{bundle.Avaliacoes}" rendered="#{loginController.perfilLogged.nome eq 'AVALIADOR'}">
                                     <p:menuitem value="Capacidades --> Areas" outcome="/user/capacidadesAreas/List"/>

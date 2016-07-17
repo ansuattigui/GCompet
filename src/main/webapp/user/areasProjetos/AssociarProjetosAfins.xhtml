@@ -10,20 +10,20 @@
 
         <p:dialog id="AssociarProjetosAfinsDlg" widgetVar="AssociarProjetosAfinsDialog" modal="true" resizable="false" appendTo="@(body)" >
             <h:form id="AssociarProjetosAfinsForm">
-                <p:panel style="width: 800px;" class="ui-sem-borda">
+                <p:panel style="width: 800px;" header="#{areasProjetosController.area.nome}" class="ui-sem-borda" styleClass="ui-text-header">
                     <p:dataTable id="datalist" value="#{areasProjetosController.projetosCandidatos}" var="item"
                                  selectionMode="single" selection="#{areasProjetosController.projeto}"
-                                 paginator="true" 
+                                 paginator="false" 
+                                 scrollable="true"
+                                 scrollHeight="400"
                                  paginatorPosition="bottom"
                                  rowKey="#{item.projeto.id}"
-                                 rows="10"
-                                 rowsPerPageTemplate="10,20,30,40,50"
                                  >      
                         <p:ajax event="rowSelect" listener="#{areasProjetosController.onProjetoSelect}" update="viewButton"/>
                         <p:ajax event="rowUnselect" update="viewButton"/>
                         
                         <f:facet name="header">
-                            <h:outputText id="associaHeader" value="#{areasProjetosController.area.nome} - Vinculação de Projetos Afins" />
+                            <h:outputText id="associaHeader" value="Vinculação de Projetos Afins" />
                         </f:facet>                        
                         <p:column style="width: 5%;">
                             <f:facet name="header">

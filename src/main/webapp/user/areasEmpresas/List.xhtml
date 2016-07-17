@@ -56,7 +56,7 @@
                     <h:form id="AreasEmpresasListForm" prependId="false">
                         <p:panel class="ui-sem-borda" >
                             <f:facet name="header" >
-                                <h:outputText value="#{areasEmpresasController.area.nome}" style="font-size: 14px !important; font-variant-caps: small-caps; color: yellow !important;"/>
+                                <h:outputText value="#{areasEmpresasController.area.nome}" class="ui-text-header"/>
                             </f:facet>
                             <p:dataTable id="datalist" value="#{areasEmpresasController.itemsByUsuario}" var="item"
                                          selectionMode="single" selection="#{areasEmpresasController.selected}"
@@ -65,6 +65,7 @@
                                          rowKey="#{item.id}"
                                          rows="8"
                                          rowsPerPageTemplate="8,16,24,32,40,48"
+                                         emptyMessage="#{bundle.RelacionamentosVazios}"
                                          >
 
                                 <p:ajax event="rowSelect"   update="associateButton "/>

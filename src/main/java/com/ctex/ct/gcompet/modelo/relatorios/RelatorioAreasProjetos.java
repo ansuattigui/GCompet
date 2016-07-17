@@ -18,10 +18,10 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @author ralfh
  */
 @Entity
-@Table(name = "relatorio_capacidades_areas")
+@Table(name = "relatorio_areas_projetos")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "RelatorioCapacidadesAreas.findAll", query = "SELECT rca FROM RelatorioCapacidadesAreas rca ORDER BY rca.avaliacao DESC")
+    @NamedQuery(name = "RelatorioCapacidadesAreas.findAllAreasProjetos", query = "SELECT rca FROM RelatorioCapacidadesAreas rca ORDER BY rca.avaliacao DESC")
 })
 
 public class RelatorioAreasProjetos implements Serializable {
@@ -42,12 +42,28 @@ public class RelatorioAreasProjetos implements Serializable {
     }
     
     @Id
+    private Integer projeto_id;
     private Integer area_id;
-    private String area;    
+    private String area;
+    private String projeto;
     private long avaliadores;
     private long avaliacao;
 
     public RelatorioAreasProjetos() {
+    }
+
+    /**
+     * @return the projeto_id
+     */
+    public Integer getProjeto_id() {
+        return projeto_id;
+    }
+
+    /**
+     * @param projeto_id the projeto_id to set
+     */
+    public void setProjeto_id(Integer projeto_id) {
+        this.projeto_id = projeto_id;
     }
 
     /**
@@ -79,6 +95,20 @@ public class RelatorioAreasProjetos implements Serializable {
     }
 
     /**
+     * @return the projeto
+     */
+    public String getProjeto() {
+        return projeto;
+    }
+
+    /**
+     * @param projeto the projeto to set
+     */
+    public void setProjeto(String projeto) {
+        this.projeto = projeto;
+    }
+
+    /**
      * @return the avaliadores
      */
     public long getAvaliadores() {
@@ -106,4 +136,4 @@ public class RelatorioAreasProjetos implements Serializable {
         this.avaliacao = avaliacao;
     }
 
-}
+    }

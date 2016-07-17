@@ -61,7 +61,7 @@ public class RelatorioCapacidadesAreasFacade extends AbstractFacade<RelatorioCap
     
     public List<Object[]> findAllAreasProjetos() {
                 
-        String sqlString = "SELECT ap.projeto_id, pj.nome as projeto,ap.AREA_id,a.nome as area, "+
+        String sqlString = "SELECT ap.projeto_id,ap.area_id,a.nome as area,pj.nome as projeto,"+
         "count(ap.PROJETO_id) as avaliadores, "+
         "(SELECT count(ap1.PROJETO_id) FROM gcompet.areas_projetos ap1 "+
         " WHERE ap1.AREA_id = ap.AREA_id AND ap.PROJETO_id = ap1.PROJETO_id "+

@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.2.0.final using JasperReports Library version 6.2.0  -->
+<!-- 2016-07-17T16:27:10 -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="CapacidadeProjeto" pageWidth="595" pageHeight="842" whenNoDataType="AllSectionsNoDetail" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="cee05612-34ea-4758-8afd-e3b7679e08b0">
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="One Empty Record"/>
+	<property name="com.jaspersoft.studio.unit." value="pixel"/>
+	<queryString>
+		<![CDATA[]]>
+	</queryString>
+	<field name="area" class="java.lang.String">
+		<fieldDescription><![CDATA[area]]></fieldDescription>
+	</field>
+	<field name="projeto" class="java.lang.String">
+		<fieldDescription><![CDATA[projeto]]></fieldDescription>
+	</field>
+	<field name="avaliadores" class="java.lang.Long">
+		<fieldDescription><![CDATA[avaliadores]]></fieldDescription>
+	</field>
+	<field name="projeto_id" class="java.lang.Integer">
+		<fieldDescription><![CDATA[projeto_id]]></fieldDescription>
+	</field>
+	<field name="area_id" class="java.lang.Integer">
+		<fieldDescription><![CDATA[area_id]]></fieldDescription>
+	</field>
+	<field name="avaliacao" class="java.lang.Long">
+		<fieldDescription><![CDATA[avaliacao]]></fieldDescription>
+	</field>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<columnHeader>
+		<band height="30" splitType="Stretch">
+			<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+			<rectangle>
+				<reportElement x="0" y="0" width="555" height="30" backcolor="#F5F5F5" uuid="8515948b-c78a-4ea3-8fad-a2e056603554"/>
+				<graphicElement>
+					<pen lineStyle="Solid"/>
+				</graphicElement>
+			</rectangle>
+			<staticText>
+				<reportElement x="57" y="5" width="414" height="20" uuid="694a34ed-73ad-45b0-bc02-284377978897">
+					<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+				</reportElement>
+				<textElement verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Projetos Afins]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="484" y="5" width="62" height="20" uuid="bf71cf0f-88de-4a88-a4c7-89084d23c85a">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Pontuação]]></text>
+			</staticText>
+			<line>
+				<reportElement x="477" y="0" width="1" height="30" uuid="a7a51393-7685-4a44-8b1f-671a7f143f96">
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+				</reportElement>
+			</line>
+			<staticText>
+				<reportElement x="5" y="5" width="39" height="20" uuid="afec8e9c-3769-4922-89d6-5834b6acd0af">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Nº]]></text>
+			</staticText>
+			<line>
+				<reportElement x="50" y="0" width="1" height="30" uuid="f1f276ae-4b7a-4fff-8bd0-f8a500597e14">
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+				</reportElement>
+			</line>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="24" splitType="Stretch">
+			<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+			<rectangle>
+				<reportElement mode="Opaque" x="0" y="0" width="555" height="24" backcolor="#FFFFFF" uuid="6afead33-abfd-4dd8-99a4-ab078515c5c0"/>
+				<graphicElement>
+					<pen lineStyle="Solid" lineColor="#000000"/>
+				</graphicElement>
+			</rectangle>
+			<textField>
+				<reportElement stretchType="RelativeToTallestObject" x="57" y="4" width="414" height="16" uuid="19cc030c-c45a-46f6-9d34-c141d5a583b7">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+				</reportElement>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{projeto}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement stretchType="RelativeToTallestObject" x="484" y="4" width="62" height="16" uuid="099f97f7-71d6-4a39-bf6d-596fbf690546">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{avaliacao}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="477" y="0" width="1" height="24" uuid="47d68777-ca78-446f-96cf-5a832fcf0295">
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+				</reportElement>
+			</line>
+			<textField>
+				<reportElement stretchType="RelativeToTallestObject" x="5" y="4" width="39" height="16" uuid="af098981-c80c-4e92-a1a8-f22939e9c1ca"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{projeto_id}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="50" y="0" width="1" height="24" uuid="c4c9b83b-2e48-49ac-90a9-830d109d72cd">
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+				</reportElement>
+			</line>
+		</band>
+	</detail>
+</jasperReport>

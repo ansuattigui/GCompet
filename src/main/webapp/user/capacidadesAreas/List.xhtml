@@ -23,7 +23,7 @@
                                          paginator="true"
                                          paginatorPosition="bottom"
                                          rowKey="#{capacidade.id}"
-                                         rows="12"
+                                         rows="15"
                                          rowsPerPageTemplate="5,10,15,20,25,30"  
                                          >
                                 <p:ajax event="rowSelect" listener="#{capacidadesAreasController.onCapacidadeSelect}" update="tvCapac:datalist tvCapac viewButton"/>
@@ -55,7 +55,7 @@
                     <h:form id="CapacidadesAreasListForm" prependId="false">
                         <p:panel class="ui-sem-borda" >
                             <f:facet name="header" >
-                                <h:outputText value="#{capacidadesAreasController.capacidade.nome}" style="font-size: 14px !important; font-variant-caps: small-caps; color: yellow !important;"/>
+                                <h:outputText value="#{capacidadesAreasController.capacidade.nome}" class="ui-text-header"/>
                             </f:facet>
                             <p:dataTable id="datalist" value="#{capacidadesAreasController.itemsByUsuario}" var="item"
                                          selectionMode="single" selection="#{capacidadesAreasController.selected}"
@@ -64,6 +64,7 @@
                                          rowKey="#{item.id}"
                                          rows="8"
                                          rowsPerPageTemplate="8,16,24,32,40,48"
+                                         emptyMessage="#{bundle.RelacionamentosVazios}"
                                          >
 
                                 <p:ajax event="rowSelect"   update="associateButton "/>
