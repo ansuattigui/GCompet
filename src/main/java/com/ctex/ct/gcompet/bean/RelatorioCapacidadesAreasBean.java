@@ -39,10 +39,12 @@ public class RelatorioCapacidadesAreasBean implements Serializable {
     private String jasperCapacidadesAreas;
     private String relatorio;
     private ExternalContext context;
-    private JRDataSource jrDataSource;
+    private JRDataSource jrDataSourceMainReport;
+    private JRDataSource jrDataSourceSubReport1;
+    private JRDataSource jrDataSourceSubReport2;
     private JasperPrint jasperPrintCapacidadesAreas;
+    private JasperPrint jasperPrintProjetosAreas;
     private Connection connection;
-    private String contentType;
     private String relatorioAC;
     private Capacidades capacidade;
     private RelatorioCapacidadesAreas[] arrayCapacidadesAreas;
@@ -89,10 +91,39 @@ public class RelatorioCapacidadesAreasBean implements Serializable {
         this.context = context;
     }
     
-    public JRDataSource getJrDataSource() {
-        
-        jrDataSource = new JRBeanArrayDataSource(getArrayCapacidadesAreas());
-        return jrDataSource;
+    public JRDataSource getJrDataSourceMainReport() {        
+        jrDataSourceMainReport = new JRBeanArrayDataSource(getArrayCapacidadesAreas());
+        return jrDataSourceMainReport;
+    }
+    
+    /**
+     * @return the jrDataSourceSubReport1
+     */
+    public JRDataSource getJrDataSourceSubReport1() {
+        jrDataSourceSubReport1 = new JRBeanArrayDataSource(getArrayAreasProjetos());
+        return jrDataSourceSubReport1;
+    }
+
+    /**
+     * @param jrDataSourceSubReport1 the jrDataSourceSubReport1 to set
+     */
+    public void setJrDataSourceSubReport1(JRDataSource jrDataSourceSubReport1) {
+        this.jrDataSourceSubReport1 = jrDataSourceSubReport1;
+    }
+
+    /**
+     * @return the jrDataSourceSubReport2
+     */
+    public JRDataSource getJrDataSourceSubReport2() {
+        jrDataSourceSubReport2 = new JRBeanArrayDataSource(getArrayCapacidadesAreas());
+        return jrDataSourceSubReport2;
+    }
+
+    /**
+     * @param jrDataSourceSubReport2 the jrDataSourceSubReport2 to set
+     */
+    public void setJrDataSourceSubReport2(JRDataSource jrDataSourceSubReport2) {
+        this.jrDataSourceSubReport2 = jrDataSourceSubReport2;
     }
     
     public RelatorioCapacidadesAreas[] getArrayCapacidadesAreas() {
@@ -127,6 +158,46 @@ public class RelatorioCapacidadesAreasBean implements Serializable {
     }
     
     /**
+     * @return the arrayAreasProjetos
+     */
+    public RelatorioAreasProjetos[] getArrayAreasProjetos() {
+        List<Object[]> lista;
+        lista = ejbFacade.findAllAreasProjetos();        
+        arrayAreasProjetos = new RelatorioAreasProjetos[lista.size()];
+        
+        int i = 0;
+        for (Object[] item : lista) {            
+            Integer projeto_id = (Integer) item[0];
+            Integer area_id = (Integer) item[1];
+            String area = (String)item[2];
+            String projeto = (String)item[3];
+            long avaliadores = (long) item[4];
+            long avaliacao = (long) item[5];
+
+            RelatorioAreasProjetos rca = new RelatorioAreasProjetos();
+            rca.setProjeto_id(projeto_id);
+            rca.setArea_id(area_id);
+            rca.setArea(area);
+            rca.setProjeto(projeto);
+            rca.setAvaliadores(avaliadores);
+            rca.setAvaliacao(avaliacao);
+            
+            arrayAreasProjetos[i] = rca;
+            i++;
+        }
+        return arrayAreasProjetos;
+    }
+
+    /**
+     * @param arrayAreasProjetos the arrayAreasProjetos to set
+     */
+    public void setArrayAreasProjetos(RelatorioAreasProjetos[] arrayAreasProjetos) {
+        this.arrayAreasProjetos = arrayAreasProjetos;
+    }
+    
+    
+    
+    /**
      * @return the jasperPrintCapacidadesAreas
      */
     public JasperPrint getJasperPrintCapacidadesAreas() {  
@@ -134,8 +205,9 @@ public class RelatorioCapacidadesAreasBean implements Serializable {
         HashMap hm = new HashMap<>();
         hm.put("par_logotipo",logotipo.getImage());        
         hm.put("par_nomerelat","Avaliação de Capacidades Operacionais: "+capacidade.getNome().toUpperCase());  
+        hm.put("par_dados_subrelatorio", getJrDataSourceSubReport1());
         try {   
-            jasperPrintCapacidadesAreas = JasperFillManager.fillReport(getJasperCapacidadesAreas(),hm,getJrDataSource());
+            jasperPrintCapacidadesAreas = JasperFillManager.fillReport(getJasperCapacidadesAreas(),hm,getJrDataSourceMainReport());
         } catch (JRException ex) {
             Logger.getLogger(RelatorioCapacidadesAreasBean.class.getName()).log(Level.SEVERE, null, ex);
         }        
@@ -154,7 +226,6 @@ public class RelatorioCapacidadesAreasBean implements Serializable {
      */
     public String getRelatorio() {        
         relatorio = "/reports/capacidade/CapacidadesAreas.pdf";
-        contentType = FacesContext.getCurrentInstance().getExternalContext().getMimeType(relatorio);
         return relatorio;
     }
 
@@ -233,19 +304,6 @@ public class RelatorioCapacidadesAreasBean implements Serializable {
         this.capacidade = capacidade;
     }
 
-    /**
-     * @return the arrayAreasProjetos
-     */
-    public RelatorioAreasProjetos[] getArrayAreasProjetos() {
-        return arrayAreasProjetos;
-    }
-
-    /**
-     * @param arrayAreasProjetos the arrayAreasProjetos to set
-     */
-    public void setArrayAreasProjetos(RelatorioAreasProjetos[] arrayAreasProjetos) {
-        this.arrayAreasProjetos = arrayAreasProjetos;
-    }
 
     /**
      * @return the arrayAreasEmpresas
@@ -261,5 +319,18 @@ public class RelatorioCapacidadesAreasBean implements Serializable {
         this.arrayAreasEmpresas = arrayAreasEmpresas;
     }
 
+    /**
+     * @return the jasperPrintProjetosAreas
+     */
+    public JasperPrint getJasperPrintProjetosAreas() {
+        return jasperPrintProjetosAreas;
+    }
+
+    /**
+     * @param jasperPrintProjetosAreas the jasperPrintProjetosAreas to set
+     */
+    public void setJasperPrintProjetosAreas(JasperPrint jasperPrintProjetosAreas) {
+        this.jasperPrintProjetosAreas = jasperPrintProjetosAreas;
+    }
 
 }

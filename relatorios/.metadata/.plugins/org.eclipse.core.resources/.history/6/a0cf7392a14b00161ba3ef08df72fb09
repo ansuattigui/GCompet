@@ -1,10 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with Jaspersoft Studio version 6.2.0.final using JasperReports Library version 6.2.0  -->
-<!-- 2016-07-16T19:56:24 -->
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="RelatorioCapacidadesAreas" pageWidth="595" pageHeight="842" whenNoDataType="NoDataSection" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" isSummaryNewPage="true" uuid="cee05612-34ea-4758-8afd-e3b7679e08b0">
+<!-- 2016-07-16T18:28:04 -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="RelatorioCapacidadesAreas" pageWidth="595" pageHeight="842" whenNoDataType="NoDataSection" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" isTitleNewPage="true" uuid="cee05612-34ea-4758-8afd-e3b7679e08b0">
 	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
 	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="gcompet.xml"/>
 	<property name="com.jaspersoft.studio.unit." value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.pageHeight" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.pageWidth" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.topMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.bottomMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.leftMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.rightMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.columnWidth" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.columnSpacing" value="pixel"/>
 	<parameter name="par_logotipo" class="java.awt.Image"/>
 	<parameter name="par_nomerelat" class="java.lang.String">
 		<parameterDescription><![CDATA[]]></parameterDescription>
@@ -212,13 +220,12 @@
 			</textField>
 		</band>
 	</pageFooter>
-	<summary>
-		<band height="50" splitType="Stretch">
+	<lastPageFooter>
+		<band height="91" splitType="Stretch">
 			<subreport>
-				<reportElement x="0" y="0" width="555" height="50" uuid="c6151f2e-2e1b-4559-a749-b6c56d3d9e58"/>
-				<dataSourceExpression><![CDATA[$P{par_dados_subrelatorio}]]></dataSourceExpression>
+				<reportElement x="0" y="0" width="555" height="91" uuid="c6151f2e-2e1b-4559-a749-b6c56d3d9e58"/>
 				<subreportExpression><![CDATA["CapacidadeProjeto.jasper"]]></subreportExpression>
 			</subreport>
 		</band>
-	</summary>
+	</lastPageFooter>
 </jasperReport>
