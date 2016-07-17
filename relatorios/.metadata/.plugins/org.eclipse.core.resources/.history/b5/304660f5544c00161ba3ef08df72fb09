@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with Jaspersoft Studio version 6.2.0.final using JasperReports Library version 6.2.0  -->
-<!-- 2016-07-17T16:46:07 -->
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="RelatorioCapacidadesAreas" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="cee05612-34ea-4758-8afd-e3b7679e08b0">
+<!-- 2016-07-17T16:28:36 -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="RelatorioCapacidadesAreas" pageWidth="595" pageHeight="842" whenNoDataType="NoDataSection" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" isSummaryNewPage="true" uuid="cee05612-34ea-4758-8afd-e3b7679e08b0">
 	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
 	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="gcompet.xml"/>
 	<property name="com.jaspersoft.studio.unit." value="pixel"/>
@@ -194,11 +194,36 @@
 			</line>
 		</band>
 	</detail>
+	<pageFooter>
+		<band height="32">
+			<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+			<textField pattern="d MMM, yyyy h:mm:ss a">
+				<reportElement x="17" y="6" width="100" height="20" uuid="aecd7d45-fc71-441f-8c51-6962745fdc40">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="413" y="6" width="65" height="20" uuid="b6981eb3-a537-4c28-bfa4-8c400b487dae">
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+				</reportElement>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA["Pag. " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement x="482" y="6" width="65" height="20" uuid="200340da-5193-4f09-b25b-6f57af7408e4">
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+				</reportElement>
+				<textElement textAlignment="Left" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[" de " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
 	<summary>
 		<band height="50" splitType="Stretch">
-			<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.FreeLayout"/>
-			<subreport overflowType="Stretch">
-				<reportElement stretchType="RelativeToBandHeight" x="0" y="0" width="555" height="50" uuid="c6151f2e-2e1b-4559-a749-b6c56d3d9e58"/>
+			<subreport overflowType="NoStretch">
+				<reportElement x="0" y="0" width="555" height="50" uuid="c6151f2e-2e1b-4559-a749-b6c56d3d9e58"/>
 				<dataSourceExpression><![CDATA[$P{par_dados_subrelatorio}]]></dataSourceExpression>
 				<subreportExpression><![CDATA["CapacidadeProjeto.jasper"]]></subreportExpression>
 			</subreport>
