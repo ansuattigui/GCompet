@@ -219,35 +219,36 @@ public class RelatorioCapacidadesAreasBean implements Serializable {
         
         Collections.sort(lista, new Comparator() {
             @Override
-            public int compare(RelatorioAreasProjetos r1, RelatorioAreasProjetos r2) {
+            public int compare(Object r1, Object r2) {
                     Integer id1 = ((RelatorioAreasProjetos) r1).getProjeto_id();
                     Integer id2 = ((RelatorioAreasProjetos) r2).getProjeto_id();
-
-                    // ascending order
+                    // ordem crescente
                      return id1.compareTo(id2);
 
-                    // descending order
+                    // ordem decrescente
                     //return id2.compareTo(id1);
-            }
-
-            @Override
-            public int compare(Object o1, Object o2) {
-                throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
             }
         });
         
-        
-        
-        lista.sort(null);
-        
-        
-        
         arrayAreasProjetosCapacidade = new RelatorioAreasProjetos[lista.size()];
         int i=0;
-        for (RelatorioAreasProjetos item : lista) {
-            arrayAreasProjetosCapacidade[i] = item;
+        int j=0;
+        while (i < lista.size()-1) {                    
+            RelatorioAreasProjetos item = lista.get(i);
+            RelatorioAreasProjetos itemSeguinte = lista.get(i+1);
+            if (Objects.equals(item.getProjeto_id(), itemSeguinte.getProjeto_id())) {                
+                long avaliacao = item.getAvaliacao()+itemSeguinte.getAvaliacao();
+                long avaliadores = item.getAvaliadores() + itemSeguinte.getAvaliadores();
+                lista.get(i+1).setAvaliacao(avaliacao);
+                lista.get(i+1).setAvaliadores(avaliadores);                
+            } else {
+                arrayAreasProjetosCapacidade[j] = itemSeguinte;
+                j++;
+            }
             i++;
         }
+        
+        
         return arrayAreasProjetosCapacidade;
     }
 

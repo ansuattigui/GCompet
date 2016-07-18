@@ -5,42 +5,13 @@
  */
 package com.ctex.ct.gcompet.modelo.relatorios;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
-import javax.persistence.Table;
-import javax.xml.bind.annotation.XmlRootElement;
-
 /**
  *
  * @author ralfh
  */
-@Entity
-@Table(name = "relatorio_areas_projetos")
-@XmlRootElement
-@NamedQueries({
-    @NamedQuery(name = "RelatorioCapacidadesAreas.findAllAreasProjetos", query = "SELECT rca FROM RelatorioCapacidadesAreas rca ORDER BY rca.avaliacao DESC")
-})
 
 public class RelatorioAreasProjetos implements Comparable  {
-    private static long serialVersionUID = 1L;
-
-    /**
-     * @return the serialVersionUID
-     */
-    public static long getSerialVersionUID() {
-        return serialVersionUID;
-    }
-
-    /**
-     * @param aSerialVersionUID the serialVersionUID to set
-     */
-    public static void setSerialVersionUID(long aSerialVersionUID) {
-        serialVersionUID = aSerialVersionUID;
-    }
     
-    @Id
     private Integer projeto_id;
     private Integer area_id;
     private String area;
@@ -136,8 +107,13 @@ public class RelatorioAreasProjetos implements Comparable  {
     }
 
     @Override
-    public int compareTo(Object o) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public int compareTo(Object compProjId) {
+        int compareage=((RelatorioAreasProjetos)compProjId).getProjeto_id();
+        /* For Ascending order*/
+        return this.projeto_id-compareage;
+
+        /* For Descending order do like this */
+        //return compareage-this.studentage;
     }
 
-    }
+}

@@ -12,7 +12,6 @@ import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
-import javax.persistence.TypedQuery;
 
 /**
  *
@@ -32,14 +31,17 @@ public class RelatorioCapacidadesAreasFacade extends AbstractFacade<RelatorioCap
         super(RelatorioCapacidadesAreas.class);
     }
     
+/*    
     @Override
     public List<RelatorioCapacidadesAreas> findAll() {
+        String findAll = "SELECT rca FROM RelatorioCapacidadesAreas rca ORDER BY rca.avaliacao DESC";
         TypedQuery<RelatorioCapacidadesAreas> tq;
-        tq = getEntityManager().createNamedQuery("RelatorioCapacidadesAreas.findAll",RelatorioCapacidadesAreas.class);
+        tq = getEntityManager().createNamedQuery(findAll,RelatorioCapacidadesAreas.class);
         List<RelatorioCapacidadesAreas> lista = tq.getResultList();
         return lista;
     }
-
+*/
+    
     public List<Object[]> findAll(Capacidades cap) {
         String sqlString = "SELECT ca.AREA_id as area_id, a.nome as area, "+
             "(SELECT count(ca1.AREA_id) FROM gcompet.capacidades_areas ca1 "+

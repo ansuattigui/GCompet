@@ -5,43 +5,13 @@
  */
 package com.ctex.ct.gcompet.modelo.relatorios;
 
-import java.io.Serializable;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
-import javax.persistence.Table;
-import javax.xml.bind.annotation.XmlRootElement;
-
 /**
  *
  * @author ralfh
  */
-@Entity
-@Table(name = "relatorio_capacidades_areas")
-@XmlRootElement
-@NamedQueries({
-    @NamedQuery(name = "RelatorioCapacidadesAreas.findAll", query = "SELECT rca FROM RelatorioCapacidadesAreas rca ORDER BY rca.avaliacao DESC")
-})
 
-public class RelatorioCapacidadesAreas implements Serializable {
-    private static long serialVersionUID = 1L;
+public class RelatorioCapacidadesAreas implements Comparable {
 
-    /**
-     * @return the serialVersionUID
-     */
-    public static long getSerialVersionUID() {
-        return serialVersionUID;
-    }
-
-    /**
-     * @param aSerialVersionUID the serialVersionUID to set
-     */
-    public static void setSerialVersionUID(long aSerialVersionUID) {
-        serialVersionUID = aSerialVersionUID;
-    }
-    
-    @Id
     private Integer area_id;
     private String area;    
     private long avaliadores;
@@ -104,6 +74,11 @@ public class RelatorioCapacidadesAreas implements Serializable {
      */
     public void setAvaliacao(long avaliacao) {
         this.avaliacao = avaliacao;
+    }
+
+    @Override
+    public int compareTo(Object o) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
 }
