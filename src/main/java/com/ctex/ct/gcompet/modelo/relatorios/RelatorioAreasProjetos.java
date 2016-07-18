@@ -5,7 +5,6 @@
  */
 package com.ctex.ct.gcompet.modelo.relatorios;
 
-import java.io.Serializable;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
@@ -24,7 +23,7 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "RelatorioCapacidadesAreas.findAllAreasProjetos", query = "SELECT rca FROM RelatorioCapacidadesAreas rca ORDER BY rca.avaliacao DESC")
 })
 
-public class RelatorioAreasProjetos implements Serializable {
+public class RelatorioAreasProjetos implements Comparable  {
     private static long serialVersionUID = 1L;
 
     /**
@@ -134,6 +133,11 @@ public class RelatorioAreasProjetos implements Serializable {
      */
     public void setAvaliacao(long avaliacao) {
         this.avaliacao = avaliacao;
+    }
+
+    @Override
+    public int compareTo(Object o) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     }

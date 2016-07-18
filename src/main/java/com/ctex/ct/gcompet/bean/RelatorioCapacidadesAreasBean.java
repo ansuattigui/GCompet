@@ -11,8 +11,12 @@ import com.ctex.ct.gcompet.modelo.relatorios.RelatorioAreasProjetos;
 import com.ctex.ct.gcompet.modelo.relatorios.RelatorioCapacidadesAreas;
 import java.io.Serializable;
 import java.sql.Connection;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Objects;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.ejb.EJB;
@@ -50,6 +54,7 @@ public class RelatorioCapacidadesAreasBean implements Serializable {
     private RelatorioCapacidadesAreas[] arrayCapacidadesAreas;
     private RelatorioAreasProjetos[] arrayAreasProjetos;
     private RelatorioAreasEmpresas[] arrayAreasEmpresas;
+    private RelatorioAreasProjetos[] arrayAreasProjetosCapacidade;
         
     @EJB 
     private RelatorioCapacidadesAreasFacade ejbFacade;
@@ -92,7 +97,7 @@ public class RelatorioCapacidadesAreasBean implements Serializable {
     }
     
     public JRDataSource getJrDataSourceMainReport() {        
-        jrDataSourceMainReport = new JRBeanArrayDataSource(getArrayCapacidadesAreas());
+        jrDataSourceMainReport = new JRBeanArrayDataSource(arrayCapacidadesAreas);
         return jrDataSourceMainReport;
     }
     
@@ -100,7 +105,7 @@ public class RelatorioCapacidadesAreasBean implements Serializable {
      * @return the jrDataSourceSubReport1
      */
     public JRDataSource getJrDataSourceSubReport1() {
-        jrDataSourceSubReport1 = new JRBeanArrayDataSource(getArrayAreasProjetos());
+        jrDataSourceSubReport1 = new JRBeanArrayDataSource(getArrayAreasProjetosCapacidade());
         return jrDataSourceSubReport1;
     }
 
@@ -194,7 +199,64 @@ public class RelatorioCapacidadesAreasBean implements Serializable {
     public void setArrayAreasProjetos(RelatorioAreasProjetos[] arrayAreasProjetos) {
         this.arrayAreasProjetos = arrayAreasProjetos;
     }
-    
+
+    /**
+     * @return the arrayAreasProjetosCapacidade
+     */
+    public RelatorioAreasProjetos[] getArrayAreasProjetosCapacidade() {      
+        
+        getArrayCapacidadesAreas();
+        getArrayAreasProjetos();
+        
+        List<RelatorioAreasProjetos> lista = new ArrayList<>();        
+        for(RelatorioCapacidadesAreas itemCA : arrayCapacidadesAreas) {            
+            for(RelatorioAreasProjetos itemAP : arrayAreasProjetos) {                
+                if (Objects.equals(itemAP.getArea_id(), itemCA.getArea_id())) {                    
+                    lista.add(itemAP);                    
+                }                
+            }            
+        }       
+        
+        Collections.sort(lista, new Comparator() {
+            @Override
+            public int compare(RelatorioAreasProjetos r1, RelatorioAreasProjetos r2) {
+                    Integer id1 = ((RelatorioAreasProjetos) r1).getProjeto_id();
+                    Integer id2 = ((RelatorioAreasProjetos) r2).getProjeto_id();
+
+                    // ascending order
+                     return id1.compareTo(id2);
+
+                    // descending order
+                    //return id2.compareTo(id1);
+            }
+
+            @Override
+            public int compare(Object o1, Object o2) {
+                throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+            }
+        });
+        
+        
+        
+        lista.sort(null);
+        
+        
+        
+        arrayAreasProjetosCapacidade = new RelatorioAreasProjetos[lista.size()];
+        int i=0;
+        for (RelatorioAreasProjetos item : lista) {
+            arrayAreasProjetosCapacidade[i] = item;
+            i++;
+        }
+        return arrayAreasProjetosCapacidade;
+    }
+
+    /**
+     * @param arrayAreasProjetosCapacidade the arrayAreasProjetosCapacidade to set
+     */
+    public void setArrayAreasProjetosCapacidade(RelatorioAreasProjetos[] arrayAreasProjetosCapacidade) {
+        this.arrayAreasProjetosCapacidade = arrayAreasProjetosCapacidade;
+    }
     
     
     /**
