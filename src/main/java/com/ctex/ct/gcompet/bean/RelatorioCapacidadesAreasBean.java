@@ -220,13 +220,13 @@ public class RelatorioCapacidadesAreasBean implements Serializable {
         Collections.sort(lista, new Comparator() {
             @Override
             public int compare(Object r1, Object r2) {
-                    Integer id1 = ((RelatorioAreasProjetos) r1).getProjeto_id();
-                    Integer id2 = ((RelatorioAreasProjetos) r2).getProjeto_id();
-                    // ordem crescente
-                     return id1.compareTo(id2);
+                Integer id1 = ((RelatorioAreasProjetos) r1).getProjeto_id();
+                Integer id2 = ((RelatorioAreasProjetos) r2).getProjeto_id();
+                // ordem crescente
+                 return id1.compareTo(id2);
 
-                    // ordem decrescente
-                    //return id2.compareTo(id1);
+                // ordem decrescente
+                //return id2.compareTo(id1);
             }
         });
         
@@ -234,21 +234,23 @@ public class RelatorioCapacidadesAreasBean implements Serializable {
         int i=0;
         int j=0;
         while (i < lista.size()-1) {                    
+            j=i+1;
             RelatorioAreasProjetos item = lista.get(i);
-            RelatorioAreasProjetos itemSeguinte = lista.get(i+1);
-            if (Objects.equals(item.getProjeto_id(), itemSeguinte.getProjeto_id())) {                
-                long avaliacao = item.getAvaliacao()+itemSeguinte.getAvaliacao();
-                long avaliadores = item.getAvaliadores() + itemSeguinte.getAvaliadores();
-                lista.get(i+1).setAvaliacao(avaliacao);
-                lista.get(i+1).setAvaliadores(avaliadores);                
-            } else {
-                arrayAreasProjetosCapacidade[j] = itemSeguinte;
-                j++;
+            while (j < lista.size()-1) {
+                RelatorioAreasProjetos itemSeguinte = lista.get(j);
+                if (Objects.equals(item.getProjeto_id(), itemSeguinte.getProjeto_id())) {                
+                    long avaliacao = item.getAvaliacao()+itemSeguinte.getAvaliacao();
+                    long avaliadores = item.getAvaliadores() + itemSeguinte.getAvaliadores();
+                    item.setAvaliacao(avaliacao);
+                    item.setAvaliadores(avaliadores);
+                    j++;
+                } else {
+                    arrayAreasProjetosCapacidade[i] = item;
+                    i = j;
+                    break;
+                }
             }
-            i++;
-        }
-        
-        
+        }                
         return arrayAreasProjetosCapacidade;
     }
 

@@ -34,8 +34,8 @@
                 <children xsi:type="advanced:Placeholder" xmi:id="_3VfA10uIEeaUZ5m0xXuaVA" elementId="org.eclipse.ui.views.ContentOutline" ref="_3VckkEuIEeaUZ5m0xXuaVA"/>
               </children>
             </children>
-            <children xsi:type="basic:PartSashContainer" xmi:id="_3VfA2EuIEeaUZ5m0xXuaVA" containerData="7500" selectedElement="_3VfA3UuIEeaUZ5m0xXuaVA" horizontal="true">
-              <children xsi:type="basic:PartSashContainer" xmi:id="_3VfA2UuIEeaUZ5m0xXuaVA" containerData="6451" selectedElement="_3VfA2kuIEeaUZ5m0xXuaVA">
+            <children xsi:type="basic:PartSashContainer" xmi:id="_3VfA2EuIEeaUZ5m0xXuaVA" containerData="7500" selectedElement="_3VfA2UuIEeaUZ5m0xXuaVA" horizontal="true">
+              <children xsi:type="basic:PartSashContainer" xmi:id="_3VfA2UuIEeaUZ5m0xXuaVA" containerData="6451" selectedElement="_3VfA20uIEeaUZ5m0xXuaVA">
                 <children xsi:type="advanced:Placeholder" xmi:id="_3VfA2kuIEeaUZ5m0xXuaVA" elementId="org.eclipse.ui.editorss" containerData="7500" ref="_3VQ-YEuIEeaUZ5m0xXuaVA"/>
                 <children xsi:type="basic:PartStack" xmi:id="_3VfA20uIEeaUZ5m0xXuaVA" elementId="com.jaspersoft.studio.editor.preview.reportstateMStack" containerData="2500" selectedElement="_3VfA3EuIEeaUZ5m0xXuaVA">
                   <children xsi:type="advanced:Placeholder" xmi:id="_3VfA3EuIEeaUZ5m0xXuaVA" elementId="com.jaspersoft.studio.editor.preview.reportstate" ref="_3VeZwEuIEeaUZ5m0xXuaVA"/>
@@ -86,21 +86,9 @@
       <tags>categoryTag:Help</tags>
     </sharedElements>
     <sharedElements xsi:type="advanced:Area" xmi:id="_3VQ-YEuIEeaUZ5m0xXuaVA" elementId="org.eclipse.ui.editorss" selectedElement="_3VQ-YUuIEeaUZ5m0xXuaVA">
-      <children xsi:type="basic:PartStack" xmi:id="_3VQ-YUuIEeaUZ5m0xXuaVA" elementId="org.eclipse.e4.primaryDataStack" selectedElement="_g79SsEuLEeawv7Ub3opGDQ">
+      <children xsi:type="basic:PartStack" xmi:id="_3VQ-YUuIEeaUZ5m0xXuaVA" elementId="org.eclipse.e4.primaryDataStack">
         <tags>org.eclipse.e4.primaryDataStack</tags>
         <tags>EditorStack</tags>
-        <children xsi:type="basic:Part" xmi:id="_B3UEAEuNEeaoc6SPiXcmjw" elementId="org.eclipse.e4.ui.compatibility.editor" contributionURI="bundleclass://org.eclipse.ui.workbench/org.eclipse.ui.internal.e4.compatibility.CompatibilityEditor" label="RelatorioCapacidadeAreas.jrxml" iconURI="platform:/plugin/com.jaspersoft.studio/icons/jrxml_icon.png" closeable="true">
-          <persistedState key="memento" value="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xD;&#xA;&lt;editor id=&quot;com.jaspersoft.studio.editor.JrxmlEditor&quot; name=&quot;RelatorioCapacidadeAreas.jrxml&quot; partName=&quot;RelatorioCapacidadeAreas.jrxml&quot; title=&quot;RelatorioCapacidadeAreas.jrxml&quot; tooltip=&quot;GCompet/RelatorioCapacidadeAreas.jrxml&quot;>&#xD;&#xA;&lt;input factoryID=&quot;org.eclipse.ui.part.FileEditorInputFactory&quot; path=&quot;/GCompet/RelatorioCapacidadeAreas.jrxml&quot;/>&#xD;&#xA;&lt;/editor>"/>
-          <tags>Editor</tags>
-          <tags>com.jaspersoft.studio.editor.JrxmlEditor</tags>
-          <tags>removeOnHide</tags>
-        </children>
-        <children xsi:type="basic:Part" xmi:id="_g79SsEuLEeawv7Ub3opGDQ" elementId="org.eclipse.e4.ui.compatibility.editor" contributionURI="bundleclass://org.eclipse.ui.workbench/org.eclipse.ui.internal.e4.compatibility.CompatibilityEditor" label="CapacidadeProjeto.jrxml" iconURI="platform:/plugin/com.jaspersoft.studio/icons/jrxml_icon.png" closeable="true">
-          <persistedState key="memento" value="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xD;&#xA;&lt;editor id=&quot;com.jaspersoft.studio.editor.JrxmlEditor&quot; name=&quot;CapacidadeProjeto.jrxml&quot; partName=&quot;CapacidadeProjeto.jrxml&quot; title=&quot;CapacidadeProjeto.jrxml&quot; tooltip=&quot;GCompet/CapacidadeProjeto.jrxml&quot;>&#xD;&#xA;&lt;input factoryID=&quot;org.eclipse.ui.part.FileEditorInputFactory&quot; path=&quot;/GCompet/CapacidadeProjeto.jrxml&quot;/>&#xD;&#xA;&lt;/editor>"/>
-          <tags>Editor</tags>
-          <tags>com.jaspersoft.studio.editor.JrxmlEditor</tags>
-          <tags>removeOnHide</tags>
-        </children>
       </children>
     </sharedElements>
     <sharedElements xsi:type="basic:Part" xmi:id="_3VaIUEuIEeaUZ5m0xXuaVA" elementId="com.jaspersoft.studio.Repository" contributionURI="bundleclass://org.eclipse.ui.workbench/org.eclipse.ui.internal.e4.compatibility.CompatibilityView" label="Repository Explorer" iconURI="platform:/plugin/com.jaspersoft.studio/icons/jr_icon.png" tooltip="" closeable="true">
@@ -182,7 +170,7 @@
       </children>
       <children xsi:type="menu:ToolBar" xmi:id="_3Q-UQEuIEeaUZ5m0xXuaVA" elementId="org.eclipse.ui.workbench.file">
         <tags>Draggable</tags>
-        <children xsi:type="menu:HandledToolItem" xmi:id="_6XkU8EuMEeaoc6SPiXcmjw" elementId="print" visible="false" iconURI="platform:/plugin/org.eclipse.ui/icons/full/etool16/print_edit.png" tooltip="Print" command="_1_8xfEuIEeaUZ5m0xXuaVA"/>
+        <children xsi:type="menu:HandledToolItem" xmi:id="_Usv5EEx2EeaQZbe6cmq42w" elementId="print" visible="false" iconURI="platform:/plugin/org.eclipse.ui/icons/full/etool16/print_edit.png" tooltip="Print" command="_1_8xfEuIEeaUZ5m0xXuaVA"/>
       </children>
       <children xsi:type="menu:ToolBar" xmi:id="_3Q-7UEuIEeaUZ5m0xXuaVA" elementId="additions" toBeRendered="false">
         <tags>toolbarSeparator</tags>
@@ -200,7 +188,7 @@
       </children>
       <children xsi:type="menu:ToolBar" xmi:id="_3Q-7VEuIEeaUZ5m0xXuaVA" elementId="org.eclipse.ui.workbench.navigate">
         <tags>Draggable</tags>
-        <children xsi:type="menu:HandledToolItem" xmi:id="_6Xs30EuMEeaoc6SPiXcmjw" elementId="org.eclipse.ui.window.pinEditor" visible="false" iconURI="platform:/plugin/org.eclipse.ui/icons/full/etool16/pin_editor.png" tooltip="Pin Editor" type="Check" command="_1_7jPkuIEeaUZ5m0xXuaVA"/>
+        <children xsi:type="menu:HandledToolItem" xmi:id="_Us8tYEx2EeaQZbe6cmq42w" elementId="org.eclipse.ui.window.pinEditor" visible="false" iconURI="platform:/plugin/org.eclipse.ui/icons/full/etool16/pin_editor.png" tooltip="Pin Editor" type="Check" command="_1_7jPkuIEeaUZ5m0xXuaVA"/>
       </children>
       <children xsi:type="menu:ToolBar" xmi:id="_b3JqIEuNEeaoc6SPiXcmjw" elementId="com.jaspersoft.studio.graphic.text">
         <tags>Draggable</tags>
