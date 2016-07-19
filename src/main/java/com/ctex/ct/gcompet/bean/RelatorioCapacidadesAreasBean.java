@@ -200,15 +200,21 @@ public class RelatorioCapacidadesAreasBean implements Serializable {
         this.arrayAreasProjetos = arrayAreasProjetos;
     }
 
+    
     /**
      * @return the arrayAreasProjetosCapacidade
      */
     public RelatorioAreasProjetos[] getArrayAreasProjetosCapacidade() {      
         
+        // popula uma lista com os relacionamentos entre Capacidades Operativas e Areas de Pesquisa
         getArrayCapacidadesAreas();
+        // popula uma lista com os relacionamentos entre Areas de Pesquisa e projetos do CTEx
         getArrayAreasProjetos();
         
-        List<RelatorioAreasProjetos> lista = new ArrayList<>();        
+        // efetua uma relação de correspondencia direta entre os arrays e produz uma lista co o resultado
+        // os projetos relacionados a áreas que não constem da lista Capacidade/Areas não são contados
+        // cria uma lista com os projetos selecionadas 
+        ArrayList<RelatorioAreasProjetos> lista = new ArrayList<>();        
         for(RelatorioCapacidadesAreas itemCA : arrayCapacidadesAreas) {            
             for(RelatorioAreasProjetos itemAP : arrayAreasProjetos) {                
                 if (Objects.equals(itemAP.getArea_id(), itemCA.getArea_id())) {                    
@@ -217,6 +223,7 @@ public class RelatorioCapacidadesAreasBean implements Serializable {
             }            
         }       
         
+        // ordena a lista de projetos pelo seu id 
         Collections.sort(lista, new Comparator() {
             @Override
             public int compare(Object r1, Object r2) {
@@ -230,33 +237,14 @@ public class RelatorioCapacidadesAreasBean implements Serializable {
             }
         });
         
-        arrayAreasProjetosCapacidade = new RelatorioAreasProjetos[lista.size()];
-        int i=0;
-        int j=0;
-        int k=0;
-        while (i < lista.size()-1) {                    
-            j = i + 1;
-            RelatorioAreasProjetos item = lista.get(i);
-            while (j < lista.size()-1) {
-                RelatorioAreasProjetos itemSeguinte = lista.get(j);
-                if (Objects.equals(item.getProjeto_id(), itemSeguinte.getProjeto_id())) {                
-                    long avaliacao = item.getAvaliacao()+itemSeguinte.getAvaliacao();
-                    long avaliadores = item.getAvaliadores() + itemSeguinte.getAvaliadores();
-                    item.setAvaliacao(avaliacao);
-                    item.setAvaliadores(avaliadores);
-                    j++;
-                } else {
-                    arrayAreasProjetosCapacidade[k] = item;
-                    k++;
-                    i = j;
-                    break;
-                }
-            }
-            if (j == lista.size()-1) {
-                arrayAreasProjetosCapacidade[k] = item;
-                i = j ;
-            }
-        }
+        // agrupa todas as contagens referentes as repetições dos projetos na lista,
+        // desconsiderando o efeito das áreas de pesquisa (Não sei se é isto que deve ser feito!!!)
+        ArrayList<RelatorioAreasProjetos> listaProjetos = RelatorioAreasProjetos.agrupaProjetos(lista);
+        
+        // devolve um array com o resultado dos projetos resultantes da pesquisa 
+        // com a Capacidade Operativa selecionada.
+        arrayAreasProjetosCapacidade = RelatorioAreasProjetos.castAreasProjetos(listaProjetos);
+
         return arrayAreasProjetosCapacidade;
     }
 

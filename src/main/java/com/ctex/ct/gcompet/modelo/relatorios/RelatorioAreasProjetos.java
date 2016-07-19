@@ -5,6 +5,9 @@
  */
 package com.ctex.ct.gcompet.modelo.relatorios;
 
+import java.util.ArrayList;
+import java.util.Objects;
+
 /**
  *
  * @author ralfh
@@ -115,5 +118,48 @@ public class RelatorioAreasProjetos implements Comparable  {
         /* For Descending order do like this */
         //return compareage-this.studentage;
     }
+    
+    // agrupa todas as contagens referentes as repetições dos projetos na lista,
+    // desconsiderando o efeito das áreas de pesquisa (Não sei se é isto que deve ser feito!!!)
+    public static ArrayList<RelatorioAreasProjetos> agrupaProjetos(ArrayList lista) {
+        
+        ArrayList<RelatorioAreasProjetos> listaProjetos = new ArrayList<>();
+        
+        int i=0;
+        int j=0;
+        while (i < lista.size()-1) {                    
+            j = i + 1;
+            RelatorioAreasProjetos item = (RelatorioAreasProjetos) lista.get(i);
+            while (j < lista.size()-1) {
+                RelatorioAreasProjetos itemSeguinte = (RelatorioAreasProjetos) lista.get(j);
+                if (Objects.equals(item.getProjeto_id(), itemSeguinte.getProjeto_id())) {                
+                    long avaliacaoProjeto = item.getAvaliacao()+itemSeguinte.getAvaliacao();
+                    long avaliadoresProjeto = item.getAvaliadores() + itemSeguinte.getAvaliadores();
+                    item.setAvaliacao(avaliacaoProjeto);
+                    item.setAvaliadores(avaliadoresProjeto);
+                    j++;
+                } else {
+                    listaProjetos.add(item);
+                    i = j;
+                    break;
+                }
+            }
+            if (j == lista.size()-1) {
+                listaProjetos.add(item);
+                i = j ;
+            }
+        }        
+        return listaProjetos;
+    }
+    
+    // Encapsula uma lista de objetos do tipo RelatorioAreasProjetos em um array do tipo RelatorioAreasProjetos
+    public static RelatorioAreasProjetos[] castAreasProjetos(ArrayList<RelatorioAreasProjetos> listaProjetos) {    
+        RelatorioAreasProjetos[] arrayAreasProjetos = new RelatorioAreasProjetos[listaProjetos.size()];
+        for (int a=0;a<listaProjetos.size();a++) {
+            arrayAreasProjetos[a] = listaProjetos.get(a);
+        }        
+        return arrayAreasProjetos;
+    }
+    
 
 }
