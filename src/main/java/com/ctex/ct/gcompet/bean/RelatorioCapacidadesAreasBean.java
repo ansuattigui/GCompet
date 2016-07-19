@@ -20,7 +20,7 @@ import java.util.Objects;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.ejb.EJB;
-import javax.enterprise.context.SessionScoped;
+import javax.enterprise.context.RequestScoped;
 import javax.faces.bean.ManagedBean;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
@@ -37,7 +37,7 @@ import net.sf.jasperreports.engine.data.JRBeanArrayDataSource;
  * @author ralfh
  */
 @ManagedBean(name = "relatorioCapacidadesAreas")
-@SessionScoped
+@RequestScoped
 public class RelatorioCapacidadesAreasBean implements Serializable {
     
     private String jasperCapacidadesAreas;
@@ -233,10 +233,11 @@ public class RelatorioCapacidadesAreasBean implements Serializable {
         arrayAreasProjetosCapacidade = new RelatorioAreasProjetos[lista.size()];
         int i=0;
         int j=0;
+        int k=0;
         while (i < lista.size()-1) {                    
-            j=i+1;
+            j = i + 1;
             RelatorioAreasProjetos item = lista.get(i);
-            while (j < lista.size()-1) {
+            while (j < lista.size()-2) {
                 RelatorioAreasProjetos itemSeguinte = lista.get(j);
                 if (Objects.equals(item.getProjeto_id(), itemSeguinte.getProjeto_id())) {                
                     long avaliacao = item.getAvaliacao()+itemSeguinte.getAvaliacao();
@@ -245,12 +246,17 @@ public class RelatorioCapacidadesAreasBean implements Serializable {
                     item.setAvaliadores(avaliadores);
                     j++;
                 } else {
-                    arrayAreasProjetosCapacidade[i] = item;
+                    arrayAreasProjetosCapacidade[k] = item;
+                    k++;
                     i = j;
                     break;
                 }
             }
-        }                
+            if (j == lista.size()-2) {
+                arrayAreasProjetosCapacidade[k] = lista.get(i);
+                i++;
+            }
+        }
         return arrayAreasProjetosCapacidade;
     }
 
