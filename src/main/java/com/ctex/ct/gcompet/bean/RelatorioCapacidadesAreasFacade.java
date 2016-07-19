@@ -42,7 +42,7 @@ public class RelatorioCapacidadesAreasFacade extends AbstractFacade<RelatorioCap
     }
 */
     
-    public List<Object[]> findAll(Capacidades cap) {
+    public RelatorioCapacidadesAreas[] findAllCapacidadesAreas(Capacidades cap) {
         String sqlString = "SELECT ca.AREA_id as area_id, a.nome as area, "+
             "(SELECT count(ca1.AREA_id) FROM gcompet.capacidades_areas ca1 "+
             "WHERE ca1.CAPACIDADE_id = ca.CAPACIDADE_id and ca1.AREA_id = ca.AREA_id) as avaliadores, "+
@@ -58,33 +58,27 @@ public class RelatorioCapacidadesAreasFacade extends AbstractFacade<RelatorioCap
         qr.setParameter(1, cap.getId());
         List<Object[]> lista = qr.getResultList();
         
-        return lista;
-    }
-    
-    public List<Object[]> findAllAreasProjetos() {
-                
-        String sqlString = "SELECT ap.projeto_id,ap.area_id,a.nome as area,pj.nome as projeto,"+
-        "count(ap.PROJETO_id) as avaliadores, "+
-        "(SELECT count(ap1.PROJETO_id) FROM gcompet.areas_projetos ap1 "+
-        " WHERE ap1.AREA_id = ap.AREA_id AND ap.PROJETO_id = ap1.PROJETO_id "+
-        " AND ap1.avaliacao = 1 GROUP BY ap.AREA_id, ap.PROJETO_id) as avaliacao "+
-        " FROM gcompet.areas_projetos ap, gcompet.projetos pj, gcompet.areas a "+
-        " WHERE ap.PROJETO_id=PJ.id and ap.AREA_id=a.id "+
-        " GROUP BY ap.AREA_id, ap.PROJETO_id "+
-        " HAVING avaliacao > 0 "+
-        " ORDER BY ap.PROJETO_id, ap.AREA_id ";
+        RelatorioCapacidadesAreas[] arrayCapacidadesAreas = new RelatorioCapacidadesAreas[lista.size()];
         
-        Query qr = getEntityManager().createNativeQuery(sqlString);
-        List<Object[]> lista = qr.getResultList();        
-        return lista;
+        int i = 0;
+        for (Object[] item : lista) {            
+            Integer area_id = (Integer) item[0];
+            String area = (String)item[1];
+            long avaliadores = (long) item[2];
+            long avaliacao = (long) item[3];
+
+            RelatorioCapacidadesAreas rca = new RelatorioCapacidadesAreas();
+            rca.setArea_id(area_id);
+            rca.setArea(area);
+            rca.setAvaliadores(avaliadores);
+            rca.setAvaliacao(avaliacao);
+            
+            arrayCapacidadesAreas[i] = rca;
+            i++;
+        }
+        
+        return arrayCapacidadesAreas;
     }
-    
-    
-    
-    
-    
-    
-    
     
     
 }

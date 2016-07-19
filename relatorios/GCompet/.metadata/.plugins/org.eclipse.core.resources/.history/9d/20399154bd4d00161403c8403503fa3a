@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with Jaspersoft Studio version 6.2.0.final using JasperReports Library version 6.2.0  -->
-<!-- 2016-07-19T11:33:36 -->
+<!-- 2016-07-17T16:46:07 -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="RelatorioCapacidadesAreas" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="cee05612-34ea-4758-8afd-e3b7679e08b0">
 	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
 	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="gcompet.xml"/>
@@ -18,8 +18,7 @@
 		<parameterDescription><![CDATA[]]></parameterDescription>
 		<defaultValueExpression><![CDATA["Relação dos que entraram ou saíram fora do horário"]]></defaultValueExpression>
 	</parameter>
-	<parameter name="par_dados_projetos" class="net.sf.jasperreports.engine.data.JRBeanArrayDataSource"/>
-	<parameter name="par_dados_empresas" class="net.sf.jasperreports.engine.data.JRBeanArrayDataSource"/>
+	<parameter name="par_dados_subrelatorio" class="net.sf.jasperreports.engine.data.JRBeanArrayDataSource"/>
 	<queryString>
 		<![CDATA[]]>
 	</queryString>
@@ -196,19 +195,12 @@
 		</band>
 	</detail>
 	<summary>
-		<band height="62" splitType="Stretch">
+		<band height="50" splitType="Stretch">
 			<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.FreeLayout"/>
 			<subreport overflowType="Stretch">
-				<reportElement stretchType="RelativeToBandHeight" x="0" y="0" width="555" height="30" uuid="c6151f2e-2e1b-4559-a749-b6c56d3d9e58"/>
-				<dataSourceExpression><![CDATA[$P{par_dados_projetos}]]></dataSourceExpression>
+				<reportElement stretchType="RelativeToBandHeight" x="0" y="0" width="555" height="50" uuid="c6151f2e-2e1b-4559-a749-b6c56d3d9e58"/>
+				<dataSourceExpression><![CDATA[$P{par_dados_subrelatorio}]]></dataSourceExpression>
 				<subreportExpression><![CDATA["CapacidadeProjeto.jasper"]]></subreportExpression>
-			</subreport>
-			<subreport>
-				<reportElement x="0" y="31" width="555" height="30" uuid="a2cee387-780c-473b-af40-c99c4e570685">
-					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
-				</reportElement>
-				<dataSourceExpression><![CDATA[$P{par_dados_empresas}]]></dataSourceExpression>
-				<subreportExpression><![CDATA["CapacidadeEmpresa.jasper"]]></subreportExpression>
 			</subreport>
 		</band>
 	</summary>

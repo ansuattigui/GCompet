@@ -308,7 +308,6 @@ public class AreasProjetosController implements Serializable {
         private short avaliacao;
 
         private ProjetosCandidatos() {
-//            usuario = LoginController.returnUserLoggedIn();
             usuario = (Usuarios) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("usuarioLogado");
             avaliada = false;
             avaliacao = -1;
