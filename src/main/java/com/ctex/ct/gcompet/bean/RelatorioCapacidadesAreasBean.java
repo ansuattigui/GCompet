@@ -237,7 +237,7 @@ public class RelatorioCapacidadesAreasBean implements Serializable {
         while (i < lista.size()-1) {                    
             j = i + 1;
             RelatorioAreasProjetos item = lista.get(i);
-            while (j < lista.size()-2) {
+            while (j < lista.size()-1) {
                 RelatorioAreasProjetos itemSeguinte = lista.get(j);
                 if (Objects.equals(item.getProjeto_id(), itemSeguinte.getProjeto_id())) {                
                     long avaliacao = item.getAvaliacao()+itemSeguinte.getAvaliacao();
@@ -252,9 +252,9 @@ public class RelatorioCapacidadesAreasBean implements Serializable {
                     break;
                 }
             }
-            if (j == lista.size()-2) {
-                arrayAreasProjetosCapacidade[k] = lista.get(i);
-                i++;
+            if (j == lista.size()-1) {
+                arrayAreasProjetosCapacidade[k] = item;
+                i = j ;
             }
         }
         return arrayAreasProjetosCapacidade;
