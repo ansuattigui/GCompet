@@ -13,7 +13,7 @@ import java.util.Objects;
  * @author ralfh
  */
 
-public class RelatorioAreasProjetos implements Comparable  {
+public class RelatorioAreasProjetos implements Comparable<RelatorioAreasProjetos>  {
     
     private Integer projeto_id;
     private Integer area_id;
@@ -108,52 +108,22 @@ public class RelatorioAreasProjetos implements Comparable  {
     public void setAvaliacao(long avaliacao) {
         this.avaliacao = avaliacao;
     }
-
+    
     @Override
-    public int compareTo(Object compProjPeso) {
-        int compareage=(int) ((RelatorioAreasProjetos)compProjPeso).getAvaliacao();
-        /* For Ascending order*/
-        //return this.avaliacao-compareage;
-
-        /* For Descending order do like this */
-        return (int) (compareage-this.avaliacao);
+    public int compareTo(RelatorioAreasProjetos o) {        
+        if(this.avaliacao > o.getAvaliacao()){
+            return -1;
+        } else if(this.avaliacao < o.getAvaliacao()){
+            return 1;
+        }   
+        return this.getProjeto().compareToIgnoreCase(o.getProjeto());
     }
-
+    
     
     // agrupa todas as contagens referentes as repetições dos projetos na lista,
     // desconsiderando o efeito das áreas de pesquisa (Não sei se é isto que deve ser feito!!!)
-    public static RelatorioAreasProjetos[] agrupaProjetos(ArrayList lista) {
+    public static ArrayList<RelatorioAreasProjetos> agrupaProjetos(ArrayList lista) {
         
-        
-        RelatorioAreasProjetos[] arrayAreasProjetosCapacidade = new RelatorioAreasProjetos[lista.size()];
-        int i=0;
-        int j=0;
-        int k=0;
-        while (i < lista.size()-1) {                    
-            j = i + 1;
-            RelatorioAreasProjetos item = (RelatorioAreasProjetos) lista.get(i);
-            while (j < lista.size()-1) {
-                RelatorioAreasProjetos itemSeguinte = (RelatorioAreasProjetos) lista.get(j);
-                if (Objects.equals(item.getProjeto_id(), itemSeguinte.getProjeto_id())) {                
-                    long avaliacao = item.getAvaliacao()+itemSeguinte.getAvaliacao();
-                    long avaliadores = item.getAvaliadores() + itemSeguinte.getAvaliadores();
-                    item.setAvaliacao(avaliacao);
-                    item.setAvaliadores(avaliadores);
-                    j++;
-                } else {
-                    arrayAreasProjetosCapacidade[k] = item;
-                    k++;
-                    i = j;
-                    break;
-                }
-            }
-            if (j == lista.size()-1) {
-                arrayAreasProjetosCapacidade[k] = item;
-                i = j ;
-            }
-        }        
-        
-/*        
         ArrayList<RelatorioAreasProjetos> listaProjetos = new ArrayList<>();
         
         int i=0;
@@ -181,9 +151,6 @@ public class RelatorioAreasProjetos implements Comparable  {
             }
         }        
         return listaProjetos;
-*/        
-        return arrayAreasProjetosCapacidade;
-        
     }
     
     // Encapsula uma lista de objetos do tipo RelatorioAreasProjetos em um array do tipo RelatorioAreasProjetos
@@ -194,6 +161,5 @@ public class RelatorioAreasProjetos implements Comparable  {
         }        
         return arrayAreasProjetos;
     }
-    
 
 }

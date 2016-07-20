@@ -13,7 +13,7 @@ import java.util.Objects;
  * @author ralfh
  */
 
-public class RelatorioAreasEmpresas implements Comparable {
+public class RelatorioAreasEmpresas implements Comparable<RelatorioAreasEmpresas> {
 
     private Integer empresa_id;
     private String empresa;
@@ -110,15 +110,16 @@ public class RelatorioAreasEmpresas implements Comparable {
     }
 
     @Override
-    public int compareTo(Object compEmprId) {
-        int compareage=((RelatorioAreasEmpresas)compEmprId).getEmpresa_id();
-        /* For Ascending order*/
-        return this.empresa_id-compareage;
-
-        /* For Descending order do like this */
-        //return compareage-this.studentage;
+    public int compareTo(RelatorioAreasEmpresas o) {        
+        if(this.avaliacao > o.getAvaliacao()){
+            return -1;
+        } else if(this.avaliacao < o.getAvaliacao()){
+            return 1;
+        }   
+        return this.getEmpresa().compareToIgnoreCase(o.getEmpresa());
     }
 
+    
 
     // agrupa todas as contagens referentes as repetições das empresas na lista,
     // desconsiderando o efeito das áreas de pesquisa (Não sei se é isto que deve ser feito!!!)

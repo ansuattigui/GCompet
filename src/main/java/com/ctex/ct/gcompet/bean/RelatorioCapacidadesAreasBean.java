@@ -13,7 +13,6 @@ import java.io.Serializable;
 import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Objects;
 import java.util.logging.Level;
@@ -197,36 +196,24 @@ public class RelatorioCapacidadesAreasBean implements Serializable {
         // os projetos relacionados a áreas que não constem da lista Capacidade/Areas não são contados
         // cria uma lista com os projetos selecionadas 
         ArrayList<RelatorioAreasProjetos> lista = new ArrayList<>();        
-        for(RelatorioCapacidadesAreas itemCA : arrayCapacidadesAreas) {            
-            for(RelatorioAreasProjetos itemAP : arrayAreasProjetos) {                
+        for(RelatorioAreasProjetos itemAP : arrayAreasProjetos) {                
+            for(RelatorioCapacidadesAreas itemCA : arrayCapacidadesAreas) {            
                 if (Objects.equals(itemAP.getArea_id(), itemCA.getArea_id())) {                    
                     lista.add(itemAP);                    
                 }                
             }            
         }       
-/*        
-        // ordena a lista de projetos pelo seu id 
-        Collections.sort(lista, new Comparator() {
-            @Override
-            public int compare(Object r1, Object r2) {
-                Integer id1 = (int) ((RelatorioAreasProjetos) r1).getAvaliacao();
-                Integer id2 = (int) ((RelatorioAreasProjetos) r2).getAvaliacao();
-                // ordem crescente
-                 //return id1.compareTo(id2);
 
-                // ordem decrescente
-                return id2.compareTo(id1);
-            }
-        });
-*/
-        
         // agrupa todas as contagens referentes as repetições dos projetos na lista,
         // desconsiderando o efeito das áreas de pesquisa (Não sei se é isto que deve ser feito!!!)
-        arrayAreasProjetosCapacidade = RelatorioAreasProjetos.agrupaProjetos(lista);
+        ArrayList<RelatorioAreasProjetos> listaProjetos = RelatorioAreasProjetos.agrupaProjetos(lista);
+        
+        //Ordena a lista de projetos em ordem decrescente de avaliação
+         Collections.sort(listaProjetos);
         
         // devolve um array com o resultado dos projetos resultantes da pesquisa 
         // com a Capacidade Operativa selecionada.
-//        arrayAreasProjetosCapacidade = RelatorioAreasProjetos.castAreasProjetos(listaProjetos);
+        arrayAreasProjetosCapacidade = RelatorioAreasProjetos.castAreasProjetos(listaProjetos);
 
         return arrayAreasProjetosCapacidade;
     }
@@ -244,6 +231,7 @@ public class RelatorioCapacidadesAreasBean implements Serializable {
     public RelatorioAreasEmpresas[] getArrayAreasEmpresasCapacidade() {
         // popula uma lista com os relacionamentos entre Capacidades Operativas e Areas de Pesquisa
         getArrayCapacidadesAreasPorArea();
+        
         // popula uma lista com os relacionamentos entre Areas de Pesquisa e empresas parceiras do CTEx
         getArrayAreasEmpresas();
         
@@ -251,31 +239,20 @@ public class RelatorioCapacidadesAreasBean implements Serializable {
         // as empresas relacionadas a áreas que não constem da lista Capacidade/Areas não são contadas
         // cria uma lista com as empresas selecionadas 
         ArrayList<RelatorioAreasEmpresas> lista = new ArrayList<>();        
-        for(RelatorioCapacidadesAreas itemCA : arrayCapacidadesAreas) {            
-            for(RelatorioAreasEmpresas itemAE : arrayAreasEmpresas) {                
+        for(RelatorioAreasEmpresas itemAE : arrayAreasEmpresas) {                
+            for(RelatorioCapacidadesAreas itemCA : arrayCapacidadesAreas) {            
                 if (Objects.equals(itemAE.getArea_id(), itemCA.getArea_id())) {                    
                     lista.add(itemAE);                    
                 }                
             }            
         }       
-        
-        // ordena a lista de empresas pelo seu id 
-        Collections.sort(lista, new Comparator() {
-            @Override
-            public int compare(Object r1, Object r2) {
-                Integer id1 = ((RelatorioAreasEmpresas) r1).getEmpresa_id();
-                Integer id2 = ((RelatorioAreasEmpresas) r2).getEmpresa_id();
-                // ordem crescente
-                 return id1.compareTo(id2);
 
-                // ordem decrescente
-                //return id2.compareTo(id1);
-            }
-        });
-        
         // agrupa todas as contagens referentes as repetições dos projetos na lista,
         // desconsiderando o efeito das áreas de pesquisa (Não sei se é isto que deve ser feito!!!)
         ArrayList<RelatorioAreasEmpresas> listaEmpresas = RelatorioAreasEmpresas.agrupaEmpresas(lista);
+        
+        // ordena a lista de empresas pelo seu id 
+        Collections.sort(listaEmpresas);
         
         // devolve um array com o resultado dos projetos resultantes da pesquisa 
         // com a Capacidade Operativa selecionada.
