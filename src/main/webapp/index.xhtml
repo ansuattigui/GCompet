@@ -33,9 +33,8 @@
                                     <p:menuitem value="Areas --> Empresas" outcome="/user/areasEmpresas/List"/>
                                 </p:submenu>
                                 <p:submenu label="#{bundle.Relatorios}" rendered="#{loginController.perfilLogged.nome eq 'GESTOR'}">
-                                    <p:menuitem ajax="false" value="Contagem das avaliações" action="#{relatorioContagem.getRelatorioContagemAvaliacoes}" update="@all" />                            
-                                    <p:menuitem />
                                     <p:menuitem ajax="false" value="Capacidades" outcome="/user/relatorios/capacidades/RelatorioCapacidadesAreas" />                            
+                                    <p:menuitem ajax="false" value="Areas" outcome="/user/relatorios/areas/RelatorioAreasCapacidades" />                            
                                 </p:submenu>
                                 <p:menuitem value="#{bundle.UserLogout}" action="#{loginController.logout}"/>
                             </p:menubar>
