@@ -110,19 +110,50 @@ public class RelatorioAreasProjetos implements Comparable  {
     }
 
     @Override
-    public int compareTo(Object compProjId) {
-        int compareage=((RelatorioAreasProjetos)compProjId).getProjeto_id();
+    public int compareTo(Object compProjPeso) {
+        int compareage=(int) ((RelatorioAreasProjetos)compProjPeso).getAvaliacao();
         /* For Ascending order*/
-        return this.projeto_id-compareage;
+        //return this.avaliacao-compareage;
 
         /* For Descending order do like this */
-        //return compareage-this.studentage;
+        return (int) (compareage-this.avaliacao);
     }
+
     
     // agrupa todas as contagens referentes as repetições dos projetos na lista,
     // desconsiderando o efeito das áreas de pesquisa (Não sei se é isto que deve ser feito!!!)
-    public static ArrayList<RelatorioAreasProjetos> agrupaProjetos(ArrayList lista) {
+    public static RelatorioAreasProjetos[] agrupaProjetos(ArrayList lista) {
         
+        
+        RelatorioAreasProjetos[] arrayAreasProjetosCapacidade = new RelatorioAreasProjetos[lista.size()];
+        int i=0;
+        int j=0;
+        int k=0;
+        while (i < lista.size()-1) {                    
+            j = i + 1;
+            RelatorioAreasProjetos item = (RelatorioAreasProjetos) lista.get(i);
+            while (j < lista.size()-1) {
+                RelatorioAreasProjetos itemSeguinte = (RelatorioAreasProjetos) lista.get(j);
+                if (Objects.equals(item.getProjeto_id(), itemSeguinte.getProjeto_id())) {                
+                    long avaliacao = item.getAvaliacao()+itemSeguinte.getAvaliacao();
+                    long avaliadores = item.getAvaliadores() + itemSeguinte.getAvaliadores();
+                    item.setAvaliacao(avaliacao);
+                    item.setAvaliadores(avaliadores);
+                    j++;
+                } else {
+                    arrayAreasProjetosCapacidade[k] = item;
+                    k++;
+                    i = j;
+                    break;
+                }
+            }
+            if (j == lista.size()-1) {
+                arrayAreasProjetosCapacidade[k] = item;
+                i = j ;
+            }
+        }        
+        
+/*        
         ArrayList<RelatorioAreasProjetos> listaProjetos = new ArrayList<>();
         
         int i=0;
@@ -150,6 +181,9 @@ public class RelatorioAreasProjetos implements Comparable  {
             }
         }        
         return listaProjetos;
+*/        
+        return arrayAreasProjetosCapacidade;
+        
     }
     
     // Encapsula uma lista de objetos do tipo RelatorioAreasProjetos em um array do tipo RelatorioAreasProjetos

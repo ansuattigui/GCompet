@@ -34,13 +34,13 @@ public class RelatorioAreasEmpresasFacade extends AbstractFacade<RelatorioAreasE
     public RelatorioAreasEmpresas[] findAllAreasEmpresas() {
         
         String sqlString = "SELECT ae.empresas_id,ae.areas_id,a.nome as area,em.nome as empresa,"+
-            "count(ae.empresa_id) as avaliadores, "+
+            "count(ae.empresas_id) as avaliadores, "+
             "(SELECT count(ae1.empresas_id) FROM gcompet.areas_empresas ae1 "+
             " WHERE ae1.areas_id = ae.areas_id AND ae.empresas_id = ae1.empresas_id "+
             " AND ae1.avaliacao = 1 GROUP BY ae.areas_id, ae.empresas_id) as avaliacao "+
             " FROM gcompet.areas_empresas ae, gcompet.empresas em, gcompet.areas a "+
-            " WHERE ae.empresas_id=em.id and ae.area_id=a.id "+
-            " GROUP BY ae.areas_id, ae.projetos_id "+
+            " WHERE ae.empresas_id=em.id and ae.areas_id=a.id "+
+            " GROUP BY ae.areas_id, ae.empresas_id "+
             " HAVING avaliacao > 0 "+
             " ORDER BY ae.empresas_id, ae.areas_id ";
         

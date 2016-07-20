@@ -42,17 +42,33 @@ public class RelatorioCapacidadesAreasFacade extends AbstractFacade<RelatorioCap
     }
 */
     
-    public RelatorioCapacidadesAreas[] findAllCapacidadesAreas(Capacidades cap) {
-        String sqlString = "SELECT ca.AREA_id as area_id, a.nome as area, "+
-            "(SELECT count(ca1.AREA_id) FROM gcompet.capacidades_areas ca1 "+
-            "WHERE ca1.CAPACIDADE_id = ca.CAPACIDADE_id and ca1.AREA_id = ca.AREA_id) as avaliadores, "+
-            "(SELECT count(ca2.avaliacao) FROM gcompet.capacidades_areas ca2 WHERE ca2.avaliacao = 1 "+
-            "AND ca2.CAPACIDADE_id = ca.CAPACIDADE_id AND ca2.AREA_id = ca.AREA_id) as avaliacao " +
-            "FROM gcompet.capacidades_areas ca, gcompet.areas a " +
-            "WHERE ca.CAPACIDADE_id = ? AND ca.AREA_id = a.id " +
-            "GROUP BY ca.AREA_id  " +
-            "HAVING avaliacao > 0 " +
-            "ORDER BY ca.AREA_id ASC ";
+    public RelatorioCapacidadesAreas[] findAllCapacidadesAreas(Capacidades cap, String ordem) {
+        String sqlString = null;        
+        if ("area".equals(ordem)) {
+        
+            sqlString = "SELECT ca.AREA_id as area_id, a.nome as area, "+
+                "(SELECT count(ca1.AREA_id) FROM gcompet.capacidades_areas ca1 "+
+                "WHERE ca1.CAPACIDADE_id = ca.CAPACIDADE_id and ca1.AREA_id = ca.AREA_id) as avaliadores, "+
+                "(SELECT count(ca2.avaliacao) FROM gcompet.capacidades_areas ca2 WHERE ca2.avaliacao = 1 "+
+                "AND ca2.CAPACIDADE_id = ca.CAPACIDADE_id AND ca2.AREA_id = ca.AREA_id) as avaliacao " +
+                "FROM gcompet.capacidades_areas ca, gcompet.areas a " +
+                "WHERE ca.CAPACIDADE_id = ? AND ca.AREA_id = a.id " +
+                "GROUP BY ca.AREA_id  " +
+                "HAVING avaliacao > 0 " +
+                "ORDER BY ca.AREA_id ASC ";
+        } else if ("peso".equals(ordem)) {
+            sqlString = "SELECT ca.AREA_id as area_id, a.nome as area, "+
+                "(SELECT count(ca1.AREA_id) FROM gcompet.capacidades_areas ca1 "+
+                "WHERE ca1.CAPACIDADE_id = ca.CAPACIDADE_id and ca1.AREA_id = ca.AREA_id) as avaliadores, "+
+                "(SELECT count(ca2.avaliacao) FROM gcompet.capacidades_areas ca2 WHERE ca2.avaliacao = 1 "+
+                "AND ca2.CAPACIDADE_id = ca.CAPACIDADE_id AND ca2.AREA_id = ca.AREA_id) as avaliacao " +
+                "FROM gcompet.capacidades_areas ca, gcompet.areas a " +
+                "WHERE ca.CAPACIDADE_id = ? AND ca.AREA_id = a.id " +
+                "GROUP BY ca.AREA_id  " +
+                "HAVING avaliacao > 0 " +
+                "ORDER BY avaliacao DESC ";
+            
+        }
         
         Query qr = getEntityManager().createNativeQuery(sqlString);
         qr.setParameter(1, cap.getId());

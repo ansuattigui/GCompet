@@ -255,11 +255,11 @@ public class RelatorioAreasEmpresasBean implements Serializable {
         
         // agrupa todas as contagens referentes as repetições dos projetos na lista,
         // desconsiderando o efeito das áreas de pesquisa (Não sei se é isto que deve ser feito!!!)
-        ArrayList<RelatorioAreasProjetos> listaProjetos = RelatorioAreasProjetos.agrupaProjetos(lista);
+//        ArrayList<RelatorioAreasProjetos> listaProjetos = RelatorioAreasProjetos.agrupaProjetos(lista);
         
         // devolve um array com o resultado dos projetos resultantes da pesquisa 
         // com a Capacidade Operativa selecionada.
-        arrayAreasProjetosCapacidade = RelatorioAreasProjetos.castAreasProjetos(listaProjetos);
+  //      arrayAreasProjetosCapacidade = RelatorioAreasProjetos.castAreasProjetos(listaProjetos);
 
         return arrayAreasProjetosCapacidade;
     }

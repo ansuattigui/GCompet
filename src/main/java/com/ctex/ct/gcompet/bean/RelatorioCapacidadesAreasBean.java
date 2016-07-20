@@ -101,7 +101,7 @@ public class RelatorioCapacidadesAreasBean implements Serializable {
     }
     
     public JRDataSource getJrDataSourceMainReport() {        
-        jrDataSourceMainReport = new JRBeanArrayDataSource(getArrayCapacidadesAreas());
+        jrDataSourceMainReport = new JRBeanArrayDataSource(getArrayCapacidadesAreasPorPeso());
         return jrDataSourceMainReport;
     }
     
@@ -135,11 +135,16 @@ public class RelatorioCapacidadesAreasBean implements Serializable {
         this.jrDataSourceSubReport2 = jrDataSourceSubReport2;
     }
     
-    public RelatorioCapacidadesAreas[] getArrayCapacidadesAreas() {
-        arrayCapacidadesAreas = ejbRCAFacade.findAllCapacidadesAreas(capacidade);
+    public RelatorioCapacidadesAreas[] getArrayCapacidadesAreasPorPeso() {
+        arrayCapacidadesAreas = ejbRCAFacade.findAllCapacidadesAreas(capacidade,"peso");
         return arrayCapacidadesAreas;
     }
 
+    public RelatorioCapacidadesAreas[] getArrayCapacidadesAreasPorArea() {
+        arrayCapacidadesAreas = ejbRCAFacade.findAllCapacidadesAreas(capacidade,"area");
+        return arrayCapacidadesAreas;
+    }
+    
     /**
      * @param arrayCapacidadesAreas the arrayCapacidadesAreas to set
      */
@@ -184,7 +189,7 @@ public class RelatorioCapacidadesAreasBean implements Serializable {
      */
     public RelatorioAreasProjetos[] getArrayAreasProjetosCapacidade() {              
         // popula uma lista com os relacionamentos entre Capacidades Operativas e Areas de Pesquisa
-        getArrayCapacidadesAreas();
+        getArrayCapacidadesAreasPorArea();
         // popula uma lista com os relacionamentos entre Areas de Pesquisa e projetos do CTEx
         getArrayAreasProjetos();
         
@@ -199,28 +204,29 @@ public class RelatorioCapacidadesAreasBean implements Serializable {
                 }                
             }            
         }       
-        
+/*        
         // ordena a lista de projetos pelo seu id 
         Collections.sort(lista, new Comparator() {
             @Override
             public int compare(Object r1, Object r2) {
-                Integer id1 = ((RelatorioAreasProjetos) r1).getProjeto_id();
-                Integer id2 = ((RelatorioAreasProjetos) r2).getProjeto_id();
+                Integer id1 = (int) ((RelatorioAreasProjetos) r1).getAvaliacao();
+                Integer id2 = (int) ((RelatorioAreasProjetos) r2).getAvaliacao();
                 // ordem crescente
-                 return id1.compareTo(id2);
+                 //return id1.compareTo(id2);
 
                 // ordem decrescente
-                //return id2.compareTo(id1);
+                return id2.compareTo(id1);
             }
         });
+*/
         
         // agrupa todas as contagens referentes as repetições dos projetos na lista,
         // desconsiderando o efeito das áreas de pesquisa (Não sei se é isto que deve ser feito!!!)
-        ArrayList<RelatorioAreasProjetos> listaProjetos = RelatorioAreasProjetos.agrupaProjetos(lista);
+        arrayAreasProjetosCapacidade = RelatorioAreasProjetos.agrupaProjetos(lista);
         
         // devolve um array com o resultado dos projetos resultantes da pesquisa 
         // com a Capacidade Operativa selecionada.
-        arrayAreasProjetosCapacidade = RelatorioAreasProjetos.castAreasProjetos(listaProjetos);
+//        arrayAreasProjetosCapacidade = RelatorioAreasProjetos.castAreasProjetos(listaProjetos);
 
         return arrayAreasProjetosCapacidade;
     }
@@ -237,7 +243,7 @@ public class RelatorioCapacidadesAreasBean implements Serializable {
      */
     public RelatorioAreasEmpresas[] getArrayAreasEmpresasCapacidade() {
         // popula uma lista com os relacionamentos entre Capacidades Operativas e Areas de Pesquisa
-        getArrayCapacidadesAreas();
+        getArrayCapacidadesAreasPorArea();
         // popula uma lista com os relacionamentos entre Areas de Pesquisa e empresas parceiras do CTEx
         getArrayAreasEmpresas();
         
