@@ -10,15 +10,14 @@
 
         <ui:define id="body" name="body">
             <h:form id="CapacidadesListForm">
-                <p:panel header="#{bundle.ListCapacidadesTitle}">
+                <p:panel header="#{bundle.ListCapacidadesTitle}" class="ui-sem-borda">
                     <p:dataTable id="datalist" value="#{capacidadesController.items}" var="item"
                                  selectionMode="single" 
                                  selection="#{capacidadesController.selected}"
-                                 paginator="true"
-                                 paginatorPosition="bottom"
+                                paginator="false" 
+                                scrollable="true"
+                                scrollHeight="350"
                                  rowKey="#{item.id}"
-                                 rows="15"
-                                 rowsPerPageTemplate="10,20,30,40,50"
                                  >
 
                         <p:ajax event="rowSelect"   update="createButton viewButton editButton deleteButton"/>

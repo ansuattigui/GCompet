@@ -10,7 +10,7 @@
 
         <p:dialog id="AssociarAreasAfinsDlg" widgetVar="AssociarAreasAfinsDialog" modal="true" resizable="false" appendTo="@(body)" >
             <h:form id="AssociarAreasAfinsForm" >
-                <p:panel style="width: 800px;" header="#{capacidadesAreasController.capacidade.nome}" class="ui-sem-borda" styleClass="ui-text-header">
+                <p:panel style="width: 800px;" header="#{capacidadesAreasController.capacidade.nome}" class="ui-sem-borda" >
                     <p:dataTable id="datalist" value="#{capacidadesAreasController.areasCandidatas}" var="item"
                                  selectionMode="single" selection="#{capacidadesAreasController.area}"
                                  paginator="false" 

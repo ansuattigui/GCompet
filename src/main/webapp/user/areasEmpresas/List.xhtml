@@ -18,14 +18,13 @@
                     <h:form id="AreasListForm" prependId="false">
                         <p:panel class="ui-sem-borda">
                             <p:dataTable value="#{areasController.itemsAvailableSelectOne}" var="area"
-                                         selectionMode="single" 
-                                         selection="#{areasEmpresasController.area}"
-                                         paginator="true"
-                                         paginatorPosition="bottom"
-                                         rowKey="#{area.id}"
-                                         rows="12"
-                                         rowsPerPageTemplate="10,20,30,40,50"
-                                         >
+                                selectionMode="single" 
+                                selection="#{areasEmpresasController.area}"
+                                paginator="false" 
+                                scrollable="true"
+                                scrollHeight="350"
+                                rowKey="#{area.id}"
+                                >
 
                                 <p:ajax event="rowSelect" listener="#{areasEmpresasController.onAreaSelect}"  update="tvArea viewButton"/>
                                 <p:ajax event="rowUnselect" update="viewButton"/>
@@ -59,14 +58,13 @@
                                 <h:outputText value="#{areasEmpresasController.area.nome}" class="ui-text-header"/>
                             </f:facet>
                             <p:dataTable id="datalist" value="#{areasEmpresasController.itemsByUsuario}" var="item"
-                                         selectionMode="single" selection="#{areasEmpresasController.selected}"
-                                         paginator="true"
-                                         paginatorPosition="bottom"
-                                         rowKey="#{item.id}"
-                                         rows="8"
-                                         rowsPerPageTemplate="8,16,24,32,40,48"
-                                         emptyMessage="#{bundle.RelacionamentosVazios}"
-                                         >
+                                selectionMode="single" selection="#{areasEmpresasController.selected}"
+                                paginator="false" 
+                                scrollable="true"
+                                scrollHeight="320"
+                                rowKey="#{item.id}"
+                                emptyMessage="#{bundle.RelacionamentosVazios}"
+                                >
 
                                 <p:ajax event="rowSelect"   update="associateButton "/>
                                 <p:ajax event="rowUnselect" update="associateButton "/>

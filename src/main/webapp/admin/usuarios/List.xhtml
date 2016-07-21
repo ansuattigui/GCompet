@@ -10,16 +10,15 @@
 
         <ui:define id="body" name="body">
             <h:form id="UsuariosListForm">
-                <p:panel header="#{bundle.ListUsuariosTitle}">
+                <p:panel header="#{bundle.ListUsuariosTitle}" class="ui-sem-borda">
                     <p:dataTable id="datalist" value="#{usuariosController.items}" var="item"
-                                 selectionMode="single" 
-                                 selection="#{usuariosController.selected}"
-                                 paginatorPosition="bottom"
-                                 paginator="true"
-                                 rowKey="#{item.id}"
-                                 rows="10"
-                                 rowsPerPageTemplate="10,20,30,40,50"
-                                 >
+                        selectionMode="single" 
+                        selection="#{usuariosController.selected}"
+                        paginator="false" 
+                        scrollable="true"
+                        scrollHeight="395"
+                        rowKey="#{item.id}"
+                        >
 
                         <p:ajax event="rowSelect"   update="createButton viewButton editButton deleteButton"/>
                         <p:ajax event="rowUnselect" update="createButton viewButton editButton deleteButton"/>
@@ -36,7 +35,7 @@
                             </f:facet>
                             <h:outputText value="#{item.nomeCompleto}"/>
                         </p:column>
-                        <p:column style="width: 20%;">
+                        <p:column style="width: 15%;">
                             <f:facet name="header">
                                 <h:outputText value="#{bundle.ListUsuariosTitle_nomeUsuario}"/>
                             </f:facet>

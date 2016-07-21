@@ -9,8 +9,8 @@
     <ui:composition>
 
         <p:dialog id="AssociarEmpresasAfinsDlg" widgetVar="AssociarEmpresasAfinsDialog" modal="true" resizable="false" appendTo="@(body)" >
-            <h:form id="AssociarEmpresasAfinsForm">
-                <p:panel style="width: 800px;" header="#{areasEmpresasController.area.nome}" class="ui-sem-borda" styleClass="ui-text-header">
+            <h:form id="AssociarEmpresasAfinsForm" >
+                <p:panel style="width: 800px;" header="#{areasEmpresasController.area.nome}" class="ui-sem-borda" >
                     <p:dataTable id="datalist" value="#{areasEmpresasController.empresasCandidatas}" var="item"
                                  selectionMode="single" selection="#{areasEmpresasController.empresa}"
                                  paginator="false" 
