@@ -5,6 +5,7 @@
  */
 package com.ctex.ct.gcompet.bean;
 
+import com.ctex.ct.gcompet.modelo.Areas;
 import com.ctex.ct.gcompet.modelo.relatorios.RelatorioAreasProjetos;
 import java.util.List;
 import javax.ejb.Stateless;
@@ -30,9 +31,8 @@ public class RelatorioAreasProjetosFacade extends AbstractFacade<RelatorioAreasP
         super(RelatorioAreasProjetos.class);
     }
 
-    
-    public RelatorioAreasProjetos[] findAllAreasProjetos() {
-        
+    //Todos os Projetos relacionados as areas avaliadas
+    public RelatorioAreasProjetos[] findAllAreasProjetos() {        
         String sqlString = "SELECT ap.projeto_id,ap.area_id,a.nome as area,pj.nome as projeto,"+
             "count(ap.PROJETO_id) as avaliadores, "+
             "(SELECT count(ap1.PROJETO_id) FROM gcompet.areas_projetos ap1 "+
@@ -74,6 +74,44 @@ public class RelatorioAreasProjetosFacade extends AbstractFacade<RelatorioAreasP
     }
     
     
+    //Todos os Projetos relacionados as areas avaliadas
+    public RelatorioAreasProjetos[] findAllAreasProjetosPorArea(Areas area, String ordem) {        
+        String sqlString = "SELECT ap.projeto_id,pj.nome as projeto,"+
+            "count(ap.PROJETO_id) as avaliadores, "+
+            "(SELECT count(ap1.PROJETO_id) FROM gcompet.areas_projetos ap1 "+
+            " WHERE ap1.AREA_id = ap.AREA_id AND ap.PROJETO_id = ap1.PROJETO_id "+
+            " AND ap1.avaliacao = 1 ) as avaliacao "+
+            " FROM gcompet.areas_projetos ap, gcompet.projetos pj "+
+            " WHERE ap.PROJETO_id=pj.id and ap.AREA_id= ? "+
+            " GROUP BY ap.PROJETO_id "+
+            " HAVING avaliacao > 0 "+
+            " ORDER BY avaliacao DESC ";
+        
+        Query qr = getEntityManager().createNativeQuery(sqlString);
+        qr.setParameter(1, area.getId());
+        List<Object[]> lista = qr.getResultList();            
+        
+        RelatorioAreasProjetos[] arrayAreasProjetos = new RelatorioAreasProjetos[lista.size()];        
+        
+        int i = 0;
+        for (Object[] item : lista) {            
+            Integer projeto_id = (Integer) item[0];
+            String projeto = (String)item[1];
+            long avaliadores = (long) item[2];
+            long avaliacao = (long) item[3];
+
+            RelatorioAreasProjetos rca = new RelatorioAreasProjetos();
+            rca.setProjeto_id(projeto_id);
+            rca.setProjeto(projeto);
+            rca.setAvaliadores(avaliadores);
+            rca.setAvaliacao(avaliacao);
+            
+            arrayAreasProjetos[i] = rca;
+            i++;
+        }        
+        
+        return arrayAreasProjetos;
+    }
     
     
     

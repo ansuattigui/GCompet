@@ -5,7 +5,8 @@
  */
 package com.ctex.ct.gcompet.bean;
 
-import com.ctex.ct.gcompet.modelo.Capacidades;
+import com.ctex.ct.gcompet.modelo.Projetos;
+import com.ctex.ct.gcompet.modelo.relatorios.RelatorioAreasProjetos;
 import com.ctex.ct.gcompet.modelo.relatorios.RelatorioCapacidadesAreas;
 import java.util.List;
 import javax.ejb.Stateless;
@@ -18,7 +19,7 @@ import javax.persistence.Query;
  * @author ralfh
  */
 @Stateless
-public class RelatorioCapacidadesAreasFacade extends AbstractFacade<RelatorioCapacidadesAreas> {
+public class RelatorioProjetosAreasFacade extends AbstractFacade<RelatorioAreasProjetos> {
     @PersistenceContext(unitName = "com.ctex.ct_GCompet_war_1.0-SNAPSHOTPU")
     private EntityManager em;
 
@@ -27,11 +28,11 @@ public class RelatorioCapacidadesAreasFacade extends AbstractFacade<RelatorioCap
         return em;
     }
 
-    public RelatorioCapacidadesAreasFacade() {
-        super(RelatorioCapacidadesAreas.class);
+    public RelatorioProjetosAreasFacade() {
+        super(RelatorioAreasProjetos.class);
     }
         
-    public RelatorioCapacidadesAreas[] findAllCapacidadesAreas(Capacidades cap, String ordem) {
+    public RelatorioCapacidadesAreas[] findAllAreasPorProjeto(Projetos proj, String ordem) {
         String sqlString = null;        
         if (null != ordem) switch (ordem) {
             case "area":
@@ -61,7 +62,7 @@ public class RelatorioCapacidadesAreasFacade extends AbstractFacade<RelatorioCap
         }
         
         Query qr = getEntityManager().createNativeQuery(sqlString);
-        qr.setParameter(1, cap.getId());
+        qr.setParameter(1, proj.getId());
         List<Object[]> lista = qr.getResultList();
         
         RelatorioCapacidadesAreas[] arrayCapacidadesAreas = new RelatorioCapacidadesAreas[lista.size()];

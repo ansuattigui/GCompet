@@ -5,12 +5,11 @@
  */
 package com.ctex.ct.gcompet.bean;
 
-import com.ctex.ct.gcompet.modelo.Capacidades;
+import com.ctex.ct.gcompet.modelo.Projetos;
 import com.ctex.ct.gcompet.modelo.relatorios.RelatorioAreasEmpresas;
 import com.ctex.ct.gcompet.modelo.relatorios.RelatorioAreasProjetos;
 import com.ctex.ct.gcompet.modelo.relatorios.RelatorioCapacidadesAreas;
 import java.io.Serializable;
-import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -45,11 +44,10 @@ public class RelatorioAreasProjetosBean implements Serializable {
     private JRDataSource jrDataSourceMainReport;
     private JRDataSource jrDataSourceSubReport1;
     private JRDataSource jrDataSourceSubReport2;
-    private JasperPrint jasperPrintCapacidadesAreas;
+    private JasperPrint jasperPrintAreasProjetos;
     private JasperPrint jasperPrintProjetosAreas;
-    private Connection connection;
     private String relatorioAC;
-    private Capacidades capacidade;
+    private Projetos projeto;
     private RelatorioCapacidadesAreas[] arrayCapacidadesAreas;
     private RelatorioAreasProjetos[] arrayAreasProjetos;
     private RelatorioAreasEmpresas[] arrayAreasEmpresas;
@@ -133,19 +131,19 @@ public class RelatorioAreasProjetosBean implements Serializable {
     public RelatorioCapacidadesAreas[] getArrayCapacidadesAreas() {
         
 /*        List<Object[]> lista;
-        lista = ejbFacade.findAll(capacidade);        
+        lista = ejbFacade.findAll(projeto);        
         arrayCapacidadesAreas = new RelatorioCapacidadesAreas[lista.size()];
         
         int i = 0;
         for (Object[] item : lista) {            
             Integer area_id = (Integer) item[0];
-            String area = (String)item[1];
+            String projeto = (String)item[1];
             long avaliadores = (long) item[2];
             long avaliacao = (long) item[3];
 
             RelatorioCapacidadesAreas rca = new RelatorioCapacidadesAreas();
             rca.setArea_id(area_id);
-            rca.setArea(area);
+            rca.setArea(projeto);
             rca.setAvaliadores(avaliadores);
             rca.setAvaliacao(avaliacao);
             
@@ -175,7 +173,7 @@ public class RelatorioAreasProjetosBean implements Serializable {
         for (Object[] item : lista) {            
             Integer projeto_id = (Integer) item[0];
             Integer area_id = (Integer) item[1];
-            String area = (String)item[2];
+            String projeto = (String)item[2];
             String projeto = (String)item[3];
             long avaliadores = (long) item[4];
             long avaliacao = (long) item[5];
@@ -183,7 +181,7 @@ public class RelatorioAreasProjetosBean implements Serializable {
             RelatorioAreasProjetos rca = new RelatorioAreasProjetos();
             rca.setProjeto_id(projeto_id);
             rca.setArea_id(area_id);
-            rca.setArea(area);
+            rca.setArea(projeto);
             rca.setProjeto(projeto);
             rca.setAvaliadores(avaliadores);
             rca.setAvaliacao(avaliacao);
@@ -273,27 +271,28 @@ public class RelatorioAreasProjetosBean implements Serializable {
     
     
     /**
-     * @return the jasperPrintCapacidadesAreas
+     * @return the jasperPrintAreasProjetos
      */
-    public JasperPrint getJasperPrintCapacidadesAreas() {  
+    public JasperPrint getJasperPrintAreasProjetos() {  
         ImageIcon logotipo = new ImageIcon(getContext().getRealPath("resources/img/logo-ctex.png"));                
         HashMap hm = new HashMap<>();
         hm.put("par_logotipo",logotipo.getImage());        
-        hm.put("par_nomerelat","Avaliação de Capacidades Operacionais: "+capacidade.getNome().toUpperCase());  
-        hm.put("par_dados_subrelatorio", getJrDataSourceSubReport1());
+        hm.put("par_nomerelat","Avaliação de Projetod: "+projeto.getNome().toUpperCase());  
+        hm.put("par_dados_projetos", getJrDataSourceSubReport1());
+        hm.put("par_dados_empresas", getJrDataSourceSubReport2());
         try {   
-            jasperPrintCapacidadesAreas = JasperFillManager.fillReport(getJasperAreasProjetos(),hm,getJrDataSourceMainReport());
+            jasperPrintAreasProjetos = JasperFillManager.fillReport(getJasperAreasProjetos(),hm,getJrDataSourceMainReport());
         } catch (JRException ex) {
             Logger.getLogger(RelatorioAreasProjetosBean.class.getName()).log(Level.SEVERE, null, ex);
         }        
-        return jasperPrintCapacidadesAreas;
+        return jasperPrintAreasProjetos;
     }
 
     /**
-     * @param jasperPrintCapacidadesAreas the jasperPrintCapacidadesAreas to set
+     * @param jasperPrintAreasProjetos the jasperPrintAreasProjetos to set
      */
-    public void setJasperPrintCapacidadesAreas(JasperPrint jasperPrintCapacidadesAreas) {
-        this.jasperPrintCapacidadesAreas = jasperPrintCapacidadesAreas;
+    public void setJasperPrintAreasProjetos(JasperPrint jasperPrintAreasProjetos) {
+        this.jasperPrintAreasProjetos = jasperPrintAreasProjetos;
     }
     
     /**
@@ -309,25 +308,6 @@ public class RelatorioAreasProjetosBean implements Serializable {
      */
     public void setRelatorio(String relatorio) {
         this.relatorio = relatorio;
-    }
-
-    /**
-     * @return 
-     */
-    public Connection getConnection() {
-        connection = CapacidadesAreasFacade.getConnection();
-        return connection;
-    }
-
-    /**
-     * @param connection the connection to set
-     */
-    public void setConnection(Connection connection) {
-        this.connection = connection;
-    }
-    
-    public void closeConnection() {
-        CapacidadesAreasFacade.closeConnection(connection);
     }
 
     /**
@@ -348,13 +328,13 @@ public class RelatorioAreasProjetosBean implements Serializable {
      * @return the relatorioAC
      */
     public String getRelatorioAC() {
-        relatorio = "/reports/capacidade/CapacidadesAreas.pdf";
+        relatorio = "/reports/projeto/AreasProjetos.pdf";
         try {                
-            JasperExportManager.exportReportToPdfFile(getJasperPrintCapacidadesAreas(), getContext().getRealPath(relatorio));
+            JasperExportManager.exportReportToPdfFile(getJasperPrintAreasProjetos(), getContext().getRealPath(relatorio));
         } catch (JRException ex) {
             Logger.getLogger(RelatorioAreasProjetosBean.class.getName()).log(Level.SEVERE, null, ex);
         }
-        relatorioAC = "/user/relatorios/capacidades/CapacidadesAreas";
+        relatorioAC = "/user/relatorios/capacidades/AreasProjetos";
         return relatorioAC;
     }
 
@@ -366,17 +346,17 @@ public class RelatorioAreasProjetosBean implements Serializable {
     }
 
     /**
-     * @return the capacidade
+     * @return the projeto
      */
-    public Capacidades getCapacidade() {
-        return capacidade;
+    public Projetos getProjeto() {
+        return projeto;
     }
 
     /**
-     * @param capacidade the capacidade to set
+     * @param projeto the projeto to set
      */
-    public void setCapacidade(Capacidades capacidade) {
-        this.capacidade = capacidade;
+    public void setProjeto(Projetos projeto) {
+        this.projeto = projeto;
     }
 
     /**

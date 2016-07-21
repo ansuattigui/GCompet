@@ -31,6 +31,7 @@ public class RelatorioAreasCapacidadesFacade extends AbstractFacade<RelatorioAre
         super(RelatorioAreasCapacidades.class);
     }
     
+    // Todas as Capacidades relacionadas a uma determinada area avaliada
     public RelatorioAreasCapacidades[] findAllAreasCapacidades(Areas area, String ordem) {
         String sqlString = null;        
         if (null != ordem) switch (ordem) {
