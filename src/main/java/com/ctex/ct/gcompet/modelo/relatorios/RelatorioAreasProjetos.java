@@ -15,9 +15,9 @@ import java.util.Objects;
 
 public class RelatorioAreasProjetos implements Comparable<RelatorioAreasProjetos>  {
     
-    private Integer projeto_id;
     private Integer area_id;
     private String area;
+    private Integer projeto_id;
     private String projeto;
     private long avaliadores;
     private long avaliacao;

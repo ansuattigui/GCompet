@@ -12,6 +12,8 @@ package com.ctex.ct.gcompet.modelo.relatorios;
 
 public class RelatorioCapacidadesAreas implements Comparable {
 
+    private Integer capacidade_id;
+    private String capacidade;    
     private Integer area_id;
     private String area;    
     private long avaliadores;
@@ -76,9 +78,38 @@ public class RelatorioCapacidadesAreas implements Comparable {
         this.avaliacao = avaliacao;
     }
 
+
+    /**
+     * @return the capacidade_id
+     */
+    public Integer getCapacidade_id() {
+        return capacidade_id;
+    }
+
+    /**
+     * @param capacidade_id the capacidade_id to set
+     */
+    public void setCapacidade_id(Integer capacidade_id) {
+        this.capacidade_id = capacidade_id;
+    }
+
+    /**
+     * @return the capacidade
+     */
+    public String getCapacidade() {
+        return capacidade;
+    }
+
+    /**
+     * @param capacidade the capacidade to set
+     */
+    public void setCapacidade(String capacidade) {
+        this.capacidade = capacidade;
+    }
+
     @Override
     public int compareTo(Object o) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-
+    
 }
