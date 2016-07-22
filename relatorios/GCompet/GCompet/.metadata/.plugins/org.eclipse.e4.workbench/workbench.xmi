@@ -162,7 +162,7 @@
       </children>
       <children xsi:type="menu:ToolBar" xmi:id="_KrSlwEx3EeaB9u675vRVeQ" elementId="org.eclipse.ui.workbench.file">
         <tags>Draggable</tags>
-        <children xsi:type="menu:HandledToolItem" xmi:id="_KrzjIEx3EeaB9u675vRVeQ" elementId="print" visible="false" iconURI="platform:/plugin/org.eclipse.ui/icons/full/etool16/print_edit.png" tooltip="Print" enabled="false" command="_JPuofUx3EeaB9u675vRVeQ"/>
+        <children xsi:type="menu:HandledToolItem" xmi:id="_j4-fsE-4Eea7r-X3FXPpkw" elementId="print" visible="false" iconURI="platform:/plugin/org.eclipse.ui/icons/full/etool16/print_edit.png" tooltip="Print" command="_JPuofUx3EeaB9u675vRVeQ"/>
       </children>
       <children xsi:type="menu:ToolBar" xmi:id="_KrSlwUx3EeaB9u675vRVeQ" elementId="additions" toBeRendered="false">
         <tags>toolbarSeparator</tags>
@@ -183,7 +183,7 @@
       </children>
       <children xsi:type="menu:ToolBar" xmi:id="_KrTM0Ex3EeaB9u675vRVeQ" elementId="org.eclipse.ui.workbench.navigate">
         <tags>Draggable</tags>
-        <children xsi:type="menu:HandledToolItem" xmi:id="_Kr8tEUx3EeaB9u675vRVeQ" elementId="org.eclipse.ui.window.pinEditor" visible="false" iconURI="platform:/plugin/org.eclipse.ui/icons/full/etool16/pin_editor.png" tooltip="Pin Editor" type="Check" command="_JPun-Ux3EeaB9u675vRVeQ"/>
+        <children xsi:type="menu:HandledToolItem" xmi:id="_j5IQsE-4Eea7r-X3FXPpkw" elementId="org.eclipse.ui.window.pinEditor" visible="false" iconURI="platform:/plugin/org.eclipse.ui/icons/full/etool16/pin_editor.png" tooltip="Pin Editor" type="Check" command="_JPun-Ux3EeaB9u675vRVeQ"/>
       </children>
       <children xsi:type="menu:ToolBar" xmi:id="_KrTM0Ux3EeaB9u675vRVeQ" elementId="group.editor" toBeRendered="false">
         <tags>toolbarSeparator</tags>
@@ -888,29 +888,35 @@
     <tags>View</tags>
     <tags>categoryTag:Plug-in Development</tags>
   </descriptors>
-  <descriptors xmi:id="_JSzI00x3EeaB9u675vRVeQ" elementId="net.sf.jasperreports.views.reportPreview" label="Preview" iconURI="platform:/plugin/net.sf.jasperreports/icons/jr_icon.png" tooltip="" category="Jaspersoft Studio" closeable="true" contributionURI="bundleclass://org.eclipse.ui.workbench/org.eclipse.ui.internal.e4.compatibility.CompatibilityView">
+  <descriptors xmi:id="_JSzI00x3EeaB9u675vRVeQ" elementId="net.sf.jasperreports.views.reportPreview" label="Preview" iconURI="platform:/plugin/net.sf.jasperreports/icons/jr_icon.png" tooltip="" category="JasperReports" closeable="true" contributionURI="bundleclass://org.eclipse.ui.workbench/org.eclipse.ui.internal.e4.compatibility.CompatibilityView">
     <tags>View</tags>
     <tags>categoryTag:Jaspersoft Studio</tags>
+    <tags>categoryTag:JasperReports</tags>
   </descriptors>
-  <descriptors xmi:id="_JSzI1Ex3EeaB9u675vRVeQ" elementId="com.jaspersoft.studio.Repository" label="Repository Explorer" iconURI="platform:/plugin/com.jaspersoft.studio/icons/jr_icon.png" tooltip="" category="Jaspersoft Studio" closeable="true" contributionURI="bundleclass://org.eclipse.ui.workbench/org.eclipse.ui.internal.e4.compatibility.CompatibilityView">
+  <descriptors xmi:id="_JSzI1Ex3EeaB9u675vRVeQ" elementId="com.jaspersoft.studio.Repository" label="Repository Explorer" iconURI="platform:/plugin/com.jaspersoft.studio/icons/jr_icon.png" tooltip="" category="JasperReports" closeable="true" contributionURI="bundleclass://org.eclipse.ui.workbench/org.eclipse.ui.internal.e4.compatibility.CompatibilityView">
     <tags>View</tags>
     <tags>categoryTag:Jaspersoft Studio</tags>
+    <tags>categoryTag:JasperReports</tags>
   </descriptors>
-  <descriptors xmi:id="_JS2MIEx3EeaB9u675vRVeQ" elementId="com.jaspersoft.studio.editor.preview.reportstate" label="Report State" iconURI="platform:/plugin/com.jaspersoft.studio/icons/jrxml_icon.png" tooltip="" category="Jaspersoft Studio" closeable="true" contributionURI="bundleclass://org.eclipse.ui.workbench/org.eclipse.ui.internal.e4.compatibility.CompatibilityView">
+  <descriptors xmi:id="_JS2MIEx3EeaB9u675vRVeQ" elementId="com.jaspersoft.studio.editor.preview.reportstate" label="Report State" iconURI="platform:/plugin/com.jaspersoft.studio/icons/jrxml_icon.png" tooltip="" category="JasperReports" closeable="true" contributionURI="bundleclass://org.eclipse.ui.workbench/org.eclipse.ui.internal.e4.compatibility.CompatibilityView">
     <tags>View</tags>
     <tags>categoryTag:Jaspersoft Studio</tags>
+    <tags>categoryTag:JasperReports</tags>
   </descriptors>
-  <descriptors xmi:id="_JS2MIUx3EeaB9u675vRVeQ" elementId="com.jaspersoft.studio.templateStyleView" label="Template View" iconURI="platform:/plugin/com.jaspersoft.studio/icons/resources/style-16.png" tooltip="" category="Jaspersoft Studio" closeable="true" contributionURI="bundleclass://org.eclipse.ui.workbench/org.eclipse.ui.internal.e4.compatibility.CompatibilityView">
+  <descriptors xmi:id="_JS2MIUx3EeaB9u675vRVeQ" elementId="com.jaspersoft.studio.templateStyleView" label="Template View" iconURI="platform:/plugin/com.jaspersoft.studio/icons/resources/style-16.png" tooltip="" category="JasperReports" closeable="true" contributionURI="bundleclass://org.eclipse.ui.workbench/org.eclipse.ui.internal.e4.compatibility.CompatibilityView">
     <tags>View</tags>
     <tags>categoryTag:Jaspersoft Studio</tags>
+    <tags>categoryTag:JasperReports</tags>
   </descriptors>
-  <descriptors xmi:id="_JS2MIkx3EeaB9u675vRVeQ" elementId="com.jaspersoft.studio.FormattingToolsView" label="Formatting Tools" iconURI="platform:/plugin/com.jaspersoft.studio/icons/resources/formatting/formattingtools.png" tooltip="" category="Jaspersoft Studio" closeable="true" contributionURI="bundleclass://org.eclipse.ui.workbench/org.eclipse.ui.internal.e4.compatibility.CompatibilityView">
+  <descriptors xmi:id="_JS2MIkx3EeaB9u675vRVeQ" elementId="com.jaspersoft.studio.FormattingToolsView" label="Formatting Tools" iconURI="platform:/plugin/com.jaspersoft.studio/icons/resources/formatting/formattingtools.png" tooltip="" category="JasperReports" closeable="true" contributionURI="bundleclass://org.eclipse.ui.workbench/org.eclipse.ui.internal.e4.compatibility.CompatibilityView">
     <tags>View</tags>
     <tags>categoryTag:Jaspersoft Studio</tags>
+    <tags>categoryTag:JasperReports</tags>
   </descriptors>
-  <descriptors xmi:id="_JS2MI0x3EeaB9u675vRVeQ" elementId="com.jaspersoft.studio.debug.trace" label="Trace Report View" iconURI="platform:/plugin/org.eclipse.ui/icons/full/eview16/defaultview_misc.png" tooltip="" category="Jaspersoft Studio" closeable="true" contributionURI="bundleclass://org.eclipse.ui.workbench/org.eclipse.ui.internal.e4.compatibility.CompatibilityView">
+  <descriptors xmi:id="_JS2MI0x3EeaB9u675vRVeQ" elementId="com.jaspersoft.studio.debug.trace" label="Trace Report View" iconURI="platform:/plugin/org.eclipse.ui/icons/full/eview16/defaultview_misc.png" tooltip="" category="JasperReports" closeable="true" contributionURI="bundleclass://org.eclipse.ui.workbench/org.eclipse.ui.internal.e4.compatibility.CompatibilityView">
     <tags>View</tags>
     <tags>categoryTag:Jaspersoft Studio</tags>
+    <tags>categoryTag:JasperReports</tags>
   </descriptors>
   <commands xmi:id="_JPrje0x3EeaB9u675vRVeQ" elementId="org.eclipse.jdt.ui.correction.inlineLocal.assist" commandName="Quick Assist - Inline local variable" description="Invokes quick assist and selects 'Inline local variable'" category="_JPrjd0x3EeaB9u675vRVeQ"/>
   <commands xmi:id="_JPrjfEx3EeaB9u675vRVeQ" elementId="org.eclipse.ui.edit.text.select.pageUp" commandName="Select Page Up" description="Select to the top of the page" category="_JPrjZUx3EeaB9u675vRVeQ"/>
