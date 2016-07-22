@@ -72,8 +72,10 @@ public class RelatorioAreasProjetosFacade extends AbstractFacade<RelatorioAreasP
         
         return arrayAreasProjetos;
     }
+
+
     
-    
+/*    
     //Todos os Projetos relacionados as areas avaliadas
     public RelatorioAreasProjetos[] findAllAreasProjetosPorArea(Areas area, String ordem) {        
         String sqlString = "SELECT ap.projeto_id,pj.nome as projeto,"+
@@ -112,7 +114,7 @@ public class RelatorioAreasProjetosFacade extends AbstractFacade<RelatorioAreasP
         
         return arrayAreasProjetos;
     }
-    
+*/    
     
     
     

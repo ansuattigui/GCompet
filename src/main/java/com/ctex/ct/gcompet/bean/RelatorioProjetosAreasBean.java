@@ -5,12 +5,12 @@
  */
 package com.ctex.ct.gcompet.bean;
 
-import com.ctex.ct.gcompet.modelo.Capacidades;
+import com.ctex.ct.gcompet.modelo.Projetos;
+import com.ctex.ct.gcompet.modelo.relatorios.RelatorioAreasCapacidades;
 import com.ctex.ct.gcompet.modelo.relatorios.RelatorioAreasEmpresas;
 import com.ctex.ct.gcompet.modelo.relatorios.RelatorioAreasProjetos;
 import com.ctex.ct.gcompet.modelo.relatorios.RelatorioCapacidadesAreas;
 import java.io.Serializable;
-import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -34,7 +34,7 @@ import net.sf.jasperreports.engine.data.JRBeanArrayDataSource;
  *
  * @author ralfh
  */
-@ManagedBean(name = "relatorioCapacidadesAreas")
+@ManagedBean(name = "relatorioProjetosAreas")
 @RequestScoped
 public class RelatorioProjetosAreasBean implements Serializable {
     
@@ -46,11 +46,10 @@ public class RelatorioProjetosAreasBean implements Serializable {
     private JRDataSource jrDataSourceSubReport2;
     private JasperPrint jasperPrintCapacidadesAreas;
     private JasperPrint jasperPrintProjetosAreas;
-    private Connection connection;
     private String relatorioAC;
-    private Capacidades capacidade;
+    private Projetos projeto;
     private RelatorioAreasProjetos[] arrayAreasProjetos;
-    private RelatorioCapacidadesAreas[] arrayCapacidadesAreas;
+    private RelatorioAreasCapacidades[] arrayAreasCapacidades;
     private RelatorioAreasEmpresas[] arrayAreasEmpresas;
     private RelatorioAreasProjetos[] arrayAreasProjetosCapacidade;
     private RelatorioAreasEmpresas[] arrayAreasEmpresasCapacidade;
@@ -100,7 +99,7 @@ public class RelatorioProjetosAreasBean implements Serializable {
     }
     
     public JRDataSource getJrDataSourceMainReport() {        
-        jrDataSourceMainReport = new JRBeanArrayDataSource(getArrayCapacidadesAreasPorPeso());
+        jrDataSourceMainReport = new JRBeanArrayDataSource(getArrayAreasProjetos());  //getArrayCapacidadesAreasPorPeso());
         return jrDataSourceMainReport;
     }
     
@@ -108,7 +107,7 @@ public class RelatorioProjetosAreasBean implements Serializable {
      * @return the jrDataSourceSubReport1
      */
     public JRDataSource getJrDataSourceSubReport1() {
-        jrDataSourceSubReport1 = new JRBeanArrayDataSource(getArrayAreasProjetosCapacidade());
+        jrDataSourceSubReport1 = new JRBeanArrayDataSource(getArrayCapacidadesAreas());
         return jrDataSourceSubReport1;
     }
 
@@ -134,28 +133,28 @@ public class RelatorioProjetosAreasBean implements Serializable {
         this.jrDataSourceSubReport2 = jrDataSourceSubReport2;
     }
     
-    public RelatorioAreasProjetos[] getArrayAreasProjetoPorPeso() {
-        arrayCapacidadesAreas = ejbRPAFacade.findAllAreasPorProjeto(capacidade,"peso");
+    public RelatorioAreasCapacidades[] getArrayAreasProjetoPorPeso() {
+        arrayAreasCapacidades = ejbRAPFacade.findAllAreasPorProjeto(projeto,"peso");
         return arrayAreasProjetos;
     }
 
     public RelatorioAreasProjetos[] getArrayAreasProjetoPorArea() {
-        arrayCapacidadesAreas = ejbRPAFacade.findAllAreasPorProjeto(capacidade,"area");
+        arrayAreasCapacidades = ejbRAPFacade.findAllAreasPorProjeto(projeto,"area");
         return arrayAreasProjetos;
     }
     
     /**
-     * @param arrayCapacidadesAreas the arrayCapacidadesAreas to set
+     * @param arrayCapacidadesAreas the arrayAreasCapacidades to set
      */
     public void setArrayCapacidadesAreas(RelatorioCapacidadesAreas[] arrayCapacidadesAreas) {
-        this.arrayCapacidadesAreas = arrayCapacidadesAreas;
+        this.arrayAreasCapacidades = arrayCapacidadesAreas;
     }
     
     /**
      * @return the arrayAreasProjetos
      */
     public RelatorioAreasProjetos[] getArrayAreasProjetos() {
-        arrayAreasProjetos = ejbRAPFacade.findAllAreasProjetos();    
+        arrayAreasProjetos = ejbRPAFacade.findAllAreasPorProjeto(projeto, "peso");
         return arrayAreasProjetos;
     }
 
@@ -186,7 +185,7 @@ public class RelatorioProjetosAreasBean implements Serializable {
     /**
      * @return the arrayAreasProjetosCapacidade
      */
-    public RelatorioAreasProjetos[] getArrayAreasProjetosCapacidade() {              
+    public RelatorioAreasCapacidades[][] getArrayAreasProjetosCapacidade() {              
         // popula uma lista com os relacionamentos entre Capacidades Operativas e Areas de Pesquisa
         getArrayCapacidadesAreasPorArea();
         // popula uma lista com os relacionamentos entre Areas de Pesquisa e projetos do CTEx
@@ -197,7 +196,7 @@ public class RelatorioProjetosAreasBean implements Serializable {
         // cria uma lista com os projetos selecionadas 
         ArrayList<RelatorioAreasProjetos> lista = new ArrayList<>();        
         for(RelatorioAreasProjetos itemAP : arrayAreasProjetos) {                
-            for(RelatorioCapacidadesAreas itemCA : arrayCapacidadesAreas) {            
+            for(RelatorioCapacidadesAreas itemCA : arrayAreasCapacidades) {            
                 if (Objects.equals(itemAP.getArea_id(), itemCA.getArea_id())) {                    
                     lista.add(itemAP);                    
                 }                
@@ -240,7 +239,7 @@ public class RelatorioProjetosAreasBean implements Serializable {
         // cria uma lista com as empresas selecionadas 
         ArrayList<RelatorioAreasEmpresas> lista = new ArrayList<>();        
         for(RelatorioAreasEmpresas itemAE : arrayAreasEmpresas) {                
-            for(RelatorioCapacidadesAreas itemCA : arrayCapacidadesAreas) {            
+            for(RelatorioCapacidadesAreas itemCA : arrayAreasCapacidades) {            
                 if (Objects.equals(itemAE.getArea_id(), itemCA.getArea_id())) {                    
                     lista.add(itemAE);                    
                 }                
@@ -277,7 +276,7 @@ public class RelatorioProjetosAreasBean implements Serializable {
         ImageIcon logotipo = new ImageIcon(getContext().getRealPath("resources/img/logo-ctex.png"));                
         HashMap hm = new HashMap<>();
         hm.put("par_logotipo",logotipo.getImage());        
-        hm.put("par_nomerelat","Avaliação de Capacidades Operacionais: "+capacidade.getNome().toUpperCase());  
+        hm.put("par_nomerelat","Avaliação de Capacidades Operacionais: "+projeto.getNome().toUpperCase());  
         hm.put("par_dados_projetos", getJrDataSourceSubReport1());
         hm.put("par_dados_empresas", getJrDataSourceSubReport2());
         try {   
@@ -308,25 +307,6 @@ public class RelatorioProjetosAreasBean implements Serializable {
      */
     public void setRelatorio(String relatorio) {
         this.relatorio = relatorio;
-    }
-
-    /**
-     * @return 
-     */
-    public Connection getConnection() {
-        connection = CapacidadesAreasFacade.getConnection();
-        return connection;
-    }
-
-    /**
-     * @param connection the connection to set
-     */
-    public void setConnection(Connection connection) {
-        this.connection = connection;
-    }
-    
-    public void closeConnection() {
-        CapacidadesAreasFacade.closeConnection(connection);
     }
 
     /**
@@ -365,17 +345,17 @@ public class RelatorioProjetosAreasBean implements Serializable {
     }
 
     /**
-     * @return the capacidade
+     * @return the projeto
      */
-    public Capacidades getCapacidade() {
-        return capacidade;
+    public Projetos getProjeto() {
+        return projeto;
     }
 
     /**
-     * @param capacidade the capacidade to set
+     * @param projeto the projeto to set
      */
-    public void setCapacidade(Capacidades capacidade) {
-        this.capacidade = capacidade;
+    public void setProjeto(Projetos projeto) {
+        this.projeto = projeto;
     }
 
     /**

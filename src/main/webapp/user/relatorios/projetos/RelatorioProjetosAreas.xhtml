@@ -46,7 +46,7 @@
                         
                         <f:facet name="footer">
                             <p:commandButton id="viewButton"  update=":ProjetosViewForm" icon="ui-icon-search" value="#{bundle.View}" oncomplete="PF('ProjetosViewDialog').show()" />
-                            <p:commandButton id="confirmaButton" icon="ui-icon-plus"   value="#{bundle.Select}" action="#{relatorioAreasProjetos.getRelatorioAC}" update="SelecionaProjetoForm">
+                            <p:commandButton id="confirmaButton" icon="ui-icon-plus"   value="#{bundle.Select}" action="#{relatorioProjetosAreas.getRelatorioAC}" update="SelecionaProjetoForm">
                                 <p:confirm header="Confirmação" message="Confirma a seleção desejada?" icon="ui-icon-alert" />
                             </p:commandButton>                                
                             <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">

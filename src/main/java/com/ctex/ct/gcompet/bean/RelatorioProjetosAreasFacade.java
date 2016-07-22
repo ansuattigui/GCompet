@@ -32,32 +32,32 @@ public class RelatorioProjetosAreasFacade extends AbstractFacade<RelatorioAreasP
         super(RelatorioAreasProjetos.class);
     }
         
-    public RelatorioCapacidadesAreas[] findAllAreasPorProjeto(Projetos proj, String ordem) {
+    public RelatorioAreasProjetos[] findAllAreasPorProjeto(Projetos proj, String ordem) {
         String sqlString = null;        
         if (null != ordem) switch (ordem) {
             case "area":
-                sqlString = "SELECT ca.AREA_id as area_id, a.nome as area, "+
-                        "(SELECT count(ca1.AREA_id) FROM gcompet.capacidades_areas ca1 "+
-                        "WHERE ca1.CAPACIDADE_id = ca.CAPACIDADE_id and ca1.AREA_id = ca.AREA_id) as avaliadores, "+
-                        "(SELECT count(ca2.avaliacao) FROM gcompet.capacidades_areas ca2 WHERE ca2.avaliacao = 1 "+
-                        "AND ca2.CAPACIDADE_id = ca.CAPACIDADE_id AND ca2.AREA_id = ca.AREA_id) as avaliacao " +
-                        "FROM gcompet.capacidades_areas ca, gcompet.areas a " +
-                        "WHERE ca.CAPACIDADE_id = ? AND ca.AREA_id = a.id " +
-                        "GROUP BY ca.AREA_id  " +
-                        "HAVING avaliacao > 0 " +
-                        "ORDER BY ca.AREA_id ASC ";
+                sqlString = "SELECT pa.area_id as area_id, a.nome as area, "+                        
+                    "(SELECT count(pa1.area_id) FROM gcompet.projetos_areas pa1 "+
+                    "WHERE pa1.projeto_id = pa.projeto_id and pa1.area_id = pa.area_id) as avaliadores, "+                        
+                    "(SELECT count(pa2.avaliacao) FROM gcompet.projetos_areas pa2 WHERE pa2.avaliacao = 1 "+
+                    "AND pa2.projeto_id = pa.projeto_id AND pa2.area_id = pa.area_id) as avaliacao " +                        
+                    "FROM gcompet.projetos_areas pa, gcompet.areas a " +
+                    "WHERE pa.projeto_id = ? AND pa.AREA_id = a.id " +
+                    "GROUP BY pa.AREA_id  " +
+                    "HAVING avaliacao > 0 " +
+                    "ORDER BY pa.AREA_id ASC ";
                 break;
             case "peso":
-                sqlString = "SELECT ca.AREA_id as area_id, a.nome as area, "+
-                        "(SELECT count(ca1.AREA_id) FROM gcompet.capacidades_areas ca1 "+
-                        "WHERE ca1.CAPACIDADE_id = ca.CAPACIDADE_id and ca1.AREA_id = ca.AREA_id) as avaliadores, "+
-                        "(SELECT count(ca2.avaliacao) FROM gcompet.capacidades_areas ca2 WHERE ca2.avaliacao = 1 "+
-                        "AND ca2.CAPACIDADE_id = ca.CAPACIDADE_id AND ca2.AREA_id = ca.AREA_id) as avaliacao " +
-                        "FROM gcompet.capacidades_areas ca, gcompet.areas a " +
-                        "WHERE ca.CAPACIDADE_id = ? AND ca.AREA_id = a.id " +
-                        "GROUP BY ca.AREA_id  " +
-                        "HAVING avaliacao > 0 " +
-                "ORDER BY avaliacao DESC ";
+                sqlString = "SELECT pa.area_id as area_id, a.nome as area, "+                        
+                    "(SELECT count(pa1.area_id) FROM gcompet.projetos_areas pa1 "+
+                    "WHERE pa1.projeto_id = pa.projeto_id and pa1.area_id = pa.area_id) as avaliadores, "+                        
+                    "(SELECT count(pa2.avaliacao) FROM gcompet.projetos_areas pa2 WHERE pa2.avaliacao = 1 "+
+                    "AND pa2.projeto_id = pa.projeto_id AND pa2.area_id = pa.area_id) as avaliacao " +                        
+                    "FROM gcompet.projetos_areas pa, gcompet.areas a " +
+                    "WHERE pa.projeto_id = ? AND pa.AREA_id = a.id " +
+                    "GROUP BY pa.AREA_id  " +
+                    "HAVING avaliacao > 0 " +
+                    "ORDER BY avaliacao DESC ";
                 break;            
         }
         
@@ -65,7 +65,7 @@ public class RelatorioProjetosAreasFacade extends AbstractFacade<RelatorioAreasP
         qr.setParameter(1, proj.getId());
         List<Object[]> lista = qr.getResultList();
         
-        RelatorioCapacidadesAreas[] arrayCapacidadesAreas = new RelatorioCapacidadesAreas[lista.size()];
+        RelatorioAreasProjetos[] arrayAreasProjetos = new RelatorioAreasProjetos[lista.size()];
         
         int i = 0;
         for (Object[] item : lista) {            
@@ -74,17 +74,17 @@ public class RelatorioProjetosAreasFacade extends AbstractFacade<RelatorioAreasP
             long avaliadores = (long) item[2];
             long avaliacao = (long) item[3];
 
-            RelatorioCapacidadesAreas rca = new RelatorioCapacidadesAreas();
-            rca.setArea_id(area_id);
-            rca.setArea(area);
-            rca.setAvaliadores(avaliadores);
-            rca.setAvaliacao(avaliacao);
+            RelatorioAreasProjetos rap = new RelatorioAreasProjetos();
+            rap.setArea_id(area_id);
+            rap.setArea(area);
+            rap.setAvaliadores(avaliadores);
+            rap.setAvaliacao(avaliacao);
             
-            arrayCapacidadesAreas[i] = rca;
+            arrayAreasProjetos[i] = rap;
             i++;
         }
         
-        return arrayCapacidadesAreas;
+        return arrayAreasProjetos;
     }
     
     
