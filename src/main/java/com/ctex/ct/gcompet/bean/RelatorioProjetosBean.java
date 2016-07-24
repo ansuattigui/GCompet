@@ -109,14 +109,7 @@ public class RelatorioProjetosBean implements Serializable {
         jrDataSourceSubReport1 = new JRBeanArrayDataSource(getArrayCapacidadesAreas());
         return jrDataSourceSubReport1;
     }
-/*    
-    /**
-     * @param jrDataSourceSubReport1 the jrDataSourceSubReport1 to set
-     /
-    public void setJrDataSourceSubReport1(JRDataSource jrDataSourceSubReport1) {
-        this.jrDataSourceSubReport1 = jrDataSourceSubReport1;
-    }
-*/
+
     /**
      * @return the jrDataSourceSubReport2
      */
@@ -124,14 +117,6 @@ public class RelatorioProjetosBean implements Serializable {
         jrDataSourceSubReport2 = new JRBeanArrayDataSource(getArrayEmpresasAreas());
         return jrDataSourceSubReport2;
     }
-/*
-    /**
-     * @param jrDataSourceSubReport2 the jrDataSourceSubReport2 to set
-     /
-    public void setJrDataSourceSubReport2(JRDataSource jrDataSourceSubReport2) {
-        this.jrDataSourceSubReport2 = jrDataSourceSubReport2;
-    }
-*/
     
     //Consulta as Areas de pesquisa afins da projeto selecionada - Ordem decrescente do numero de avaliações positivas
     public RelatorioAreasEmpresas[] getArrayEmpresas() {
@@ -143,15 +128,6 @@ public class RelatorioProjetosBean implements Serializable {
         return ejbRCFacade.findAllCapacidades();
     }   
     
-/*    
-    /**
-     * @param arrayAreasPorCapacidade the arrayAreasPorProjeto to set
-     /
-    public void setArrayCapacidadesAreas(RelatorioCapacidadesAreas[] arrayAreasPorCapacidade) {
-        this.arrayCapacidadesAreas = arrayAreasPorCapacidade;
-    }
-*/
-    
     //Consulta as Areas afins  - Ordem do id das areas
     public RelatorioAreasProjetos[] getArrayAreasProjetos() {
         return ejbRAFacade.findAllAreasPorProjeto(projeto, "area");    
@@ -161,35 +137,6 @@ public class RelatorioProjetosBean implements Serializable {
     public RelatorioAreasProjetos[] getArrayAreasProjetosPorPeso() {
         return ejbRAFacade.findAllAreasPorProjeto(projeto, "peso");    
     }
-    
-/*    
-    /**
-     * @param arrayProjetosAreasAux the arrayCapacidadesAreasAux to set
-     /
-    public void setArrayProjetosAreasAux(RelatorioAreasProjetos[] arrayProjetosAreasAux) {
-        this.arrayCapacidadesAreasAux = arrayProjetosAreasAux;
-    }
-*/
- 
-/*    
-    /**
-     * @return the arrayEmpresasAreasAux
-     /
-    //Array com todas as empresas relacionadas as áreas selecionadas
-    public RelatorioAreasEmpresas[] getArrayEmpresasAreasAux() {
-        arrayEmpresasAreasAux = ejbRAEFacade.findAllEmpresasAreas();
-        return arrayEmpresasAreasAux;
-    }
-
-/*    
-    /**
-     * @param arrayEmpresasAreasAux the arrayEmpresasAreasAux to set
-     /
-    public void setArrayEmpresasAreasAux(RelatorioAreasEmpresas[] arrayEmpresasAreasAux) {
-        this.arrayEmpresasAreasAux = arrayEmpresasAreasAux;
-    }
-*/    
-
     
     /**
      * @return the arrayCapacidadesAreas
@@ -224,15 +171,6 @@ public class RelatorioProjetosBean implements Serializable {
         return arrayCapacidadesAreas;
     }
 
-/*    
-    /**
-     * @param arrayProjetosAreas the arrayCapacidadesAreas to set
-     /
-    public void setArrayProjetosAreas(RelatorioAreasProjetos[] arrayProjetosAreas) {
-        this.arrayCapacidadesAreas = arrayProjetosAreas;
-    }
-*/
-    
     /**
      * @return the arrayEmpresasAreas
      */
