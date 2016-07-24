@@ -159,7 +159,7 @@ public class RelatorioCapacidadesBean implements Serializable {
      */
     //Consulta os Projetos afins  - Ordem do id dos projetos
     public RelatorioAreasProjetos[] getArrayProjetosAreasAux() {
-        arrayProjetosAreasAux = ejbRAPFacade.findAllProjetos();    
+        arrayProjetosAreasAux = ejbRAPFacade.findAllProjetosAreas();    
         return arrayProjetosAreasAux;
     }
 

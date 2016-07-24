@@ -6,7 +6,9 @@
 package com.ctex.ct.gcompet.bean;
 
 import com.ctex.ct.gcompet.modelo.Capacidades;
+import com.ctex.ct.gcompet.modelo.Empresas;
 import com.ctex.ct.gcompet.modelo.Projetos;
+import com.ctex.ct.gcompet.modelo.relatorios.RelatorioAreasEmpresas;
 import com.ctex.ct.gcompet.modelo.relatorios.RelatorioAreasProjetos;
 import com.ctex.ct.gcompet.modelo.relatorios.RelatorioCapacidadesAreas;
 import java.util.List;
@@ -151,6 +153,64 @@ public class RelatorioAreasFacade extends AbstractFacade<RelatorioCapacidadesAre
         return arrayAreasProjetos;
     }
     
+    public RelatorioAreasEmpresas[] findAllAreasPorEmpresa(Empresas empr, String ordem) {
+        String sqlString = null;        
+        if (null != ordem) switch (ordem) {
+            case "area":
+                // Consulta todas as áreas de pesquisa afins a uma determinada empresa selecionada
+                // Ordenada pelo id da area de pesquisa
+                sqlString = "SELECT ae.areas_id as area_id, a.nome as area, "+
+                        "(SELECT count(ae1.areas_id) FROM gcompet.areas_empresas ae1 "+
+                        "WHERE ae1.areas_id = ae.areas_id and ae1.empresas_id = ae.empresas_id) as avaliadores, "+                        
+                        "(SELECT count(ae2.avaliacao) FROM gcompet.areas_empresas ae2 WHERE ae2.avaliacao = 1 "+
+                        "AND ae2.empresas_id = ae.empresas_id AND ae2.areas_id = ae.areas_id) as avaliacao " +                                                
+                        "FROM gcompet.areas_empresas ae, gcompet.areas a " +
+                        "WHERE ae.empresas_id = ? AND ae.areas_id = a.id " +
+                        "GROUP BY ae.areas_id  " +
+                        "HAVING avaliacao > 0 " +
+                        "ORDER BY ae.areas_id ASC ";
+                break;
+            case "peso":
+                // Consulta todas as áreas de pesquisa afins a uma determinada empresa selecionada
+                // Ordenada em ordem decrescente pelo número de avaliações positivas
+                sqlString = "SELECT ae.areas_id as area_id, a.nome as area, "+
+                        "(SELECT count(ae1.areas_id) FROM gcompet.areas_empresas ae1 "+
+                        "WHERE ae1.areas_id = ae.areas_id and ae1.empresas_id = ae.empresas_id) as avaliadores, "+                        
+                        "(SELECT count(ae2.avaliacao) FROM gcompet.areas_empresas ae2 WHERE ae2.avaliacao = 1 "+
+                        "AND ae2.empresas_id = ae.empresas_id AND ae2.areas_id = ae.areas_id) as avaliacao " +                                                
+                        "FROM gcompet.areas_empresas ae, gcompet.areas a " +
+                        "WHERE ae.empresas_id = ? AND ae.areas_id = a.id " +
+                        "GROUP BY ae.areas_id  " +
+                        "HAVING avaliacao > 0 " +
+                        "ORDER BY avaliacao DESC ";
+                break;            
+        }
+        
+        Query qr = getEntityManager().createNativeQuery(sqlString);
+        qr.setParameter(1, empr.getId());
+        List<Object[]> lista = qr.getResultList();
+        
+        RelatorioAreasEmpresas[] arrayAreasEmpresas = new RelatorioAreasEmpresas[lista.size()];
+        
+        int i = 0;
+        for (Object[] item : lista) {            
+            Integer area_id = (Integer) item[0];
+            String area = (String)item[1];
+            long avaliadores = (long) item[2];
+            long avaliacao = (long) item[3];
+
+            RelatorioAreasEmpresas rae = new RelatorioAreasEmpresas();
+            rae.setArea_id(area_id);
+            rae.setArea(area);
+            rae.setAvaliadores(avaliadores);
+            rae.setAvaliacao(avaliacao);
+            
+            arrayAreasEmpresas[i] = rae;
+            i++;
+        }
+        
+        return arrayAreasEmpresas;
+    }
     
     
     

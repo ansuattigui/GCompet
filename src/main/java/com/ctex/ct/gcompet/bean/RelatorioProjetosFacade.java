@@ -7,6 +7,7 @@ package com.ctex.ct.gcompet.bean;
 
 import com.ctex.ct.gcompet.modelo.Areas;
 import com.ctex.ct.gcompet.modelo.relatorios.RelatorioAreasProjetos;
+import com.ctex.ct.gcompet.modelo.relatorios.RelatorioProjetosAreas;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -18,7 +19,7 @@ import javax.persistence.Query;
  * @author ralfh
  */
 @Stateless
-public class RelatorioProjetosFacade extends AbstractFacade<RelatorioAreasProjetos> {
+public class RelatorioProjetosFacade extends AbstractFacade<RelatorioProjetosAreas> {
     @PersistenceContext(unitName = "com.ctex.ct_GCompet_war_1.0-SNAPSHOTPU")
     private EntityManager em;
 
@@ -28,21 +29,21 @@ public class RelatorioProjetosFacade extends AbstractFacade<RelatorioAreasProjet
     }
 
     public RelatorioProjetosFacade() {
-        super(RelatorioAreasProjetos.class);
+        super(RelatorioProjetosAreas.class);
     }
 
     //Seleciona Todos os Projetos relacionados as areas de pesquisa avaliadas
-    public RelatorioAreasProjetos[] findAllProjetos() {        
+    public RelatorioAreasProjetos[] findAllProjetosAreas() {        
         String sqlString = "SELECT ap.projeto_id,ap.area_id,a.nome as area,pj.nome as projeto,"+
             "count(ap.PROJETO_id) as avaliadores, "+
-            "(SELECT count(ap1.PROJETO_id) FROM gcompet.areas_projetos ap1 "+
-            " WHERE ap1.AREA_id = ap.AREA_id AND ap.PROJETO_id = ap1.PROJETO_id "+
-            " AND ap1.avaliacao = 1 GROUP BY ap.AREA_id, ap.PROJETO_id) as avaliacao "+
+            "(SELECT count(ap1.projeto_id) FROM gcompet.areas_projetos ap1 "+
+            " WHERE ap1.area_id = ap.area_id AND ap.projeto_id = ap1.projeto_id "+
+            " AND ap1.avaliacao = 1 GROUP BY ap.area_id, ap.projeto_id) as avaliacao "+
             " FROM gcompet.areas_projetos ap, gcompet.projetos pj, gcompet.areas a "+
-            " WHERE ap.PROJETO_id=PJ.id and ap.AREA_id=a.id "+
-            " GROUP BY ap.AREA_id, ap.PROJETO_id "+
+            " WHERE ap.projeto_id=pj.id and ap.area_id=a.id "+
+            " GROUP BY ap.area_id, ap.projeto_id "+
             " HAVING avaliacao > 0 "+
-            " ORDER BY ap.PROJETO_id, ap.AREA_id ";
+            " ORDER BY ap.projeto_id, ap.area_id ";
         
         Query qr = getEntityManager().createNativeQuery(sqlString);
         List<Object[]> lista = qr.getResultList();            
@@ -74,18 +75,34 @@ public class RelatorioProjetosFacade extends AbstractFacade<RelatorioAreasProjet
     }
     
     //Seleciona Todos os Projetos relacionados a uma determinada area de pesquisa avaliadas
-    public RelatorioAreasProjetos[] findAllProjetosPorArea(Areas area, String ordem) {        
-        String sqlString = "SELECT ap.projeto_id,pj.nome as projeto,"+
-            "count(ap.PROJETO_id) as avaliadores, "+                
-            "(SELECT count(ap1.PROJETO_id) FROM gcompet.areas_projetos ap1 "+
-            " WHERE ap1.AREA_id = ap.AREA_id AND ap.PROJETO_id = ap1.PROJETO_id "+
-            " AND ap1.avaliacao = 1 ) as avaliacao "+                
-            " FROM gcompet.areas_projetos ap, gcompet.projetos pj "+
-            " WHERE ap.PROJETO_id=pj.id and ap.AREA_id= ? "+
-            " GROUP BY ap.PROJETO_id "+
-            " HAVING avaliacao > 0 "+
-            " ORDER BY avaliacao DESC ";
-        
+    public RelatorioAreasProjetos[] findAllProjetosPorArea(Areas area, String ordem) {     
+        String sqlString = null;        
+        if (null != ordem) switch (ordem) {
+            case "empresa":
+                sqlString = "SELECT ap.projeto_id,pj.nome as projeto,"+
+                "count(ap.PROJETO_id) as avaliadores, "+                
+                "(SELECT count(ap1.PROJETO_id) FROM gcompet.areas_projetos ap1 "+
+                " WHERE ap1.AREA_id = ap.AREA_id AND ap.PROJETO_id = ap1.PROJETO_id "+
+                " AND ap1.avaliacao = 1 ) as avaliacao "+                
+                " FROM gcompet.areas_projetos ap, gcompet.projetos pj "+
+                " WHERE ap.PROJETO_id=pj.id and ap.AREA_id= ? "+
+                " GROUP BY ap.PROJETO_id "+
+                " HAVING avaliacao > 0 "+
+                " ORDER BY ap.projeto_id ASC ";
+                break;
+            case "peso":
+                sqlString = "SELECT ap.projeto_id,pj.nome as projeto,"+
+                "count(ap.PROJETO_id) as avaliadores, "+                
+                "(SELECT count(ap1.PROJETO_id) FROM gcompet.areas_projetos ap1 "+
+                " WHERE ap1.AREA_id = ap.AREA_id AND ap.PROJETO_id = ap1.PROJETO_id "+
+                " AND ap1.avaliacao = 1 ) as avaliacao "+                
+                " FROM gcompet.areas_projetos ap, gcompet.projetos pj "+
+                " WHERE ap.PROJETO_id=pj.id and ap.AREA_id= ? "+
+                " GROUP BY ap.PROJETO_id "+
+                " HAVING avaliacao > 0 "+
+                " ORDER BY avaliacao DESC ";
+                break;
+        }
         Query qr = getEntityManager().createNativeQuery(sqlString);
         qr.setParameter(1, area.getId());
         List<Object[]> lista = qr.getResultList();            
