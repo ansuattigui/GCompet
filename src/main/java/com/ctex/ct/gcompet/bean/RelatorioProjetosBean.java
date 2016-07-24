@@ -264,7 +264,7 @@ public class RelatorioProjetosBean implements Serializable {
         HashMap hm = new HashMap<>();
         hm.put("par_logotipo",logotipo.getImage());        
         hm.put("par_nomerelat","Avaliação de Projetos do CTEx: "+projeto.getNome().toUpperCase());  
-        hm.put("par_dados_capacidade", getJrDataSourceSubReport1());
+        hm.put("par_dados_capacidades", getJrDataSourceSubReport1());
         hm.put("par_dados_empresas", getJrDataSourceSubReport2());
         try {   
             jasperPrintProjetosAreas = JasperFillManager.fillReport(getJasperProjetosAreas(),hm,getJrDataSourceMainReport());
