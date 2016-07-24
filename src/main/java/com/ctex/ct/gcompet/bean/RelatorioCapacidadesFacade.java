@@ -87,5 +87,45 @@ public class RelatorioCapacidadesFacade extends AbstractFacade<RelatorioCapacida
         return arrayAreasCapacidades;
     }
     
+
+    // Todas as Capacidades relacionadas as areas avaliadas
+    public RelatorioCapacidadesAreas[] findAllCapacidades() {
+        String sqlString = "SELECT ca.capacidade_id as capacidade_id, c.nome as capacidade, ca.area_id, "+                
+            "(SELECT count(ca1.capacidade_id) FROM gcompet.capacidades_areas ca1 "+
+            "WHERE ca1.capacidade_id = ca.capacidade_id and ca1.area_id = ca.area_id) as avaliadores, "+                
+            "(SELECT count(ca2.avaliacao) FROM gcompet.capacidades_areas ca2 WHERE ca2.avaliacao = 1 "+
+            "AND ca2.capacidade_id = ca.capacidade_id AND ca2.area_id = ca.area_id) as avaliacao " +                                        
+            "FROM gcompet.capacidades_areas ca, gcompet.capacidades c " +
+            "WHERE ca.capacidade_id = c.id " +
+            "GROUP BY ca.capacidade_id, ca.area_id " +
+            "HAVING avaliacao > 0 " +
+            "ORDER BY ca.capacidade_id ASC, ca.area_id ASC ";
+
+        Query qr = getEntityManager().createNativeQuery(sqlString);
+        List<Object[]> lista = qr.getResultList();
+        
+        RelatorioCapacidadesAreas[] arrayCapacidadesAreas = new RelatorioCapacidadesAreas[lista.size()];
+        
+        int i = 0;
+        for (Object[] item : lista) {            
+            Integer capacidade_id = (Integer) item[0];
+            String capacidade = (String)item[1];
+            Integer area_id = (Integer) item[2];
+            long avaliadores = (long) item[3];
+            long avaliacao = (long) item[4];
+
+            RelatorioCapacidadesAreas rac = new RelatorioCapacidadesAreas();
+            rac.setCapacidade_id(capacidade_id);
+            rac.setCapacidade(capacidade);
+            rac.setArea_id(area_id);
+            rac.setAvaliadores(avaliadores);
+            rac.setAvaliacao(avaliacao);
+            
+            arrayCapacidadesAreas[i] = rac;
+            i++;
+        }
+        
+        return arrayCapacidadesAreas;
+    }
     
 }

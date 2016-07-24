@@ -5,12 +5,15 @@
  */
 package com.ctex.ct.gcompet.modelo.relatorios;
 
+import java.util.ArrayList;
+import java.util.Objects;
+
 /**
  *
  * @author ralfh
  */
 
-public class RelatorioCapacidadesAreas implements Comparable {
+public class RelatorioCapacidadesAreas implements Comparable<RelatorioCapacidadesAreas> {
 
     private Integer capacidade_id;
     private String capacidade;    
@@ -108,8 +111,56 @@ public class RelatorioCapacidadesAreas implements Comparable {
     }
 
     @Override
-    public int compareTo(Object o) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public int compareTo(RelatorioCapacidadesAreas o) {
+        if(this.avaliacao > o.getAvaliacao()){
+            return -1;
+        } else if(this.avaliacao < o.getAvaliacao()){
+            return 1;
+        }   
+        return this.getCapacidade().compareToIgnoreCase(o.getCapacidade());
     }
+    
+    // agrupa todas as contagens referentes as repetições das capacidades na lista,
+    // desconsiderando o efeito das áreas de pesquisa (Não sei se é isto que deve ser feito!!!)
+    public static ArrayList<RelatorioCapacidadesAreas> agrupaCapacidades(ArrayList lista) {
+        
+        ArrayList<RelatorioCapacidadesAreas> listaCapacidades = new ArrayList<>();
+        
+        int i=0;
+        int j=0;
+        while (i < lista.size()-1) {                    
+            j = i + 1;
+            RelatorioCapacidadesAreas item = (RelatorioCapacidadesAreas) lista.get(i);
+            while (j < lista.size()-1) {
+                RelatorioCapacidadesAreas itemSeguinte = (RelatorioCapacidadesAreas) lista.get(j);
+                if (Objects.equals(item.getCapacidade_id(), itemSeguinte.getCapacidade_id())) {                
+                    long avaliacaoCapacidade = item.getAvaliacao()+itemSeguinte.getAvaliacao();
+                    long avaliadoresCapacidade = item.getAvaliadores() + itemSeguinte.getAvaliadores();
+                    item.setAvaliacao(avaliacaoCapacidade);
+                    item.setAvaliadores(avaliadoresCapacidade);
+                    j++;
+                } else {
+                    listaCapacidades.add(item);
+                    i = j;
+                    break;
+                }
+            }
+            if (j == lista.size()-1) {
+                listaCapacidades.add(item);
+                i = j ;
+            }
+        }        
+        return listaCapacidades;
+    }
+    
+    // Encapsula uma lista de objetos do tipo RelatorioCapacidadesAreas em um array do tipo RelatorioCapacidadesAreas
+    public static RelatorioCapacidadesAreas[] castCapacidadesAreas(ArrayList<RelatorioCapacidadesAreas> listaCapacidades) {    
+        RelatorioCapacidadesAreas[] arrayCapacidadesAreas = new RelatorioCapacidadesAreas[listaCapacidades.size()];
+        for (int a=0;a<listaCapacidades.size();a++) {
+            arrayCapacidadesAreas[a] = listaCapacidades.get(a);
+        }        
+        return arrayCapacidadesAreas;
+    }
+    
     
 }
