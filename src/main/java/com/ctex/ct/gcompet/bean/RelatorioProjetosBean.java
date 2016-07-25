@@ -43,7 +43,6 @@ public class RelatorioProjetosBean implements Serializable {
     private JRDataSource jrDataSourceMainReport;
     private JRDataSource jrDataSourceSubReport1;
     private JRDataSource jrDataSourceSubReport2;
-    private JasperPrint jasperPrintCapacidadesAreas;
     private JasperPrint jasperPrintProjetosAreas;
     private String relatorioAC;
     private Projetos projeto;
