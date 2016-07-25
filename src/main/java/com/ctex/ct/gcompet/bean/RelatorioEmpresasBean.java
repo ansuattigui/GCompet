@@ -262,7 +262,7 @@ public class RelatorioEmpresasBean implements Serializable {
         ImageIcon logotipo = new ImageIcon(getContext().getRealPath("resources/img/logo-ctex.png"));                
         HashMap hm = new HashMap<>();
         hm.put("par_logotipo",logotipo.getImage());        
-        hm.put("par_nomerelat","Avaliação de Projetos do CTEx: "+empresa.getNome().toUpperCase());  
+        hm.put("par_nomerelat","Avaliação de Empresas do CTEx: "+empresa.getNome().toUpperCase());  
         hm.put("par_dados_capacidades", getJrDataSourceSubReport1());
         hm.put("par_dados_projetos", getJrDataSourceSubReport2());
         try {   

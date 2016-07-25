@@ -146,7 +146,7 @@ public class RelatorioAreasBean implements Serializable {
      * @return the arrayProjetosPorArea  OKOKOK
      */
     public RelatorioAreasProjetos[] getArrayProjetosPorArea() {
-        arrayProjetosPorArea = ejbRAPFacade.findAllProjetosPorArea(area,null);    
+        arrayProjetosPorArea = ejbRAPFacade.findAllProjetosPorArea(area,"projeto");    
         return arrayProjetosPorArea;
     }
 

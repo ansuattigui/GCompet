@@ -78,7 +78,7 @@ public class RelatorioProjetosFacade extends AbstractFacade<RelatorioProjetosAre
     public RelatorioAreasProjetos[] findAllProjetosPorArea(Areas area, String ordem) {     
         String sqlString = null;        
         if (null != ordem) switch (ordem) {
-            case "empresa":
+            case "projeto":
                 sqlString = "SELECT ap.projeto_id,pj.nome as projeto,"+
                 "count(ap.PROJETO_id) as avaliadores, "+                
                 "(SELECT count(ap1.PROJETO_id) FROM gcompet.areas_projetos ap1 "+
