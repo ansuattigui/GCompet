@@ -10,7 +10,6 @@ import com.ctex.ct.gcompet.modelo.relatorios.RelatorioAreasEmpresas;
 import com.ctex.ct.gcompet.modelo.relatorios.RelatorioAreasProjetos;
 import com.ctex.ct.gcompet.modelo.relatorios.RelatorioCapacidadesAreas;
 import java.io.Serializable;
-import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -170,7 +169,13 @@ public class RelatorioCapacidadesBean implements Serializable {
         ArrayList<RelatorioAreasProjetos> listaProjetos = RelatorioAreasProjetos.agrupaProjetos(lista);
         
         //Ordena a lista de projetos em ordem decrescente de avaliação
-         Collections.sort(listaProjetos);
+         Collections.sort(listaProjetos);         
+        
+/*        
+        listaProjetos.sort(JsfUtil.<RelatorioAreasProjetos>compare()
+            .thenComparing(p -> p.getAvaliacao())
+            .thenComparing(p -> p.getAvaliadores()));
+*/        
         
         // devolve um array com o resultado dos projetos resultantes da pesquisa 
         // com a Capacidade Operativa selecionada.

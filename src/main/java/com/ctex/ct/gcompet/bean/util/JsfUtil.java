@@ -4,6 +4,7 @@ import java.io.UnsupportedEncodingException;
 import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.Comparator;
 import java.util.List;
 import javax.faces.application.FacesMessage;
 import javax.faces.component.UIComponent;
@@ -83,6 +84,10 @@ public class JsfUtil {
             //Logger.getLogger(PasswordTest.class.getName()).log(Level.SEVERE, null, ex);
         }       
         return encPassword;
-    }    
+    }  
+   
+    public static <E> Comparator<E> compare() {
+        return (e1, e2) -> 0;
+    }
     
 }

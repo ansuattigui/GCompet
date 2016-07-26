@@ -109,14 +109,24 @@ public class RelatorioAreasProjetos implements Comparable<RelatorioAreasProjetos
         this.avaliacao = avaliacao;
     }
     
+    
     @Override
-    public int compareTo(RelatorioAreasProjetos o) {        
-        if(this.avaliacao > o.getAvaliacao()){
+    public int compareTo(RelatorioAreasProjetos o) {       
+        float x1 = (float) this.avaliacao/this.avaliadores;
+        float x2 = (float) o.getAvaliacao()/o.getAvaliadores();
+        if(x1 > x2){
             return -1;
-        } else if(this.avaliacao < o.getAvaliacao()){
+        } else if (x1 < x2){
             return 1;
-        }   
-        return this.getProjeto().compareToIgnoreCase(o.getProjeto());
+        }
+        return 1;
+/*        
+        } else {
+            if (this.avaliacao > o.getAvaliacao()) {
+                return 1;
+            } else return -1;
+        }
+*/        
     }
     
     
