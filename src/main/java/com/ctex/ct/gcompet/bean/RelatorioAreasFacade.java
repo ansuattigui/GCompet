@@ -11,7 +11,9 @@ import com.ctex.ct.gcompet.modelo.Projetos;
 import com.ctex.ct.gcompet.modelo.relatorios.RelatorioAreasEmpresas;
 import com.ctex.ct.gcompet.modelo.relatorios.RelatorioAreasProjetos;
 import com.ctex.ct.gcompet.modelo.relatorios.RelatorioCapacidadesAreas;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -93,6 +95,7 @@ public class RelatorioAreasFacade extends AbstractFacade<RelatorioCapacidadesAre
         
         return arrayCapacidadesAreas;
     }
+
     
     public RelatorioAreasProjetos[] findAllAreasPorProjeto(Projetos proj, String ordem) {
         String sqlString = null;        

@@ -38,6 +38,9 @@
                                     <p:menuitem ajax="false" value="Projetos" outcome="/user/relatorios/projetos/RelatorioProjetos" />                            
                                     <p:menuitem ajax="false" value="Empresas" outcome="/user/relatorios/empresas/RelatorioEmpresas" />                            
                                 </p:submenu>
+                                <p:submenu label="#{bundle.GraficosTela}" rendered="#{loginController.perfilLogged.nome eq 'GESTOR'}">
+                                    <p:menuitem ajax="false" value="Capacidades" outcome="/user/graficosnatela/capacidades/RelatorioCapacidades" />                            
+                                </p:submenu>
                                 <p:menuitem value="#{bundle.UserLogout}" action="#{loginController.logout}"/>
                             </p:menubar>
                         </p:column>                        
