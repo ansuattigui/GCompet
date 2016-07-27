@@ -15,7 +15,6 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
-import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.bean.ManagedBean;
@@ -34,7 +33,7 @@ import org.primefaces.model.chart.ChartSeries;
 @SessionScoped
 public class GraficoCapacidadesBean implements Serializable {
     
-//    private String graficoAreas;
+    private String graficoAreas;
     private BarChartModel barChartAreas;
     private JRDataSource jrDataSourceSubReport2;
     private Capacidades capacidade;
@@ -57,10 +56,11 @@ public class GraficoCapacidadesBean implements Serializable {
     public GraficoCapacidadesBean() { 
     }    
 
+/*    
     @PostConstruct
     public void init() {
     }    
-    
+*/    
     public void createGraphics() {
     }
     
@@ -68,6 +68,7 @@ public class GraficoCapacidadesBean implements Serializable {
      * @return the barChartAreas
      */
     public BarChartModel getBarChartAreas() {
+        System.out.print("Va tomar no cú");
         return barChartAreas;
     }
 
@@ -90,12 +91,9 @@ public class GraficoCapacidadesBean implements Serializable {
         Axis yAxis = barChartAreas.getAxis(AxisType.Y);
         yAxis.setMin(0);
         yAxis.setMax(200);   
-        
-        return "/user/graficosnatela/capacidades/CapacidadesAreasGrafico";
-        
-/*        graficoAreas = "/user/graficosnatela/capacidades/CapacidadesAreasGrafico";
+        graficoAreas = "/user/graficosnatela/capacidades/CapacidadesAreasGrafico";
         return graficoAreas;
-*/    }
+    }
 
     
     
@@ -120,6 +118,7 @@ public class GraficoCapacidadesBean implements Serializable {
             String label = String.valueOf(rca[i].getArea_id());
             int pDivA = (int) (rca[i].getAvaliacao()/rca[i].getAvaliadores());
             mapAreas.put(label,pDivA);
+            i++;
         }
         areas.setData(mapAreas);
         model.addSeries(areas);        
