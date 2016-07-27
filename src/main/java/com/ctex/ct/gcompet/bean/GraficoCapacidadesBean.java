@@ -19,9 +19,7 @@ import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.bean.ManagedBean;
-import javax.swing.ImageIcon;
 import net.sf.jasperreports.engine.JRDataSource;
-import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.engine.data.JRBeanArrayDataSource;
 import org.primefaces.model.chart.Axis;
 import org.primefaces.model.chart.AxisType;
@@ -36,10 +34,9 @@ import org.primefaces.model.chart.ChartSeries;
 @SessionScoped
 public class GraficoCapacidadesBean implements Serializable {
     
-    private JRDataSource jrDataSourceMainReport;
+//    private String graficoAreas;
     private BarChartModel barChartAreas;
     private JRDataSource jrDataSourceSubReport2;
-    private JasperPrint jasperPrintCapacidadesAreas;
     private Capacidades capacidade;
     //Array para o Subrelatório Projetos
     private RelatorioAreasProjetos[] arrayProjetosAreas;
@@ -62,58 +59,73 @@ public class GraficoCapacidadesBean implements Serializable {
 
     @PostConstruct
     public void init() {
-        createGraphics();
     }    
     
-    private void createGraphics() {
-        createBarChartAreas();
+    public void createGraphics() {
     }
     
-    private void createBarChartAreas() {
+    /**
+     * @return the barChartAreas
+     */
+    public BarChartModel getBarChartAreas() {
+        return barChartAreas;
+    }
+
+    /**
+     * @param barChartAreas the barChartAreas to set
+     */
+    public void setBarChartAreas(BarChartModel barChartAreas) {
+        this.barChartAreas = barChartAreas;
+    }
+    
+    
+    /**
+     * @return the graficoAreas
+     */
+    public String getGraficoAreas() {
         barChartAreas = initBarModel();
         barChartAreas.setTitle("Areas de Pesquisa");
         barChartAreas.setAnimate(true);
         barChartAreas.setLegendPosition("ne");
         Axis yAxis = barChartAreas.getAxis(AxisType.Y);
         yAxis.setMin(0);
-        yAxis.setMax(200);    
+        yAxis.setMax(200);   
+        
+        return "/user/graficosnatela/capacidades/CapacidadesAreasGrafico";
+        
+/*        graficoAreas = "/user/graficosnatela/capacidades/CapacidadesAreasGrafico";
+        return graficoAreas;
+*/    }
+
+    
+    
+    /**
+     * @param graficoAreas the graficoAreas to set
+     */
+    public void setGraficoAreas(String graficoAreas) {
+        this.graficoAreas = graficoAreas;
     }
+    
     
     private BarChartModel initBarModel() {
         BarChartModel model = new BarChartModel();
         ChartSeries areas = new ChartSeries();            
         areas.setLabel("Areas de Pesquisa");        
         
-        Map<Integer,Double> mapAreas = new HashMap<>();
+        Map<Object,Number> mapAreas = new HashMap<>();
         RelatorioCapacidadesAreas[] rca = ejbRCAFacade.findAllAreasPorCapacidade(capacidade,"peso");
         
         int i = 0;
         while(i < rca.length) {
-            mapAreas.put(rca[i].getArea_id(), (Double) (rca[i].getAvaliacao()/rca[i].getAvaliadores()));
+            String label = String.valueOf(rca[i].getArea_id());
+            int pDivA = (int) (rca[i].getAvaliacao()/rca[i].getAvaliadores());
+            mapAreas.put(label,pDivA);
         }
-        
-        return model;
-        
+        areas.setData(mapAreas);
+        model.addSeries(areas);        
+        return model;        
     }
 
-
-    public JRDataSource getJrDataSourceMainReport() {        
-        jrDataSourceMainReport = new JRBeanArrayDataSource(getArrayAreasCapacidadePorPeso());
-        return jrDataSourceMainReport;
-    }
-
-    /**
-     * @return the barChartAreas
-     */
-    public BarChartModel getBarChartAreas() {
-        
-        
-        
-        
-        return barChartAreas;
-    }
-
-    
     /**
      * @return the jrDataSourceSubReport2
      */
@@ -212,19 +224,6 @@ public class GraficoCapacidadesBean implements Serializable {
         arrayEmpresasAreas = RelatorioAreasEmpresas.castAreasEmpresas(listaEmpresas);
         
         return arrayEmpresasAreas;
-    }
-
-    /**
-     * @return the jasperPrintCapacidadesAreas
-     */
-    public JasperPrint getJasperPrintCapacidadesAreas() {  
-        ImageIcon logotipo = new ImageIcon(getContext().getRealPath("resources/img/logo-ctex.png"));                
-        HashMap hm = new HashMap<>();
-        hm.put("par_logotipo",logotipo.getImage());        
-        hm.put("par_nomerelat","Avaliação de Capacidades Operacionais: "+capacidade.getNome().toUpperCase());  
-        hm.put("par_dados_projetos", getJrDataSourceSubReport1());
-        hm.put("par_dados_empresas", getJrDataSourceSubReport2());
-        return jasperPrintCapacidadesAreas;
     }
 
     /**

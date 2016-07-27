@@ -19,7 +19,7 @@
                                         
                     <p:dataTable id="datalist" value="#{capacidadesController.items}" var="item"
                         selectionMode="single" 
-                        selection="#{relatorioCapacidadesAreas.capacidade}"
+                        selection="#{graficoCapacidadesAreas.capacidade}"
                         paginator="false" 
                         scrollable="true"
                         scrollHeight="375"
@@ -46,7 +46,7 @@
                         
                         <f:facet name="footer">
                             <p:commandButton id="viewButton"  update=":CapacidadesViewForm" icon="ui-icon-search" value="#{bundle.View}" oncomplete="PF('CapacidadesViewDialog').show()" />
-                            <p:commandButton id="confirmaButton" icon="ui-icon-plus"   value="#{bundle.Select}" action="#{relatorioCapacidadesAreas.getRelatorioAC}" update="SelecionaCapacidadeForm">
+                            <p:commandButton id="confirmaButton" icon="ui-icon-plus"   value="#{bundle.Select}" action="#{graficoCapacidadesAreas.graficoAreas}" update="SelecionaCapacidadeForm">
                                 <p:confirm header="Confirmação" message="Confirma a seleção desejada?" icon="ui-icon-alert" />
                             </p:commandButton>                                
                             <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">

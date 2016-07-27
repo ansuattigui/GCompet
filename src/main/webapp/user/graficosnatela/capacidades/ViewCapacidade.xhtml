@@ -3,7 +3,6 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:f="http://xmlns.jcp.org/jsf/core"
       xmlns:p="http://primefaces.org/ui">
 
     <ui:composition>
@@ -12,13 +11,13 @@
             resizable="false" appendTo="@(body)" header="#{bundle.ViewCapacidadesTitle}">
             <h:form id="CapacidadesViewForm">
                 <h:panelGroup id="display" >
-                    <p:panelGrid columns="2" rendered="#{relatorioCapacidadesAreas.capacidade!= null}" style="width: 600px;">
+                    <p:panelGrid columns="2" rendered="#{graficoCapacidadesAreas.capacidade!= null}" style="width: 600px;">
                         <h:outputText value="#{bundle.ViewCapacidadesLabel_num}"/>
-                        <h:outputText value="#{relatorioCapacidadesAreas.capacidade.id}" title="#{bundle.ViewCapacidadesTitle_id}"/>
+                        <h:outputText value="#{graficoCapacidadesAreas.capacidade.id}" title="#{bundle.ViewCapacidadesTitle_id}"/>
                         <h:outputText value="#{bundle.ViewCapacidadesLabel_nome}"/>
-                        <h:outputText value="#{relatorioCapacidadesAreas.capacidade.nome}" title="#{bundle.ViewCapacidadesTitle_nome}"/>
+                        <h:outputText value="#{graficoCapacidadesAreas.capacidade.nome}" title="#{bundle.ViewCapacidadesTitle_nome}"/>
                         <h:outputText value="#{bundle.ViewCapacidadesLabel_descricao}"/>
-                        <h:inputTextarea value="#{relatorioCapacidadesAreas.capacidade.descricao}" title="#{bundle.ViewCapacidadesTitle_nome}" readonly="true" rows="5" style="width:500px;"/>
+                        <h:inputTextarea value="#{graficoCapacidadesAreas.capacidade.descricao}" title="#{bundle.ViewCapacidadesTitle_nome}" readonly="true" rows="5" style="width:500px;"/>
                     </p:panelGrid>
                 </h:panelGroup>
             </h:form>
