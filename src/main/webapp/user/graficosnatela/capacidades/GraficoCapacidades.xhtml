@@ -10,7 +10,7 @@
 
         <ui:define name="body">        
         
-            <h:form id="SelecionaCapacidadeForm" prependId="false">
+            <h:form id="FormSelecionaCapacidade" prependId="false">
                 <p:panel style="width: 100%;" class="ui-sem-borda">
 
                     <f:facet name="header" >
@@ -46,7 +46,7 @@
                         
                         <f:facet name="footer">
                             <p:commandButton id="viewButton"  update=":CapacidadesViewForm" icon="ui-icon-search" value="#{bundle.View}" oncomplete="PF('CapacidadesViewDialog').show()" />
-                            <p:commandButton id="confirmaButton" icon="ui-icon-plus"   value="#{bundle.Select}" action="#{graficoCapacidadesAreas.getGraficoAreas()}" update="SelecionaCapacidadeForm">
+                            <p:commandButton id="confirmaButton" icon="ui-icon-plus"   value="#{bundle.Select}" action="#{graficoCapacidadesAreas.getGraficoAreas()}" update="FormSelecionaCapacidade">
                                 <p:confirm header="Confirmação" message="Confirma a seleção desejada?" icon="ui-icon-alert" />
                             </p:commandButton>                                
                             <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">

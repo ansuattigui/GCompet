@@ -10,16 +10,11 @@ import com.ctex.ct.gcompet.modelo.relatorios.RelatorioAreasEmpresas;
 import com.ctex.ct.gcompet.modelo.relatorios.RelatorioAreasProjetos;
 import com.ctex.ct.gcompet.modelo.relatorios.RelatorioCapacidadesAreas;
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 import javax.ejb.EJB;
 import javax.enterprise.context.SessionScoped;
-import javax.faces.bean.ManagedBean;
-import net.sf.jasperreports.engine.JRDataSource;
-import net.sf.jasperreports.engine.data.JRBeanArrayDataSource;
+import javax.inject.Named;
 import org.primefaces.model.chart.Axis;
 import org.primefaces.model.chart.AxisType;
 import org.primefaces.model.chart.BarChartModel;
@@ -29,13 +24,11 @@ import org.primefaces.model.chart.ChartSeries;
  *
  * @author ralfh
  */
-@ManagedBean(name = "graficoCapacidadesAreas")
 @SessionScoped
+@Named("graficoCapacidadesAreas")
 public class GraficoCapacidadesBean implements Serializable {
     
-    private String graficoAreas;
     private BarChartModel barChartAreas;
-    private JRDataSource jrDataSourceSubReport2;
     private Capacidades capacidade;
     //Array para o Subrelatório Projetos
     private RelatorioAreasProjetos[] arrayProjetosAreas;
@@ -52,10 +45,11 @@ public class GraficoCapacidadesBean implements Serializable {
  
     /**
      * Creates a new instance of RelatorioDivisao
-     */
+     *
     public GraficoCapacidadesBean() { 
     }    
-
+    */
+    
 /*    
     @PostConstruct
     public void init() {
@@ -67,18 +61,9 @@ public class GraficoCapacidadesBean implements Serializable {
     /**
      * @return the barChartAreas
      */
-    public BarChartModel getBarChartAreas() {
-        System.out.print("Va tomar no cú");
+    public BarChartModel getGrafico() {
         return barChartAreas;
     }
-
-    /**
-     * @param barChartAreas the barChartAreas to set
-     */
-    public void setBarChartAreas(BarChartModel barChartAreas) {
-        this.barChartAreas = barChartAreas;
-    }
-    
     
     /**
      * @return the graficoAreas
@@ -90,18 +75,9 @@ public class GraficoCapacidadesBean implements Serializable {
         barChartAreas.setLegendPosition("ne");
         Axis yAxis = barChartAreas.getAxis(AxisType.Y);
         yAxis.setMin(0);
-        yAxis.setMax(200);   
-        graficoAreas = "/user/graficosnatela/capacidades/CapacidadesAreasGrafico";
-        return graficoAreas;
-    }
-
-    
-    
-    /**
-     * @param graficoAreas the graficoAreas to set
-     */
-    public void setGraficoAreas(String graficoAreas) {
-        this.graficoAreas = graficoAreas;
+        yAxis.setMax(100);  
+        
+        return "/user/graficosnatela/capacidades/CapacidadesAreasGrafico";
     }
     
     
@@ -116,7 +92,7 @@ public class GraficoCapacidadesBean implements Serializable {
         int i = 0;
         while(i < rca.length) {
             String label = String.valueOf(rca[i].getArea_id());
-            int pDivA = (int) (rca[i].getAvaliacao()/rca[i].getAvaliadores());
+            float pDivA = (float)rca[i].getAvaliacao()*100/rca[i].getAvaliadores();
             mapAreas.put(label,pDivA);
             i++;
         }
@@ -127,7 +103,7 @@ public class GraficoCapacidadesBean implements Serializable {
 
     /**
      * @return the jrDataSourceSubReport2
-     */
+     *
     public JRDataSource getJrDataSourceSubReport2() {
         jrDataSourceSubReport2 = new JRBeanArrayDataSource(getArrayEmpresasAreas());
         return jrDataSourceSubReport2;
@@ -137,10 +113,10 @@ public class GraficoCapacidadesBean implements Serializable {
     public RelatorioCapacidadesAreas[] getArrayAreasCapacidadePorArea() {
         return ejbRCAFacade.findAllAreasPorCapacidade(capacidade,"area");
     }   
-    
+*/    
     /**
      * @return the arrayProjetosAreasAux
-     */
+     *
     //Consulta os Projetos afins  - Ordem do id dos projetos
     public RelatorioAreasProjetos[] getArrayProjetosAreasAux() {
         return ejbRAPFacade.findAllProjetosAreas();    
@@ -148,15 +124,15 @@ public class GraficoCapacidadesBean implements Serializable {
 
     /**
      * @return the arrayEmpresasAreasAux
-     */
+     *
     //Array com todas as empresas relacionadas as áreas selecionadas
     public RelatorioAreasEmpresas[] getArrayEmpresasAreasAux() {
         return ejbRAEFacade.findAllEmpresasAreas();
     }
-
+*/
     /**
      * @return the arrayProjetosAreas
-     */
+     *
     public RelatorioAreasProjetos[] getArrayProjetosAreas() {              
         // popula uma lista com os relacionamentos entre Capacidades Operativas e Areas de Pesquisa
         RelatorioCapacidadesAreas[] areasArray = getArrayAreasCapacidadePorArea();
@@ -191,7 +167,7 @@ public class GraficoCapacidadesBean implements Serializable {
 
     /**
      * @return the arrayEmpresasAreas
-     */
+     *
     public RelatorioAreasEmpresas[] getArrayEmpresasAreas() {
         // popula uma lista com os relacionamentos entre Capacidades Operativas e Areas de Pesquisa
         RelatorioCapacidadesAreas[] areasArray = getArrayAreasCapacidadePorArea();
@@ -224,7 +200,7 @@ public class GraficoCapacidadesBean implements Serializable {
         
         return arrayEmpresasAreas;
     }
-
+*/
     /**
      * @return the ejbRCAFacade
      */
