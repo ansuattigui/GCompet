@@ -16,6 +16,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.LinkedHashMap;
 import java.util.Map;
 import javax.ejb.EJB;
 import javax.enterprise.context.SessionScoped;
@@ -89,8 +90,8 @@ public class GraficoCapacidadesBean implements Serializable {
         ChartSeries areas = new ChartSeries();            
         areas.setLabel("Areas de Pesquisa");        
         
-        Map<Object,Number> mapAreas = new ArrayMap<>(); //   HashMap<>();
         RelatorioCapacidadesAreas[] rca = ejbRCAFacade.findAllAreasPorCapacidade(capacidade,"peso");
+        Map<Object,Number> mapAreas = new LinkedHashMap<>(rca.length);
         
         int i = 0;
         while(i < rca.length) {
