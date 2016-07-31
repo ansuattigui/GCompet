@@ -196,7 +196,7 @@ public class RelatorioEmpresasBean implements Serializable {
         ArrayList<RelatorioAreasProjetos> listaProjetos = RelatorioAreasProjetos.agrupaProjetos(lista);
         
         // ordena a lista de projetos pelo seu id 
-        Collections.sort(listaProjetos);
+//        Collections.sort(listaProjetos);
         
         // devolve um array com o resultado dos projetos resultantes da pesquisa 
         // com a Capacidade Operativa selecionada.

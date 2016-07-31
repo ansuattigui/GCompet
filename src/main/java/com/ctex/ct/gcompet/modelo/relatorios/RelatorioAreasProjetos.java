@@ -5,6 +5,7 @@
  */
 package com.ctex.ct.gcompet.modelo.relatorios;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Objects;
 
@@ -13,7 +14,7 @@ import java.util.Objects;
  * @author ralfh
  */
 
-public class RelatorioAreasProjetos implements Comparable<RelatorioAreasProjetos>  {
+public class RelatorioAreasProjetos implements Serializable {
     
     private Integer area_id;
     private String area;
@@ -109,26 +110,26 @@ public class RelatorioAreasProjetos implements Comparable<RelatorioAreasProjetos
         this.avaliacao = avaliacao;
     }
     
-    
-    @Override
-    public int compareTo(RelatorioAreasProjetos o) {       
-        float x1 = (float) this.avaliacao/this.avaliadores;
-        float x2 = (float) o.getAvaliacao()/o.getAvaliadores();
+/*    
+    public int compare(RelatorioAreasProjetos o1, RelatorioAreasProjetos o2) {       
+        Float x1 = (float) o1.avaliacao/o1.avaliadores;
+        Float x2 = (float) o2.getAvaliacao()/o2.getAvaliadores();
         if(x1 > x2){
-            return -1;
-        } else if (x1 < x2){
             return 1;
+        } else if(x1 < x2) {
+            return -1;
+        } else {
+            return 0;
         }
-        return 1;
 /*        
         } else {
             if (this.avaliacao > o.getAvaliacao()) {
                 return 1;
             } else return -1;
         }
-*/        
+       
     }
-    
+*/    
     
     // agrupa todas as contagens referentes as repetições dos projetos na lista,
     // desconsiderando o efeito das áreas de pesquisa (Não sei se é isto que deve ser feito!!!)

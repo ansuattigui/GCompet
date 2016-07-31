@@ -169,7 +169,7 @@ public class RelatorioCapacidadesBean implements Serializable {
         ArrayList<RelatorioAreasProjetos> listaProjetos = RelatorioAreasProjetos.agrupaProjetos(lista);
         
         //Ordena a lista de projetos em ordem decrescente de avaliação
-         Collections.sort(listaProjetos);         
+//         Collections.sort(listaProjetos);         
         
 /*        
         listaProjetos.sort(JsfUtil.<RelatorioAreasProjetos>compare()
