@@ -7,6 +7,8 @@ package com.ctex.ct.gcompet.modelo.relatorios;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
+import java.util.Map;
 import java.util.Objects;
 
 /**
@@ -22,8 +24,17 @@ public class RelatorioAreasProjetos implements Serializable {
     private String projeto;
     private long avaliadores;
     private long avaliacao;
+    
+    public RelatorioAreasProjetos(){        
+    }
 
-    public RelatorioAreasProjetos() {
+    public RelatorioAreasProjetos(Integer projeto_id,Integer area_id, String area, String projeto, long avaliadores, long avaliacao) {
+        this.projeto_id = projeto_id;
+        this.area_id = area_id;
+        this.area = area;
+        this.projeto = projeto;
+        this.avaliadores = avaliadores;
+        this.avaliacao = avaliacao;
     }
 
     /**
@@ -110,27 +121,6 @@ public class RelatorioAreasProjetos implements Serializable {
         this.avaliacao = avaliacao;
     }
     
-/*    
-    public int compare(RelatorioAreasProjetos o1, RelatorioAreasProjetos o2) {       
-        Float x1 = (float) o1.avaliacao/o1.avaliadores;
-        Float x2 = (float) o2.getAvaliacao()/o2.getAvaliadores();
-        if(x1 > x2){
-            return 1;
-        } else if(x1 < x2) {
-            return -1;
-        } else {
-            return 0;
-        }
-/*        
-        } else {
-            if (this.avaliacao > o.getAvaliacao()) {
-                return 1;
-            } else return -1;
-        }
-       
-    }
-*/    
-    
     // agrupa todas as contagens referentes as repetições dos projetos na lista,
     // desconsiderando o efeito das áreas de pesquisa (Não sei se é isto que deve ser feito!!!)
     public static ArrayList<RelatorioAreasProjetos> agrupaProjetos(ArrayList lista) {
@@ -163,7 +153,7 @@ public class RelatorioAreasProjetos implements Serializable {
         }        
         return listaProjetos;
     }
-    
+     
     // Encapsula uma lista de objetos do tipo RelatorioAreasProjetos em um array do tipo RelatorioAreasProjetos
     public static RelatorioAreasProjetos[] castAreasProjetos(ArrayList<RelatorioAreasProjetos> listaProjetos) {    
         RelatorioAreasProjetos[] arrayAreasProjetos = new RelatorioAreasProjetos[listaProjetos.size()];
@@ -171,6 +161,20 @@ public class RelatorioAreasProjetos implements Serializable {
             arrayAreasProjetos[a] = listaProjetos.get(a);
         }        
         return arrayAreasProjetos;
+    }
+    
+    public static Map<Object,Number> mapAreasProjetos(ArrayList<RelatorioAreasProjetos> listaProjetos) {        
+        Map<Object,Number> mapProjetos = new LinkedHashMap<>(listaProjetos.size());
+        int i = 0;
+        while(i < listaProjetos.size()) {
+            String label = listaProjetos.get(i).getProjeto_id().toString();
+            Float x = ((float)listaProjetos.get(i).getAvaliacao()/listaProjetos.get(i).getAvaliadores())*100;
+            //Valor de x arredondado para cima.
+            //Integer I = (int) Math.ceil(x);
+            mapProjetos.put(label,x);
+            i++;
+        }        
+        return mapProjetos;
     }
 
 }

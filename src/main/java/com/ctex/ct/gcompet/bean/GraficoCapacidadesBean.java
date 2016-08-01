@@ -5,23 +5,18 @@
  */
 package com.ctex.ct.gcompet.bean;
 
-import com.ctex.ct.gcompet.bean.util.AreasProjetosAvaliacaoComp;
-import com.ctex.ct.gcompet.bean.util.AreasProjetosAvaliadorComp;
-import com.ctex.ct.gcompet.bean.util.AreasProjetosComparator;
+import com.ctex.ct.gcompet.bean.util.AreasProjetosSortByValue;
 import com.ctex.ct.gcompet.modelo.Capacidades;
 import com.ctex.ct.gcompet.modelo.relatorios.RelatorioAreasEmpresas;
 import com.ctex.ct.gcompet.modelo.relatorios.RelatorioAreasProjetos;
 import com.ctex.ct.gcompet.modelo.relatorios.RelatorioCapacidadesAreas;
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import javax.ejb.EJB;
 import javax.enterprise.context.SessionScoped;
 import javax.inject.Named;
-import org.olap4j.impl.ArrayMap;
 import org.primefaces.model.chart.Axis;
 import org.primefaces.model.chart.AxisType;
 import org.primefaces.model.chart.BarChartModel;
@@ -123,16 +118,7 @@ public class GraficoCapacidadesBean implements Serializable {
         ChartSeries projetos = new ChartSeries();            
         projetos.setLabel("Projetos");        
         
-        Map<Object,Number> mapProjetos = new ArrayMap<>(); //  HashMap<>();
-        RelatorioAreasProjetos[] rpa = getArrayProjetosAreas();
-        
-        int i = 0;
-        while(i < rpa.length) {
-            String label = rpa[i].getProjeto_id().toString();
-            Float pDivA = ((float)rpa[i].getAvaliacao()/rpa[i].getAvaliadores())*100;
-            mapProjetos.put(label,pDivA);
-            i++;
-        }
+        Map<Object,Number> mapProjetos = getMapProjetosAreas();
         
         projetos.setData(mapProjetos);
         model.addSeries(projetos);
@@ -171,9 +157,9 @@ public class GraficoCapacidadesBean implements Serializable {
 
 
     /**
-     * @return the arrayProjetosAreas
+     * @return the mapProjetosAreas
      */
-    public RelatorioAreasProjetos[] getArrayProjetosAreas() {              
+    public Map<Object,Number> getMapProjetosAreas() {              
         // popula uma lista com os relacionamentos entre Capacidades Operativas e Areas de Pesquisa
         RelatorioCapacidadesAreas[] areasArray = getArrayAreasCapacidadePorArea();
         // popula uma lista com os relacionamentos entre Areas de Pesquisa e projetos do CTEx
@@ -197,15 +183,10 @@ public class GraficoCapacidadesBean implements Serializable {
 
         // devolve um array com o resultado dos projetos resultantes da pesquisa 
         // com a Capacidade Operativa selecionada.
-        RelatorioAreasProjetos[] arrayProjetosAreas = RelatorioAreasProjetos.castAreasProjetos(listaProjetos);
+        Map<Object,Number> mapProjetosAreas = RelatorioAreasProjetos.mapAreasProjetos(listaProjetos);
+        Map<Object,Number> mapPA = AreasProjetosSortByValue.sortByValue(mapProjetosAreas,"DESC");
         
-        Arrays.sort(arrayProjetosAreas, new AreasProjetosComparator(
-                new AreasProjetosAvaliacaoComp(),
-                new AreasProjetosAvaliadorComp())
-        );
-        
-        
-        return arrayProjetosAreas;
+        return mapPA;
     }
 
     /**
