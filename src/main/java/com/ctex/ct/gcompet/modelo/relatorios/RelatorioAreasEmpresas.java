@@ -6,6 +6,8 @@
 package com.ctex.ct.gcompet.modelo.relatorios;
 
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
+import java.util.Map;
 import java.util.Objects;
 
 /**
@@ -162,6 +164,21 @@ public class RelatorioAreasEmpresas implements Comparable<RelatorioAreasEmpresas
         }        
         return arrayAreasEmpresas;
     }
+    
+    public static Map<Object,Number> mapAreasEmpresas(ArrayList<RelatorioAreasEmpresas> listaEmpresas) {        
+        Map<Object,Number> mapEmpresas = new LinkedHashMap<>(listaEmpresas.size());
+        int i = 0;
+        while(i < listaEmpresas.size()) {
+            String label = listaEmpresas.get(i).getEmpresa_id().toString();
+            Float x = ((float)listaEmpresas.get(i).getAvaliacao()/listaEmpresas.get(i).getAvaliadores())*100;
+            //Valor de x arredondado para cima.
+            //Integer I = (int) Math.ceil(x);
+            mapEmpresas.put(label,x);
+            i++;
+        }        
+        return mapEmpresas;
+    }
+    
     
     
     

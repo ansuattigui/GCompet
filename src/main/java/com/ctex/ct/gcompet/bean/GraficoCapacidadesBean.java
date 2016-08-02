@@ -5,6 +5,7 @@
  */
 package com.ctex.ct.gcompet.bean;
 
+import com.ctex.ct.gcompet.bean.util.AreasEmpresasSortByValue;
 import com.ctex.ct.gcompet.bean.util.AreasProjetosSortByValue;
 import com.ctex.ct.gcompet.modelo.Capacidades;
 import com.ctex.ct.gcompet.modelo.relatorios.RelatorioAreasEmpresas;
@@ -56,6 +57,9 @@ public class GraficoCapacidadesBean implements Serializable {
         return barChartProjetos;
     }
 
+    public BarChartModel getGraficoEmpresas() {
+        return barChartEmpresas;
+    }
     
     /**
      * @return the graficoAreas
@@ -63,6 +67,7 @@ public class GraficoCapacidadesBean implements Serializable {
     public String getGraficos() {
         createGraficoAreas();
         createGraficoProjetos();
+        createGraficoEmpresas();
         
         return "/user/graficosnatela/capacidades/CapacidadesAreasGrafico";
     }
@@ -78,8 +83,7 @@ public class GraficoCapacidadesBean implements Serializable {
         yAxis.setLabel("%");
         Axis xAxisAreas = barChartAreas.getAxis(AxisType.X);
         xAxisAreas.setLabel("id Area");
-    }
-    
+    }    
     private BarChartModel initBarModelAreas() {
         BarChartModel model = new BarChartModel();
         ChartSeries areas = new ChartSeries();            
@@ -102,7 +106,6 @@ public class GraficoCapacidadesBean implements Serializable {
 
     private void createGraficoProjetos() {
         barChartProjetos = initBarModelProjetos();
-//        barChartAreas.setTitle("Projetos");
         barChartProjetos.setAnimate(true);
         barChartProjetos.setLegendPosition("ne");
         Axis yAxis = barChartProjetos.getAxis(AxisType.Y);
@@ -111,8 +114,7 @@ public class GraficoCapacidadesBean implements Serializable {
         yAxis.setLabel("%");
         Axis xAxisProjetos = barChartProjetos.getAxis(AxisType.X);
         xAxisProjetos.setLabel("id Projeto");
-}
-    
+    }    
     private BarChartModel initBarModelProjetos() {
         BarChartModel model = new BarChartModel();
         ChartSeries projetos = new ChartSeries();            
@@ -124,16 +126,30 @@ public class GraficoCapacidadesBean implements Serializable {
         model.addSeries(projetos);
         return model;        
     }
-    
-    /**
-     * @return the jrDataSourceSubReport2
-     *
-    public JRDataSource getJrDataSourceSubReport2() {
-        jrDataSourceSubReport2 = new JRBeanArrayDataSource(getArrayEmpresasAreas());
-        return jrDataSourceSubReport2;
-    }
 
-*/ 
+    private void createGraficoEmpresas() {
+        barChartEmpresas = initBarModelEmpresas();
+        barChartEmpresas.setAnimate(true);
+        barChartEmpresas.setLegendPosition("ne");
+        Axis yAxis = barChartEmpresas.getAxis(AxisType.Y);
+        yAxis.setMin(0);
+        yAxis.setMax(100);  
+        yAxis.setLabel("%");
+        Axis xAxisProjetos = barChartEmpresas.getAxis(AxisType.X);
+        xAxisProjetos.setLabel("id Projeto");
+    }    
+    private BarChartModel initBarModelEmpresas() {
+        BarChartModel model = new BarChartModel();
+        ChartSeries empresas = new ChartSeries();            
+        empresas.setLabel("Empresas");        
+        
+        Map<Object,Number> mapEmpresas = getMapEmpresasAreas();
+        
+        empresas.setData(mapEmpresas);
+        model.addSeries(empresas);
+        return model;        
+    }
+    
     //Consulta as Areas de pesquisa afins da capacidade selecionada - Ordem do id das áreas de pesquisa
     public RelatorioCapacidadesAreas[] getArrayAreasCapacidadePorArea() {
         return ejbRCAFacade.findAllAreasPorCapacidade(capacidade,"area");
@@ -190,9 +206,9 @@ public class GraficoCapacidadesBean implements Serializable {
     }
 
     /**
-     * @return the arrayEmpresasAreas
-     *
-    public RelatorioAreasEmpresas[] getArrayEmpresasAreas() {
+     * @return 
+     */
+    public Map<Object,Number> getMapEmpresasAreas() {
         // popula uma lista com os relacionamentos entre Capacidades Operativas e Areas de Pesquisa
         RelatorioCapacidadesAreas[] areasArray = getArrayAreasCapacidadePorArea();
         
@@ -205,7 +221,7 @@ public class GraficoCapacidadesBean implements Serializable {
         ArrayList<RelatorioAreasEmpresas> lista = new ArrayList<>();        
         for(RelatorioAreasEmpresas itemAE : empresasArray) {                
             for(RelatorioCapacidadesAreas itemCA : areasArray) {            
-                if (Objects.equals(itemAE.getArea_id(), itemCA.getArea_id())) {                    
+                if (itemAE.getArea_id()==itemCA.getArea_id()) {                    
                     lista.add(itemAE);                    
                 }                
             }            
@@ -215,16 +231,14 @@ public class GraficoCapacidadesBean implements Serializable {
         // desconsiderando o efeito das áreas de pesquisa (Não sei se é isto que deve ser feito!!!)
         ArrayList<RelatorioAreasEmpresas> listaEmpresas = RelatorioAreasEmpresas.agrupaEmpresas(lista);
         
-        // ordena a lista de empresas pelo seu id 
-        Collections.sort(listaEmpresas);
-        
         // devolve um array com o resultado dos projetos resultantes da pesquisa 
         // com a Capacidade Operativa selecionada.
-        arrayEmpresasAreas = RelatorioAreasEmpresas.castAreasEmpresas(listaEmpresas);
+        Map<Object,Number> mapEmpresasAreas = RelatorioAreasEmpresas.mapAreasEmpresas(listaEmpresas);
+        Map<Object,Number> mapEA = AreasEmpresasSortByValue.sortByValue(mapEmpresasAreas,"DESC");
         
-        return arrayEmpresasAreas;
+        return mapEA;
     }
-*/
+
     /**
      * @return the ejbRCAFacade
      */
