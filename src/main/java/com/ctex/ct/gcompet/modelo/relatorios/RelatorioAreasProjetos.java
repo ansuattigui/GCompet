@@ -5,7 +5,6 @@
  */
 package com.ctex.ct.gcompet.modelo.relatorios;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -16,7 +15,7 @@ import java.util.Objects;
  * @author ralfh
  */
 
-public class RelatorioAreasProjetos implements Serializable {
+public class RelatorioAreasProjetos implements Comparable<RelatorioAreasProjetos> {
     
     private Integer area_id;
     private String area;
@@ -176,5 +175,11 @@ public class RelatorioAreasProjetos implements Serializable {
         }        
         return mapProjetos;
     }
+    
+    @Override
+    public int compareTo(RelatorioAreasProjetos o) {
+        return (int) ((int)o.getAvaliacao()-(int)this.getAvaliacao());
+    }
+    
 
 }

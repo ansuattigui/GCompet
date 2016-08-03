@@ -50,6 +50,11 @@ public class RelatorioAreasBean implements Serializable {
     private RelatorioAreasProjetos[] arrayProjetosPorArea;
     //Array para o Subrelatorio Empresas
     private RelatorioAreasEmpresas[] arrayEmpresasPorArea;
+    
+    private Integer totalCapacidades;
+    private Integer totalProjetos;
+    private Integer totalEmpresas;
+    
 
     @EJB 
     private RelatorioCapacidadesFacade ejbRACFacade;
@@ -107,7 +112,6 @@ public class RelatorioAreasBean implements Serializable {
      * @return the jrDataSourceSubReport1
      */
     public JRDataSource getJrDataSourceSubReport1() {
-//        jrDataSourceSubReport1 = new JRBeanArrayDataSource(getArrayAreasProjetosArea());
         jrDataSourceSubReport1 = new JRBeanArrayDataSource(getArrayProjetosPorArea());
         return jrDataSourceSubReport1;
     }
@@ -123,7 +127,6 @@ public class RelatorioAreasBean implements Serializable {
      * @return the jrDataSourceSubReport2
      */
     public JRDataSource getJrDataSourceSubReport2() {
-        //jrDataSourceSubReport2 = new JRBeanArrayDataSource(getArrayAreasEmpresasArea());
         jrDataSourceSubReport2 = new JRBeanArrayDataSource(getArrayEmpresasPorArea());
         return jrDataSourceSubReport2;
     }
@@ -146,7 +149,7 @@ public class RelatorioAreasBean implements Serializable {
      * @return the arrayProjetosPorArea  OKOKOK
      */
     public RelatorioAreasProjetos[] getArrayProjetosPorArea() {
-        arrayProjetosPorArea = ejbRAPFacade.findAllProjetosPorArea(area,"projeto");    
+        arrayProjetosPorArea = ejbRAPFacade.findAllProjetosPorArea(area,"peso");    
         return arrayProjetosPorArea;
     }
 
@@ -183,6 +186,9 @@ public class RelatorioAreasBean implements Serializable {
         hm.put("par_nomerelat","Avaliação de Areas de Pesquisa: "+area.getNome().toUpperCase());  
         hm.put("par_dados_projetos", getJrDataSourceSubReport1());
         hm.put("par_dados_empresas", getJrDataSourceSubReport2());
+        hm.put("par_total_capacidades",getTotalCapacidades());
+        hm.put("par_total_projetos",getTotalProjetos());
+        hm.put("par_total_empresas",getTotalEmpresas());
         try {   
             jasperPrintAreasCapacidades = JasperFillManager.fillReport(getJasperAreasCapacidades(),hm,getJrDataSourceMainReport());
         } catch (JRException ex) {
@@ -288,6 +294,48 @@ public class RelatorioAreasBean implements Serializable {
      */
     public void setEjbRACFacade(RelatorioCapacidadesFacade ejbRACFacade) {
         this.ejbRACFacade = ejbRACFacade;
+    }
+
+    /**
+     * @return the totalCapacidades
+     */
+    public Integer getTotalCapacidades() {
+        int i = 0;
+        totalCapacidades = 0;
+        getArrayAreasCapacidadesPorPeso();
+        while (i < arrayCapacidadesPorArea.length) {
+            totalCapacidades = totalCapacidades + (int) arrayCapacidadesPorArea[i].getAvaliacao();
+            i++;
+        }        
+        return totalCapacidades;
+    }
+
+    /**
+     * @return the totalProjetos
+     */
+    public Integer getTotalProjetos() {
+        int i = 0;
+        totalProjetos = 0;
+        getArrayProjetosPorArea();
+        while (i < arrayProjetosPorArea.length) {
+            totalProjetos = totalProjetos + (int) arrayProjetosPorArea[i].getAvaliacao();
+            i++;
+        }        
+        return totalProjetos;
+    }
+
+    /**
+     * @return the totalEmpresas
+     */
+    public Integer getTotalEmpresas() {
+        int i = 0;
+        totalEmpresas = 0;
+        getArrayEmpresasPorArea();
+        while (i < arrayEmpresasPorArea.length) {
+            totalEmpresas = totalEmpresas + (int) arrayEmpresasPorArea[i].getAvaliacao();
+            i++;
+        }        
+        return totalEmpresas;
     }
 
 }

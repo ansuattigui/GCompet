@@ -47,10 +47,17 @@ public class RelatorioCapacidadesBean implements Serializable {
     private JasperPrint jasperPrintProjetosAreas;
     private String relatorioAC;
     private Capacidades capacidade;
+    
+    //Array para o Relatorio Principal
+    RelatorioCapacidadesAreas[] arrayAreas;
     //Array para o Subrelatório Projetos
     private RelatorioAreasProjetos[] arrayProjetosAreas;
     //Array para o Subrelatório Empresas
     private RelatorioAreasEmpresas[] arrayEmpresasAreas;
+    
+    private Integer totalAreas;
+    private Integer totalProjetos;
+    private Integer totalEmpresas;
         
     @EJB 
     private RelatorioAreasFacade ejbRCAFacade;
@@ -119,7 +126,8 @@ public class RelatorioCapacidadesBean implements Serializable {
 
     //Consulta as Areas de pesquisa afins da capacidade selecionada - Ordem decrescente do numero de avaliações positivas
     public RelatorioCapacidadesAreas[] getArrayAreasCapacidadePorPeso() {
-        return ejbRCAFacade.findAllAreasPorCapacidade(capacidade,"peso");
+        arrayAreas = ejbRCAFacade.findAllAreasPorCapacidade(capacidade,"peso");
+        return arrayAreas;
     }
 
     //Consulta as Areas de pesquisa afins da capacidade selecionada - Ordem do id das áreas de pesquisa
@@ -169,13 +177,7 @@ public class RelatorioCapacidadesBean implements Serializable {
         ArrayList<RelatorioAreasProjetos> listaProjetos = RelatorioAreasProjetos.agrupaProjetos(lista);
         
         //Ordena a lista de projetos em ordem decrescente de avaliação
-//         Collections.sort(listaProjetos);         
-        
-/*        
-        listaProjetos.sort(JsfUtil.<RelatorioAreasProjetos>compare()
-            .thenComparing(p -> p.getAvaliacao())
-            .thenComparing(p -> p.getAvaliadores()));
-*/        
+        Collections.sort(listaProjetos);         
         
         // devolve um array com o resultado dos projetos resultantes da pesquisa 
         // com a Capacidade Operativa selecionada.
@@ -230,6 +232,9 @@ public class RelatorioCapacidadesBean implements Serializable {
         hm.put("par_nomerelat","Avaliação de Capacidades Operacionais: "+capacidade.getNome().toUpperCase());  
         hm.put("par_dados_projetos", getJrDataSourceSubReport1());
         hm.put("par_dados_empresas", getJrDataSourceSubReport2());
+        hm.put("par_total_areas",getTotalAreas());
+        hm.put("par_total_projetos",getTotalProjetos());
+        hm.put("par_total_empresas",getTotalEmpresas());
         try {   
             jasperPrintCapacidadesAreas = JasperFillManager.fillReport(getJasperCapacidadesAreas(),hm,getJrDataSourceMainReport());
         } catch (JRException ex) {
@@ -293,6 +298,49 @@ public class RelatorioCapacidadesBean implements Serializable {
      */
     public JasperPrint getJasperPrintProjetosAreas() {
         return jasperPrintProjetosAreas;
+    }
+
+    /**
+     * @return the totalAreas
+     * Total de Areas Correspondentes à Capacidade Selecionada
+     */
+    public Integer getTotalAreas() {        
+        int i = 0;
+        totalAreas = 0;
+        getArrayAreasCapacidadePorPeso();
+        while (i < arrayAreas.length) {
+            totalAreas = totalAreas + (int) arrayAreas[i].getAvaliacao();
+            i++;
+        }        
+        return totalAreas;
+    }
+
+    /**
+     * @return the totalrojetos
+     */
+    public Integer getTotalProjetos() {
+        int i = 0;
+        totalProjetos = 0;
+        getArrayProjetosAreas();
+        while (i < arrayProjetosAreas.length) {
+            totalProjetos = totalProjetos + (int) arrayProjetosAreas[i].getAvaliacao();
+            i++;
+        }        
+        return totalProjetos;
+    }
+
+    /**
+     * @return the totalEmpresas
+     */
+    public Integer getTotalEmpresas() {
+        int i = 0;
+        totalEmpresas = 0;
+        getArrayEmpresasAreas();
+        while (i < arrayEmpresasAreas.length) {
+            totalEmpresas = totalEmpresas + (int) arrayEmpresasAreas[i].getAvaliacao();
+            i++;
+        }        
+        return totalEmpresas;
     }
 
 }

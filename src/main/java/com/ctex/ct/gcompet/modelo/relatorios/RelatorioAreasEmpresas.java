@@ -111,17 +111,6 @@ public class RelatorioAreasEmpresas implements Comparable<RelatorioAreasEmpresas
         this.empresa = empresa;
     }
 
-    @Override
-    public int compareTo(RelatorioAreasEmpresas o) {        
-        if(this.avaliacao > o.getAvaliacao()){
-            return -1;
-        } else if(this.avaliacao < o.getAvaliacao()){
-            return 1;
-        }   
-        return this.getEmpresa().compareToIgnoreCase(o.getEmpresa());
-    }
-
-    
 
     // agrupa todas as contagens referentes as repetições das empresas na lista,
     // desconsiderando o efeito das áreas de pesquisa (Não sei se é isto que deve ser feito!!!)
@@ -178,6 +167,12 @@ public class RelatorioAreasEmpresas implements Comparable<RelatorioAreasEmpresas
         }        
         return mapEmpresas;
     }
+    
+    @Override
+    public int compareTo(RelatorioAreasEmpresas o) {
+        return (int) ((int)o.getAvaliacao()-(int)this.getAvaliacao());
+    }
+    
     
     
     

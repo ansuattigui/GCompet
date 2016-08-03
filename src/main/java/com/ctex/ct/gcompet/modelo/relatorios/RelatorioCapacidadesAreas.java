@@ -110,16 +110,6 @@ public class RelatorioCapacidadesAreas implements Comparable<RelatorioCapacidade
         this.capacidade = capacidade;
     }
 
-    @Override
-    public int compareTo(RelatorioCapacidadesAreas o) {
-        if(this.avaliacao > o.getAvaliacao()){
-            return -1;
-        } else if(this.avaliacao < o.getAvaliacao()){
-            return 1;
-        }   
-        return this.getCapacidade().compareToIgnoreCase(o.getCapacidade());
-    }
-    
     // agrupa todas as contagens referentes as repetições das capacidades na lista,
     // desconsiderando o efeito das áreas de pesquisa (Não sei se é isto que deve ser feito!!!)
     public static ArrayList<RelatorioCapacidadesAreas> agrupaCapacidades(ArrayList lista) {
@@ -160,6 +150,11 @@ public class RelatorioCapacidadesAreas implements Comparable<RelatorioCapacidade
             arrayCapacidadesAreas[a] = listaCapacidades.get(a);
         }        
         return arrayCapacidadesAreas;
+    }
+    
+    @Override
+    public int compareTo(RelatorioCapacidadesAreas o) {
+        return (int) ((int)o.getAvaliacao()-(int)this.getAvaliacao());
     }
     
     

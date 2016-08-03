@@ -47,11 +47,17 @@ public class RelatorioEmpresasBean implements Serializable {
     private JasperPrint jasperPrintProjetosAreas;
     private String relatorioAC;
     private Empresas empresa;
+    //Array para o Relatorio principal
+    private RelatorioAreasEmpresas[] arrayAreasEmpresas;    
     //Array para o Subrelatório Projetos
     private RelatorioCapacidadesAreas[] arrayCapacidadesAreas;
     //Array para o Subrelatório Projetos
     private RelatorioAreasProjetos[] arrayProjetosAreas;
-        
+
+    private Integer totalAreas;
+    private Integer totalProjetos;
+    private Integer totalCapacidades;
+    
     @EJB 
     private RelatorioAreasFacade ejbRAFacade;
     @EJB
@@ -134,7 +140,8 @@ public class RelatorioEmpresasBean implements Serializable {
 
     //Consulta as Areas afins  - Ordem do id das areas
     public RelatorioAreasEmpresas[] getArrayAreasEmpresasPorPeso() {
-        return ejbRAFacade.findAllAreasPorEmpresa(empresa, "peso");    
+        arrayAreasEmpresas = ejbRAFacade.findAllAreasPorEmpresa(empresa, "peso");
+        return arrayAreasEmpresas;
     }
     
     /**
@@ -196,7 +203,7 @@ public class RelatorioEmpresasBean implements Serializable {
         ArrayList<RelatorioAreasProjetos> listaProjetos = RelatorioAreasProjetos.agrupaProjetos(lista);
         
         // ordena a lista de projetos pelo seu id 
-//        Collections.sort(listaProjetos);
+        Collections.sort(listaProjetos);
         
         // devolve um array com o resultado dos projetos resultantes da pesquisa 
         // com a Capacidade Operativa selecionada.
@@ -265,11 +272,56 @@ public class RelatorioEmpresasBean implements Serializable {
         hm.put("par_nomerelat","Avaliação de Empresas do CTEx: "+empresa.getNome().toUpperCase());  
         hm.put("par_dados_capacidades", getJrDataSourceSubReport1());
         hm.put("par_dados_projetos", getJrDataSourceSubReport2());
+        hm.put("par_total_areas",getTotalAreas());
+        hm.put("par_total_projetos",getTotalProjetos());
+        hm.put("par_total_capacidades",getTotalCapacidades());
         try {   
             jasperPrintProjetosAreas = JasperFillManager.fillReport(getJasperProjetosAreas(),hm,getJrDataSourceMainReport());
         } catch (JRException ex) {
             Logger.getLogger(RelatorioEmpresasBean.class.getName()).log(Level.SEVERE, null, ex);
         }        
         return jasperPrintProjetosAreas;
+    }
+
+    /**
+     * @return the totalAreas
+     */
+    public Integer getTotalAreas() {
+        int i = 0;
+        totalAreas = 0;
+        getArrayAreasEmpresasPorPeso();
+        while (i < arrayAreasEmpresas.length) {
+            totalAreas = totalAreas + (int) arrayAreasEmpresas[i].getAvaliacao();
+            i++;
+        }        
+        return totalAreas;
+    }
+
+    /**
+     * @return the totalProjetos
+     */
+    public Integer getTotalProjetos() {
+        int i = 0;
+        totalProjetos = 0;
+        getArrayProjetosAreas();
+        while (i < arrayProjetosAreas.length) {
+            totalProjetos = totalProjetos + (int) arrayProjetosAreas[i].getAvaliacao();
+            i++;
+        }        
+        return totalProjetos;
+    }
+
+    /**
+     * @return the totalCapacidades
+     */
+    public Integer getTotalCapacidades() {
+        int i = 0;
+        totalCapacidades = 0;
+        getArrayCapacidadesAreas();
+        while (i < arrayCapacidadesAreas.length) {
+            totalCapacidades = totalCapacidades + (int) arrayCapacidadesAreas[i].getAvaliacao();
+            i++;
+        }        
+        return totalCapacidades;
     }
 }

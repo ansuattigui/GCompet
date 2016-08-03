@@ -64,7 +64,7 @@ public class RelatorioAreasFacade extends AbstractFacade<RelatorioCapacidadesAre
                         "WHERE ca.CAPACIDADE_id = ? AND ca.AREA_id = a.id " +
                         "GROUP BY ca.AREA_id  " +
                         "HAVING avaliacao > 0 " +
-                "ORDER BY avaliacao DESC, avaliadores ASC ";
+                "ORDER BY avaliacao DESC";
                 break;            
         }
         
