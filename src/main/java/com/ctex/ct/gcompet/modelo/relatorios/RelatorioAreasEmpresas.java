@@ -159,9 +159,7 @@ public class RelatorioAreasEmpresas implements Comparable<RelatorioAreasEmpresas
         int i = 0;
         while(i < listaEmpresas.size()) {
             String label = listaEmpresas.get(i).getEmpresa_id().toString();
-            Float x = ((float)listaEmpresas.get(i).getAvaliacao()/listaEmpresas.get(i).getAvaliadores())*100;
-            //Valor de x arredondado para cima.
-            //Integer I = (int) Math.ceil(x);
+            Integer x = (int)listaEmpresas.get(i).getAvaliacao();
             mapEmpresas.put(label,x);
             i++;
         }        

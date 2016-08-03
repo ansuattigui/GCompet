@@ -17,7 +17,10 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 import javax.ejb.EJB;
 import javax.enterprise.context.SessionScoped;
+import javax.faces.application.FacesMessage;
+import javax.faces.context.FacesContext;
 import javax.inject.Named;
+import org.primefaces.event.ItemSelectEvent;
 import org.primefaces.model.chart.Axis;
 import org.primefaces.model.chart.AxisType;
 import org.primefaces.model.chart.BarChartModel;
@@ -38,7 +41,11 @@ public class GraficoCapacidadesBean implements Serializable {
     private Capacidades capacidade;
     //Array para o Subrelatório Empresas
     private RelatorioAreasEmpresas[] arrayEmpresasAreas;
-        
+    
+    private Map<Object,Number> mapAreas;
+    private Map<Object,Number> mapProjetos;
+    private Map<Object,Number> mapEmpresas;
+    
     @EJB 
     private RelatorioAreasFacade ejbRCAFacade;
     @EJB
@@ -79,8 +86,9 @@ public class GraficoCapacidadesBean implements Serializable {
         barChartAreas.setLegendPosition("ne");
         Axis yAxis = barChartAreas.getAxis(AxisType.Y);
         yAxis.setMin(0);
-        yAxis.setMax(100);  
-        yAxis.setLabel("%");
+//        int maxX = JsfUtil.FindMaxInMaps(mapAreas);
+//        yAxis.setMax(maxX);  
+        yAxis.setLabel("Pontos");
         Axis xAxisAreas = barChartAreas.getAxis(AxisType.X);
         xAxisAreas.setLabel("id Area");
     }    
@@ -90,12 +98,12 @@ public class GraficoCapacidadesBean implements Serializable {
         areas.setLabel("Areas de Pesquisa");        
         
         RelatorioCapacidadesAreas[] rca = ejbRCAFacade.findAllAreasPorCapacidade(capacidade,"peso");
-        Map<Object,Number> mapAreas = new LinkedHashMap<>(rca.length);
+        mapAreas = new LinkedHashMap<>(rca.length);
         
         int i = 0;
         while(i < rca.length) {
             String label = rca[i].getArea_id().toString();
-            Float pDivA = (float)rca[i].getAvaliacao()*100/rca[i].getAvaliadores();
+            Integer pDivA = (int) rca[i].getAvaliacao();
             mapAreas.put(label,pDivA);
             i++;
         }
@@ -110,8 +118,9 @@ public class GraficoCapacidadesBean implements Serializable {
         barChartProjetos.setLegendPosition("ne");
         Axis yAxis = barChartProjetos.getAxis(AxisType.Y);
         yAxis.setMin(0);
-        yAxis.setMax(100);  
-        yAxis.setLabel("%");
+//        int maxX = JsfUtil.FindMaxInMaps(mapProjetos);
+//        yAxis.setMax(maxX);  
+        yAxis.setLabel("Pontos");
         Axis xAxisProjetos = barChartProjetos.getAxis(AxisType.X);
         xAxisProjetos.setLabel("id Projeto");
     }    
@@ -120,7 +129,7 @@ public class GraficoCapacidadesBean implements Serializable {
         ChartSeries projetos = new ChartSeries();            
         projetos.setLabel("Projetos");        
         
-        Map<Object,Number> mapProjetos = getMapProjetosAreas();
+        mapProjetos = getMapProjetosAreas();
         
         projetos.setData(mapProjetos);
         model.addSeries(projetos);
@@ -133,7 +142,8 @@ public class GraficoCapacidadesBean implements Serializable {
         barChartEmpresas.setLegendPosition("ne");
         Axis yAxis = barChartEmpresas.getAxis(AxisType.Y);
         yAxis.setMin(0);
-        yAxis.setMax(100);  
+//        int maxX = JsfUtil.FindMaxInMaps(mapEmpresas);
+//        yAxis.setMax(maxX);  
         yAxis.setLabel("%");
         Axis xAxisProjetos = barChartEmpresas.getAxis(AxisType.X);
         xAxisProjetos.setLabel("id Projeto");
@@ -143,7 +153,7 @@ public class GraficoCapacidadesBean implements Serializable {
         ChartSeries empresas = new ChartSeries();            
         empresas.setLabel("Empresas");        
         
-        Map<Object,Number> mapEmpresas = getMapEmpresasAreas();
+        mapEmpresas = getMapEmpresasAreas();
         
         empresas.setData(mapEmpresas);
         model.addSeries(empresas);
@@ -260,5 +270,11 @@ public class GraficoCapacidadesBean implements Serializable {
         this.capacidade = capacidade;
     }
 
-
+    public void itemSelect(ItemSelectEvent event) {
+        FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Capacidade selecionada",
+                        "Id do Item: " + event.getItemIndex() + ", Id da Series:" + event.getSeriesIndex());
+         
+        FacesContext.getCurrentInstance().addMessage(null, msg);
+    }
+    
 }

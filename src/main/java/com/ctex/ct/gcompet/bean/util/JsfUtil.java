@@ -6,6 +6,7 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Map;
 import javax.faces.application.FacesMessage;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
@@ -88,6 +89,18 @@ public class JsfUtil {
    
     public static <E> Comparator<E> compare() {
         return (e1, e2) -> 0;
+    }
+    
+    public static Integer FindMaxInMaps(Map<Object,Number> mapToFind) {
+        final Map<Object,Number> map = mapToFind;
+
+        Integer maxValue = Integer.MIN_VALUE;
+        for ( Number value : map.values()) {
+            if ((int) value > maxValue) {
+                maxValue = (int) value;
+            }
+        }    
+        return maxValue;
     }
     
 }

@@ -46,10 +46,16 @@ public class RelatorioProjetosBean implements Serializable {
     private JasperPrint jasperPrintProjetosAreas;
     private String relatorioAC;
     private Projetos projeto;
+    //Array para  Relatorio principal
+    private RelatorioAreasProjetos[] arrayAreasProjetos;
     //Array para o Subrelatório Projetos
     private RelatorioCapacidadesAreas[] arrayCapacidadesAreas;
     //Array para o Subrelatório Empresas
     private RelatorioAreasEmpresas[] arrayEmpresasAreas;
+    
+    private Integer totalAreas;
+    private Integer totalEmpresas;
+    private Integer totalCapacidades;    
         
     @EJB 
     private RelatorioAreasFacade ejbRAFacade;
@@ -133,7 +139,8 @@ public class RelatorioProjetosBean implements Serializable {
 
     //Consulta as Areas afins  - Ordem do id das areas
     public RelatorioAreasProjetos[] getArrayAreasProjetosPorPeso() {
-        return ejbRAFacade.findAllAreasPorProjeto(projeto, "peso");    
+        arrayAreasProjetos = ejbRAFacade.findAllAreasPorProjeto(projeto, "peso");            
+        return arrayAreasProjetos;
     }
     
     /**
@@ -264,11 +271,56 @@ public class RelatorioProjetosBean implements Serializable {
         hm.put("par_nomerelat","Avaliação de Projetos do CTEx: "+projeto.getNome().toUpperCase());  
         hm.put("par_dados_capacidades", getJrDataSourceSubReport1());
         hm.put("par_dados_empresas", getJrDataSourceSubReport2());
+        hm.put("par_total_areas",getTotalAreas());
+        hm.put("par_total_empresas",getTotalEmpresas());
+        hm.put("par_total_capacidades",getTotalCapacidades());
         try {   
             jasperPrintProjetosAreas = JasperFillManager.fillReport(getJasperProjetosAreas(),hm,getJrDataSourceMainReport());
         } catch (JRException ex) {
             Logger.getLogger(RelatorioProjetosBean.class.getName()).log(Level.SEVERE, null, ex);
         }        
         return jasperPrintProjetosAreas;
+    }
+
+    /**
+     * @return the totalAreas
+     */
+    public Integer getTotalAreas() {
+        int i = 0;
+        totalAreas = 0;
+        getArrayAreasProjetosPorPeso();
+        while (i < arrayAreasProjetos.length) {
+            totalAreas = totalAreas + (int) arrayAreasProjetos[i].getAvaliacao();
+            i++;
+        }        
+        return totalAreas;
+    }
+
+    /**
+     * @return the totalEmpresas
+     */
+    public Integer getTotalEmpresas() {
+        int i = 0;
+        totalEmpresas = 0;
+        getArrayEmpresasAreas();
+        while (i < arrayEmpresasAreas.length) {
+            totalEmpresas = totalEmpresas + (int) arrayEmpresasAreas[i].getAvaliacao();
+            i++;
+        }        
+        return totalEmpresas;
+    }
+
+    /**
+     * @return the totalCapacidades
+     */
+    public Integer getTotalCapacidades() {
+        int i = 0;
+        totalCapacidades = 0;
+        getArrayCapacidadesAreas();
+        while (i < arrayCapacidadesAreas.length) {
+            totalCapacidades = totalCapacidades + (int) arrayCapacidadesAreas[i].getAvaliacao();
+            i++;
+        }        
+        return totalCapacidades;
     }
 }

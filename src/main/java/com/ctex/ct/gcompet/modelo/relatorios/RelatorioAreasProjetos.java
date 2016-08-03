@@ -167,9 +167,7 @@ public class RelatorioAreasProjetos implements Comparable<RelatorioAreasProjetos
         int i = 0;
         while(i < listaProjetos.size()) {
             String label = listaProjetos.get(i).getProjeto_id().toString();
-            Float x = ((float)listaProjetos.get(i).getAvaliacao()/listaProjetos.get(i).getAvaliadores())*100;
-            //Valor de x arredondado para cima.
-            //Integer I = (int) Math.ceil(x);
+            Integer x = (int)listaProjetos.get(i).getAvaliacao();
             mapProjetos.put(label,x);
             i++;
         }        

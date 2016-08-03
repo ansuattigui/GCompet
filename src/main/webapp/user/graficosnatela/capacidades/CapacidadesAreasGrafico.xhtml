@@ -23,13 +23,17 @@
             </p:panelGrid>
             <p:tabView id="tvCapac" class="ui-sem-borda" style="margin:4px 0 4px 0;" effect="fade">                
                     <p:tab id="tabArea" title="Areas de Pesquisa">            
-                        <p:column><p:chart type="bar" model="#{graficoCapacidadesAreas.getGraficoAreas()}" style="width:100%;" /></p:column>
+                        <p:column><p:chart type="bar" model="#{graficoCapacidadesAreas.getGraficoAreas()}" style="width:100%;" responsive="true"/></p:column>                        
                     </p:tab>
                     <p:tab id="tabProjeto" title="Projetos">
-                        <p:column><p:chart type="bar" model="#{graficoCapacidadesAreas.getGraficoProjetos()}" style="width:100%;" /></p:column>
+                        <p:column><p:chart type="bar" model="#{graficoCapacidadesAreas.getGraficoProjetos()}" style="width:100%;" responsive="true"/></p:column>
                     </p:tab>
                     <p:tab id="tabEmpresa" title="Empresas">
-                        <p:column><p:chart type="bar" model="#{graficoCapacidadesAreas.getGraficoEmpresas()}" style="width:100%;" /></p:column>
+                        <p:column>
+                            <p:chart type="bar" model="#{graficoCapacidadesAreas.getGraficoEmpresas()}" style="width:100%;" responsive="true">
+<!--                                <p:ajax event="itemSelect" listener="{graficoCapacidadesAreas.itemSelect}" update="growl" /> -->
+                            </p:chart>
+                        </p:column>
                     </p:tab>
                 </p:tabView>
                     
