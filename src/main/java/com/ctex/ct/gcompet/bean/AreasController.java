@@ -110,7 +110,7 @@ public class AreasController implements Serializable {
         }
     }
 
-    public Areas getAreas(java.lang.Integer id) {
+    public Areas getAreas(Integer id) {
         return getFacade().find(id);
     }
 

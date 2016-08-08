@@ -7,6 +7,7 @@ package com.ctex.ct.gcompet.bean;
 
 import com.ctex.ct.gcompet.bean.util.AreasEmpresasSortByValue;
 import com.ctex.ct.gcompet.bean.util.AreasProjetosSortByValue;
+import com.ctex.ct.gcompet.modelo.Areas;
 import com.ctex.ct.gcompet.modelo.Capacidades;
 import com.ctex.ct.gcompet.modelo.relatorios.RelatorioAreasEmpresas;
 import com.ctex.ct.gcompet.modelo.relatorios.RelatorioAreasProjetos;
@@ -46,12 +47,13 @@ public class GraficoCapacidadesBean implements Serializable {
     private Map<Object,Number> mapProjetos;
     private Map<Object,Number> mapEmpresas;
     
-    @EJB 
-    private RelatorioAreasFacade ejbRCAFacade;
-    @EJB
-    private RelatorioProjetosFacade ejbRAPFacade;
-    @EJB
-    private RelatorioEmpresasFacade ejbRAEFacade;
+    private Areas selectedArea;
+    
+    @EJB private RelatorioAreasFacade ejbRCAFacade;
+    @EJB private RelatorioProjetosFacade ejbRAPFacade;
+    @EJB private RelatorioEmpresasFacade ejbRAEFacade;
+    
+    @EJB private AreasFacade ejbAreas;
     
     /**
      * @return the barChartAreas
@@ -81,13 +83,11 @@ public class GraficoCapacidadesBean implements Serializable {
     
     private void createGraficoAreas() {
         barChartAreas = initBarModelAreas();
-//        barChartAreas.setTitle("Areas de Pesquisa");
         barChartAreas.setAnimate(true);
         barChartAreas.setLegendPosition("ne");
+        barChartAreas.getAxis(AxisType.X).setTickAngle(-90);
         Axis yAxis = barChartAreas.getAxis(AxisType.Y);
         yAxis.setMin(0);
-//        int maxX = JsfUtil.FindMaxInMaps(mapAreas);
-//        yAxis.setMax(maxX);  
         yAxis.setLabel("Pontos");
         Axis xAxisAreas = barChartAreas.getAxis(AxisType.X);
         xAxisAreas.setLabel("id Area");
@@ -116,10 +116,9 @@ public class GraficoCapacidadesBean implements Serializable {
         barChartProjetos = initBarModelProjetos();
         barChartProjetos.setAnimate(true);
         barChartProjetos.setLegendPosition("ne");
+        barChartProjetos.getAxis(AxisType.X).setTickAngle(-90);
         Axis yAxis = barChartProjetos.getAxis(AxisType.Y);
         yAxis.setMin(0);
-//        int maxX = JsfUtil.FindMaxInMaps(mapProjetos);
-//        yAxis.setMax(maxX);  
         yAxis.setLabel("Pontos");
         Axis xAxisProjetos = barChartProjetos.getAxis(AxisType.X);
         xAxisProjetos.setLabel("id Projeto");
@@ -140,11 +139,10 @@ public class GraficoCapacidadesBean implements Serializable {
         barChartEmpresas = initBarModelEmpresas();
         barChartEmpresas.setAnimate(true);
         barChartEmpresas.setLegendPosition("ne");
+        barChartEmpresas.getAxis(AxisType.X).setTickAngle(-90);
         Axis yAxis = barChartEmpresas.getAxis(AxisType.Y);
         yAxis.setMin(0);
-//        int maxX = JsfUtil.FindMaxInMaps(mapEmpresas);
-//        yAxis.setMax(maxX);  
-        yAxis.setLabel("%");
+        yAxis.setLabel("Pontos");
         Axis xAxisProjetos = barChartEmpresas.getAxis(AxisType.X);
         xAxisProjetos.setLabel("id Projeto");
     }    
@@ -271,10 +269,27 @@ public class GraficoCapacidadesBean implements Serializable {
     }
 
     public void itemSelect(ItemSelectEvent event) {
+        
+        setSelectedArea(event.getItemIndex());
+        
         FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Capacidade selecionada",
                         "Id do Item: " + event.getItemIndex() + ", Id da Series:" + event.getSeriesIndex());
          
         FacesContext.getCurrentInstance().addMessage(null, msg);
+    }
+
+    /**
+     * @return the selectedArea
+     */
+    public Areas getSelectedArea() {
+        return selectedArea;
+    }
+
+    /**
+     * @param selectedAreaId
+     */
+    public void setSelectedArea(Integer selectedAreaId) {        
+        selectedArea = ejbAreas.find(selectedAreaId);                
     }
     
 }
