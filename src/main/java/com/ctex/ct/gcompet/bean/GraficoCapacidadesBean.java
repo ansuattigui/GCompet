@@ -9,6 +9,8 @@ import com.ctex.ct.gcompet.bean.util.AreasEmpresasSortByValue;
 import com.ctex.ct.gcompet.bean.util.AreasProjetosSortByValue;
 import com.ctex.ct.gcompet.modelo.Areas;
 import com.ctex.ct.gcompet.modelo.Capacidades;
+import com.ctex.ct.gcompet.modelo.Empresas;
+import com.ctex.ct.gcompet.modelo.Projetos;
 import com.ctex.ct.gcompet.modelo.relatorios.RelatorioAreasEmpresas;
 import com.ctex.ct.gcompet.modelo.relatorios.RelatorioAreasProjetos;
 import com.ctex.ct.gcompet.modelo.relatorios.RelatorioCapacidadesAreas;
@@ -18,8 +20,6 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 import javax.ejb.EJB;
 import javax.enterprise.context.SessionScoped;
-import javax.faces.application.FacesMessage;
-import javax.faces.context.FacesContext;
 import javax.inject.Named;
 import org.primefaces.event.ItemSelectEvent;
 import org.primefaces.model.chart.Axis;
@@ -48,12 +48,19 @@ public class GraficoCapacidadesBean implements Serializable {
     private Map<Object,Number> mapEmpresas;
     
     private Areas selectedArea;
+    private Integer selectedAreaPontos;
+    private Projetos selectedProjeto;
+    private Integer selectedProjetoPontos;
+    private Empresas selectedEmpresa;
+    private Integer selectedEmpresaPontos;
     
     @EJB private RelatorioAreasFacade ejbRCAFacade;
     @EJB private RelatorioProjetosFacade ejbRAPFacade;
     @EJB private RelatorioEmpresasFacade ejbRAEFacade;
     
     @EJB private AreasFacade ejbAreas;
+    @EJB private ProjetosFacade ejbProjeto;
+    @EJB private EmpresasFacade ejbEmpresas;
     
     /**
      * @return the barChartAreas
@@ -77,7 +84,8 @@ public class GraficoCapacidadesBean implements Serializable {
         createGraficoAreas();
         createGraficoProjetos();
         createGraficoEmpresas();
-        
+        selectedArea = null;
+        selectedAreaPontos = null;
         return "/user/graficosnatela/capacidades/CapacidadesAreasGrafico";
     }
     
@@ -90,7 +98,7 @@ public class GraficoCapacidadesBean implements Serializable {
         yAxis.setMin(0);
         yAxis.setLabel("Pontos");
         Axis xAxisAreas = barChartAreas.getAxis(AxisType.X);
-        xAxisAreas.setLabel("id Area");
+        //xAxisAreas.setLabel("id Area");
     }    
     private BarChartModel initBarModelAreas() {
         BarChartModel model = new BarChartModel();
@@ -121,7 +129,7 @@ public class GraficoCapacidadesBean implements Serializable {
         yAxis.setMin(0);
         yAxis.setLabel("Pontos");
         Axis xAxisProjetos = barChartProjetos.getAxis(AxisType.X);
-        xAxisProjetos.setLabel("id Projeto");
+//        xAxisProjetos.setLabel("id Projeto");
     }    
     private BarChartModel initBarModelProjetos() {
         BarChartModel model = new BarChartModel();
@@ -144,7 +152,7 @@ public class GraficoCapacidadesBean implements Serializable {
         yAxis.setMin(0);
         yAxis.setLabel("Pontos");
         Axis xAxisProjetos = barChartEmpresas.getAxis(AxisType.X);
-        xAxisProjetos.setLabel("id Projeto");
+//        xAxisProjetos.setLabel("id Projeto");
     }    
     private BarChartModel initBarModelEmpresas() {
         BarChartModel model = new BarChartModel();
@@ -268,16 +276,54 @@ public class GraficoCapacidadesBean implements Serializable {
         this.capacidade = capacidade;
     }
 
-    public void itemSelect(ItemSelectEvent event) {
-        
-        setSelectedArea(event.getItemIndex());
-        
-        FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Capacidade selecionada",
-                        "Id do Item: " + event.getItemIndex() + ", Id da Series:" + event.getSeriesIndex());
-         
-        FacesContext.getCurrentInstance().addMessage(null, msg);
+    public void itemAreaSelect(ItemSelectEvent event) {
+        String label = null;
+        ChartSeries cs = barChartAreas.getSeries().get(event.getSeriesIndex());
+        Map<Object,Number> map = cs.getData();
+        int i = 0;
+        for (Map.Entry<Object, Number> entry : map.entrySet()) {
+            if (i == event.getItemIndex()) {
+                label = (String) entry.getKey();
+                selectedAreaPontos = (Integer) entry.getValue();
+                setSelectedArea(Integer.parseInt(label));
+                break;
+            }
+            i++;
+        }        
     }
 
+    public void itemProjetoSelect(ItemSelectEvent event) {
+        String label = null;
+        ChartSeries cs = barChartProjetos.getSeries().get(event.getSeriesIndex());
+        Map<Object,Number> map = cs.getData();
+        int i = 0;
+        for (Map.Entry<Object, Number> entry : map.entrySet()) {
+            if (i == event.getItemIndex()) {
+                label = (String) entry.getKey();
+                selectedProjetoPontos = (Integer) entry.getValue();
+                setSelectedProjeto(Integer.parseInt(label));
+                break;
+            }
+            i++;
+        }        
+    }
+
+    public void itemEmpresaSelect(ItemSelectEvent event) {
+        String label = null;
+        ChartSeries cs = barChartEmpresas.getSeries().get(event.getSeriesIndex());
+        Map<Object,Number> map = cs.getData();
+        int i = 0;
+        for (Map.Entry<Object, Number> entry : map.entrySet()) {
+            if (i == event.getItemIndex()) {
+                label = (String) entry.getKey();
+                selectedEmpresaPontos = (Integer) entry.getValue();
+                setSelectedEmpresa(Integer.parseInt(label));
+                break;
+            }
+            i++;
+        }        
+    }
+    
     /**
      * @return the selectedArea
      */
@@ -290,6 +336,76 @@ public class GraficoCapacidadesBean implements Serializable {
      */
     public void setSelectedArea(Integer selectedAreaId) {        
         selectedArea = ejbAreas.find(selectedAreaId);                
+    }
+
+    /**
+     * @return the selectedAreaPontos
+     */
+    public Integer getSelectedAreaPontos() {
+        return selectedAreaPontos;
+    }
+
+    /**
+     * @param selectedAreaPontos the selectedAreaPontos to set
+     */
+    public void setSelectedAreaPontos(Integer selectedAreaPontos) {
+        this.selectedAreaPontos = selectedAreaPontos;
+    }
+
+    /**
+     * @return the selectedProjeto
+     */
+    public Projetos getSelectedProjeto() {
+        return selectedProjeto;
+    }
+
+    /**
+     * @param selectedProjetoId
+     */
+    public void setSelectedProjeto(Integer selectedProjetoId) {
+        selectedProjeto = ejbProjeto.find(selectedProjetoId);
+    }
+
+    /**
+     * @return the selectedProjetoPontos
+     */
+    public Integer getSelectedProjetoPontos() {
+        return selectedProjetoPontos;
+    }
+
+    /**
+     * @param selectedProjetoPontos the selectedProjetoPontos to set
+     */
+    public void setSelectedProjetoPontos(Integer selectedProjetoPontos) {
+        this.selectedProjetoPontos = selectedProjetoPontos;
+    }
+
+    /**
+     * @return the selectedEmpresa
+     */
+    public Empresas getSelectedEmpresa() {
+        return selectedEmpresa;
+    }
+
+    /**
+     * @param selectedEmpresaId
+     */
+    public void setSelectedEmpresa(Integer selectedEmpresaId) {
+        selectedEmpresa = ejbEmpresas.find(selectedEmpresaId);
+    }
+
+    /**
+     * @return the selectedEmpresaPontos
+     */
+    public Integer getSelectedEmpresaPontos() {
+        return selectedEmpresaPontos;
+    }
+
+    /**
+     * @param selectedEmpresaPontos the selectedEmpresaPontos to set
+     */
+    public void setSelectedEmpresaPontos(Integer selectedEmpresaPontos) {
+        this.selectedEmpresaPontos = selectedEmpresaPontos;
     }
     
 }
