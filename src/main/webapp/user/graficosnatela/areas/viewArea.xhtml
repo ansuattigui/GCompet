@@ -11,13 +11,13 @@
         <p:dialog id="AreasViewDlg" widgetVar="AreasViewDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.ViewAreasTitle}">
             <h:form id="AreasViewForm">
                 <h:panelGroup id="display">
-                    <p:panelGrid columns="2" rendered="#{graficoCapacidadesAreas.selectedArea != null}" style="width: 600px;">
+                    <p:panelGrid columns="2" rendered="#{graficoAreasCapacidades.area != null}" style="width: 600px;">
                         <h:outputText value="#{bundle.ViewAreasLabel_id}"/>
-                        <h:outputText value="#{graficoCapacidadesAreas.selectedArea.id}" title="#{bundle.ViewAreasTitle_id}"/>
+                        <h:outputText value="#{graficoAreasCapacidades.area.id}" title="#{bundle.ViewAreasTitle_id}"/>
                         <h:outputText value="#{bundle.ViewAreasLabel_nome}"/>
-                        <h:outputText value="#{graficoCapacidadesAreas.selectedArea.nome}" title="#{bundle.ViewAreasTitle_nome}"/>
+                        <h:outputText value="#{graficoAreasCapacidades.area.nome}" title="#{bundle.ViewAreasTitle_nome}"/>
                         <h:outputText value="#{bundle.ViewAreasLabel_descricao}"/>
-                        <h:outputText value="#{graficoCapacidadesAreas.selectedArea.descricao}" title="#{bundle.ViewAreasTitle_descricao}"/>
+                        <h:outputText value="#{graficoAreasCapacidades.area.descricao}" title="#{bundle.ViewAreasTitle_descricao}"/>
                     </p:panelGrid>
                     <p:commandButton value="#{bundle.Close}" onclick="AreasViewDialog.hide()"/>
                 </h:panelGroup>

@@ -27,6 +27,7 @@ import org.primefaces.model.chart.AxisType;
 import org.primefaces.model.chart.BarChartModel;
 import org.primefaces.model.chart.ChartSeries;
 
+//çgnmerkbnorb
 
 /**
  *
@@ -34,7 +35,7 @@ import org.primefaces.model.chart.ChartSeries;
  */
 @SessionScoped
 @Named("graficoCapacidadesAreas")
-public class GraficoCapacidadesBean implements Serializable {
+public class GraficoProjetosBean implements Serializable {
     
     private BarChartModel barChartAreas;
     private BarChartModel barChartProjetos;

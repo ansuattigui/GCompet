@@ -10,16 +10,16 @@
 
         <ui:define name="body">        
         
-            <h:form id="FormSelecionaCapacidade" prependId="false">
+            <h:form id="SelecionaAreaForm" prependId="false">
                 <p:panel style="width: 100%;" class="ui-sem-borda">
 
                     <f:facet name="header" >
-                        <h:outputText value="#{bundle.GraficoCapacidade_Title}" style="font-size: 14px !important; font-variant-caps: small-caps; color: yellow !important;"/>
+                        <h:outputText value="#{bundle.GraficoArea_Title}" style="font-size: 14px !important; font-variant-caps: small-caps; color: yellow !important;"/>
                     </f:facet>
                                         
-                    <p:dataTable id="datalist" value="#{capacidadesController.items}" var="item"
+                    <p:dataTable id="datalist" value="#{areasController.items}" var="item"
                         selectionMode="single" 
-                        selection="#{graficoCapacidadesAreas.capacidade}"
+                        selection="#{graficoAreasCapacidades.area}"
                         paginator="false" 
                         scrollable="true"
                         scrollHeight="375"
@@ -29,7 +29,7 @@
                         <p:ajax event="rowUnselect" update="viewButton"/>
                         
                         <f:facet name="header">
-                            <h:outputText id="associaHeader" value="#{bundle.CapacidadesSelectOne}" />
+                            <h:outputText id="associaHeader" value="#{bundle.AreasSelectOne}" />
                         </f:facet>                        
                         <p:column style="width: 5%;">
                             <f:facet name="header">
@@ -45,8 +45,8 @@
                         </p:column>
                         
                         <f:facet name="footer">
-                            <p:commandButton id="viewButton"  update=":CapacidadesViewForm" icon="ui-icon-search" value="#{bundle.View}" oncomplete="PF('CapacidadesViewDialog').show()" />
-                            <p:commandButton id="confirmaButton" icon="ui-icon-plus"   value="#{bundle.Select}" action="#{graficoCapacidadesAreas.getGraficos()}" update="FormSelecionaCapacidade">
+                            <p:commandButton id="viewButton"  update=":AreasViewForm" icon="ui-icon-search" value="#{bundle.View}" oncomplete="PF('AreasViewDialog').show()" />
+                            <p:commandButton id="confirmaButton" icon="ui-icon-plus"   value="#{bundle.Select}" action="#{graficoAreasCapacidades.getGraficos()}" update="SelecionaAreaForm">
                                 <p:confirm header="Confirmação" message="Confirma a seleção desejada?" icon="ui-icon-alert" />
                             </p:commandButton>                                
                             <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
@@ -58,7 +58,7 @@
                 </p:panel>
             </h:form>
             
-            <ui:include src="viewCapacidade.xhtml"/>
+            <ui:include src="viewArea.xhtml"/>
 
         </ui:define>
      

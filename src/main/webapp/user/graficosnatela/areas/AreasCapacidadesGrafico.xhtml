@@ -14,38 +14,38 @@
             <p:panelGrid style="width:100%">
                 <f:facet name="header">
                     <p:row>
-                        <p:column>Avaliação de Capacidades do EB</p:column>
+                        <p:column>Avaliação de Áreas de Pesquisa do EB</p:column>
                     </p:row>
                     <p:row>
-                        <p:column class="ui-text-header">#{graficoCapacidadesAreas.capacidade.nome}</p:column>
+                        <p:column class="ui-text-header">#{graficoAreasCapacidades.area.nome}</p:column>
                     </p:row>
                 </f:facet>
             </p:panelGrid>
             <p:tabView id="tvCapac" class="ui-sem-borda" style="margin:4px 0 4px 0;" effect="fade">         
                 
                 <p:tab id="tabArea" title="Areas de Pesquisa">            
-                    <p:chart type="bar" model="#{graficoCapacidadesAreas.getGraficoAreas()}" style="width:100%;" responsive="true">
-                        <p:ajax event="itemSelect" listener="#{graficoCapacidadesAreas.itemAreaSelect}" update="tvCapac:areaDetail"/> 
+                    <p:chart type="bar" model="#{graficoAreasCapacidades.getGraficoCapacidades()}" style="width:100%;" responsive="true">
+                        <p:ajax event="itemSelect" listener="#{graficoAreasCapacidades.itemCapacidadeSelect}" update="tvCapac:capacidadeDetail"/> 
                     </p:chart>
 
-                    <p:panelGrid id="areaDetail"  columns="2"  style="width: 100%; margin-top:10px;">
+                    <p:panelGrid id="capacidadeDetail"  columns="2"  style="width: 100%; margin-top:10px;">
                         <f:facet name="header">
-                            <p:outputLabel value="Area de Pesquisa - Detalhes"/>
+                            <p:outputLabel value="Capacidade do EB - Detalhes"/>
                         </f:facet>
-                        <h:outputText value="#{bundle.ViewAreasLabel_id}" styleClass="ui-widget-header"/>
-                        <h:outputText id="areaId" value="#{graficoCapacidadesAreas.selectedArea.id}" />
+                        <h:outputText value="#{bundle.ViewCapacidadesLabel_id}" styleClass="ui-widget-header"/>
+                        <h:outputText id="capacidadeId" value="#{graficoAreasCapacidades.selectedCapacidade.id}" />
                         <h:outputText value="Pontos" styleClass="ui-widget-header"/>
-                        <h:outputText id="pontosArea" value="#{graficoCapacidadesAreas.selectedAreaPontos}"/>
-                        <h:outputText value="#{bundle.ViewAreasLabel_nome}" styleClass="ui-widget-header"/>
-                        <h:outputText id="areaNome"  value="#{graficoCapacidadesAreas.selectedArea.nome}" />
-                        <h:outputText value="#{bundle.ViewAreasLabel_descricao}" styleClass="ui-widget-header"/>
-                        <h:outputText id="areaDescricao"  value="#{graficoCapacidadesAreas.selectedArea.descricao}"/>
+                        <h:outputText id="pontosCapacidade" value="#{graficoAreasCapacidades.selectedCapacidadePontos}"/>
+                        <h:outputText value="#{bundle.ViewCapacidadesLabel_nome}" styleClass="ui-widget-header"/>
+                        <h:outputText id="capacidadeNome"  value="#{graficoAreasCapacidades.selectedCapacidade.nome}" />
+                        <h:outputText value="#{bundle.ViewCapacidadesLabel_descricao}" styleClass="ui-widget-header"/>
+                        <h:outputText id="capacidadeDescricao"  value="#{graficoAreasCapacidades.selectedCapacidade.descricao}"/>
                     </p:panelGrid>
                 </p:tab>
                 
                 <p:tab id="tabProjeto" title="Projetos">
-                    <p:chart type="bar" model="#{graficoCapacidadesAreas.getGraficoProjetos()}" style="width:100%;" responsive="true">
-                        <p:ajax event="itemSelect" listener="#{graficoCapacidadesAreas.itemProjetoSelect}" update="tvCapac:projetoDetail"/> 
+                    <p:chart type="bar" model="#{graficoAreasCapacidades.getGraficoProjetos()}" style="width:100%;" responsive="true">
+                        <p:ajax event="itemSelect" listener="#{graficoAreasCapacidades.itemProjetoSelect}" update="tvCapac:projetoDetail"/> 
                     </p:chart>
                     
                     <p:panelGrid id="projetoDetail"  columns="2"  style="width: 100%; margin-top:10px;">
@@ -53,17 +53,17 @@
                             <p:outputLabel value="Projeto - Detalhes"/>
                         </f:facet>
                         <h:outputText value="#{bundle.ViewProjetosLabel_id}" styleClass="ui-widget-header"/>
-                        <h:outputText id="projetoId" value="#{graficoCapacidadesAreas.selectedProjeto.id}" />
+                        <h:outputText id="projetoId" value="#{graficoAreasCapacidades.selectedProjeto.id}" />
                         <h:outputText value="Pontos" styleClass="ui-widget-header"/>
-                        <h:outputText id="pontosProjeto" value="#{graficoCapacidadesAreas.selectedProjetoPontos}"/>
+                        <h:outputText id="pontosProjeto" value="#{graficoAreasCapacidades.selectedProjetoPontos}"/>
                         <h:outputText value="#{bundle.ViewProjetosLabel_nome}" styleClass="ui-widget-header"/>
-                        <h:outputText id="projetoNome"  value="#{graficoCapacidadesAreas.selectedProjeto.nome}" />
+                        <h:outputText id="projetoNome"  value="#{graficoAreasCapacidades.selectedProjeto.nome}" />
                     </p:panelGrid>                    
                 </p:tab>
                 
                 <p:tab id="tabEmpresa" title="Empresas">
-                    <p:chart type="bar" model="#{graficoCapacidadesAreas.getGraficoEmpresas()}" style="width:100%;" responsive="true">
-                        <p:ajax event="itemSelect" listener="#{graficoCapacidadesAreas.itemEmpresaSelect}" update="tvCapac:empresaDetail" /> 
+                    <p:chart type="bar" model="#{graficoAreasCapacidades.getGraficoEmpresas()}" style="width:100%;" responsive="true">
+                        <p:ajax event="itemSelect" listener="#{graficoAreasCapacidades.itemEmpresaSelect}" update="tvCapac:empresaDetail" /> 
                     </p:chart>
                     
                     <p:panelGrid id="empresaDetail"  columns="2"  style="width: 100%; margin-top:10px;">
@@ -71,15 +71,18 @@
                             <p:outputLabel value="Empresa - Detalhes"/>
                         </f:facet>
                         <h:outputText value="#{bundle.ViewEmpresasLabel_id}" styleClass="ui-widget-header"/>
-                        <h:outputText id="empresaId" value="#{graficoCapacidadesAreas.selectedEmpresa.id}" />
+                        <h:outputText id="empresaId" value="#{graficoAreasCapacidades.selectedEmpresa.id}" />
                         <h:outputText value="Pontos" styleClass="ui-widget-header"/>
-                        <h:outputText id="pontosEmpresa" value="#{graficoCapacidadesAreas.selectedEmpresaPontos}"/>
+                        <h:outputText id="pontosEmpresa" value="#{graficoAreasCapacidades.selectedEmpresaPontos}"/>
                         <h:outputText value="#{bundle.ViewEmpresasLabel_nome}" styleClass="ui-widget-header"/>
-                        <h:outputText id="empresaNome"  value="#{graficoCapacidadesAreas.selectedEmpresa.nome}" />
+                        <h:outputText id="empresaNome"  value="#{graficoAreasCapacidades.selectedEmpresa.nome}" />
                     </p:panelGrid>
                                         
                 </p:tab>
             </p:tabView>                    
         </ui:define>
+        
+        <ui:include src="viewArea.xhtml"/>
+
     </ui:composition>
 </html>
