@@ -64,6 +64,15 @@
     height: 80px;
 }
 
+.ui-panel-change_pass {
+    background-image:url(img/mudarPassw.fw.png); 
+    background-position: center; 
+    background-repeat: no-repeat; 
+    background-size: contain;
+    border-style: none;
+    height: 80px;
+}
+
 .ui-menu .ui-menuitem-link {
     font-weight: normal !important;
 }

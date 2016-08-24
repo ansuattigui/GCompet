@@ -5,9 +5,11 @@
  */
 package com.ctex.ct.gcompet.bean;
 
+import com.ctex.ct.gcompet.bean.util.JsfUtil;
 import com.ctex.ct.gcompet.modelo.Perfil;
 import com.ctex.ct.gcompet.modelo.Usuarios;
 import java.io.Serializable;
+import java.util.ResourceBundle;
 import javax.ejb.EJB;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.application.FacesMessage;
@@ -29,6 +31,10 @@ public class LoginController implements Serializable {
     private String usuario;
     private Usuarios userLoggedIn;
     private Perfil perfilLogged;
+    
+    private String senhaAtual;
+    private String novaSenha;
+    private String novaSenhaConfirma;
  
     private static final long serialVersionUID = 1094801825228386363L;
     
@@ -76,11 +82,13 @@ public class LoginController implements Serializable {
     }
     
     //logout event, invalidate session
-    public String logout() {               
+    public String logout() {    
         FacesContext context = FacesContext.getCurrentInstance();
         context.getExternalContext().getSessionMap().remove("usuarioLogado");
         return "/login?faces-redirect=true";
     }    
+    
+    
 
     /**
      * @return the ejbFacade
@@ -119,6 +127,62 @@ public class LoginController implements Serializable {
      */
     public void setPerfilLogged(Perfil perfilLogged) {
         this.perfilLogged = perfilLogged;
+    }
+
+    /**
+     * @return the novaSenha
+     */
+    public String getNovaSenha() {
+        return novaSenha;
+    }
+
+    /**
+     * @param novaSenha the novaSenha to set
+     */
+    public void setNovaSenha(String novaSenha) {
+        this.novaSenha = novaSenha;
+    }
+
+    /**
+     * @return the novaSenhaConfirma
+     */
+    public String getNovaSenhaConfirma() {
+        return novaSenhaConfirma;
+    }
+
+    /**
+     * @param novaSenhaConfirma the novaSenhaConfirma to set
+     */
+    public void setNovaSenhaConfirma(String novaSenhaConfirma) {
+        this.novaSenhaConfirma = novaSenhaConfirma;
+    }
+    
+    public String confirmaSenhaAtual() {
+        
+        if (userLoggedIn.getSenha().equals(JsfUtil.encryptPassword(senhaAtual))) {
+            
+        } else {
+            
+                    
+            JsfUtil.addErrorMessage(null, ResourceBundle.getBundle("/Bundle").getString("SenhaInvalida"));
+        
+
+        }
+        return "passChange?faces-redirect=true";
+    }
+
+    /**
+     * @return the senhaAtual
+     */
+    public String getSenhaAtual() {
+        return senhaAtual;
+    }
+
+    /**
+     * @param senhaAtual the senhaAtual to set
+     */
+    public void setSenhaAtual(String senhaAtual) {
+        this.senhaAtual = senhaAtual;
     }
 
 }
