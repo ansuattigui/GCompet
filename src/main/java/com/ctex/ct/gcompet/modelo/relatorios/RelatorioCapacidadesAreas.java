@@ -6,6 +6,8 @@
 package com.ctex.ct.gcompet.modelo.relatorios;
 
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
+import java.util.Map;
 import java.util.Objects;
 
 /**
@@ -151,6 +153,20 @@ public class RelatorioCapacidadesAreas implements Comparable<RelatorioCapacidade
         }        
         return arrayCapacidadesAreas;
     }
+    
+    public static Map<Object,Number> mapCapacidadesAreas(ArrayList<RelatorioCapacidadesAreas> listaCapacidades) {        
+        Map<Object,Number> mapCapacidades = new LinkedHashMap<>(listaCapacidades.size());
+        int i = 0;
+        while(i < listaCapacidades.size()) {
+            String label = listaCapacidades.get(i).getCapacidade_id().toString();
+            Integer x = (int)listaCapacidades.get(i).getAvaliacao();
+            mapCapacidades.put(label,x);
+            i++;
+        }        
+        return mapCapacidades;
+    }
+    
+    
     
     @Override
     public int compareTo(RelatorioCapacidadesAreas o) {

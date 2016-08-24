@@ -5,8 +5,7 @@
  */
 package com.ctex.ct.gcompet.bean;
 
-import com.ctex.ct.gcompet.bean.util.AreasEmpresasSortByValue;
-import com.ctex.ct.gcompet.bean.util.AreasProjetosSortByValue;
+import com.ctex.ct.gcompet.bean.util.MapSortByValue;
 import com.ctex.ct.gcompet.modelo.Areas;
 import com.ctex.ct.gcompet.modelo.Capacidades;
 import com.ctex.ct.gcompet.modelo.Empresas;
@@ -27,40 +26,39 @@ import org.primefaces.model.chart.AxisType;
 import org.primefaces.model.chart.BarChartModel;
 import org.primefaces.model.chart.ChartSeries;
 
-//çgnmerkbnorb
 
 /**
  *
  * @author ralfh
  */
 @SessionScoped
-@Named("graficoCapacidadesAreas")
+@Named("graficoProjetosAreas")
 public class GraficoProjetosBean implements Serializable {
     
     private BarChartModel barChartAreas;
-    private BarChartModel barChartProjetos;
+    private BarChartModel barChartCapacidades;
     private BarChartModel barChartEmpresas;
-    private Capacidades capacidade;
+    private Projetos projeto;
     //Array para o Subrelatório Empresas
     private RelatorioAreasEmpresas[] arrayEmpresasAreas;
     
     private Map<Object,Number> mapAreas;
-    private Map<Object,Number> mapProjetos;
+    private Map<Object,Number> mapCapacidades;
     private Map<Object,Number> mapEmpresas;
     
     private Areas selectedArea;
     private Integer selectedAreaPontos;
-    private Projetos selectedProjeto;
-    private Integer selectedProjetoPontos;
+    private Capacidades selectedCapacidade;
+    private Integer selectedCapacidadePontos;
     private Empresas selectedEmpresa;
     private Integer selectedEmpresaPontos;
     
     @EJB private RelatorioAreasFacade ejbRCAFacade;
-    @EJB private RelatorioProjetosFacade ejbRAPFacade;
+    @EJB private RelatorioCapacidadesFacade ejbRACFacade;
     @EJB private RelatorioEmpresasFacade ejbRAEFacade;
     
     @EJB private AreasFacade ejbAreas;
-    @EJB private ProjetosFacade ejbProjeto;
+    @EJB private CapacidadesFacade ejbCapacidade;
     @EJB private EmpresasFacade ejbEmpresas;
     
     /**
@@ -71,7 +69,7 @@ public class GraficoProjetosBean implements Serializable {
     }
 
     public BarChartModel getGraficoProjetos() {
-        return barChartProjetos;
+        return barChartCapacidades;
     }
 
     public BarChartModel getGraficoEmpresas() {
@@ -83,15 +81,15 @@ public class GraficoProjetosBean implements Serializable {
      */
     public String getGraficos() {
         createGraficoAreas();
-        createGraficoProjetos();
+        createGraficoCapacidades();
         createGraficoEmpresas();
         selectedArea = null;
         selectedAreaPontos = null;
         selectedEmpresa = null;
         selectedEmpresaPontos = null;
-        selectedProjeto = null;
-        selectedProjetoPontos = null;
-        return "/user/graficosnatela/capacidades/CapacidadesAreasGrafico";
+        selectedCapacidade = null;
+        selectedCapacidadePontos = null;
+        return "/user/graficosnatela/projetos/ProjetosAreasGrafico";
     }
     
     private void createGraficoAreas() {
@@ -102,7 +100,7 @@ public class GraficoProjetosBean implements Serializable {
         Axis yAxis = barChartAreas.getAxis(AxisType.Y);
         yAxis.setMin(0);
         yAxis.setLabel("Pontos");
-        Axis xAxisAreas = barChartAreas.getAxis(AxisType.X);
+        //Axis xAxisAreas = barChartAreas.getAxis(AxisType.X);
         //xAxisAreas.setLabel("id Area");
     }    
     private BarChartModel initBarModelAreas() {
@@ -110,13 +108,13 @@ public class GraficoProjetosBean implements Serializable {
         ChartSeries areas = new ChartSeries();            
         areas.setLabel("Areas de Pesquisa");        
         
-        RelatorioCapacidadesAreas[] rca = ejbRCAFacade.findAllAreasPorCapacidade(capacidade,"peso");
-        mapAreas = new LinkedHashMap<>(rca.length);
+        RelatorioAreasProjetos[] rap = ejbRCAFacade.findAllAreasPorProjeto(projeto,"peso");
+        mapAreas = new LinkedHashMap<>(rap.length);
         
         int i = 0;
-        while(i < rca.length) {
-            String label = rca[i].getArea_id().toString();
-            Integer pDivA = (int) rca[i].getAvaliacao();
+        while(i < rap.length) {
+            String label = rap[i].getArea_id().toString();
+            Integer pDivA = (int) rap[i].getAvaliacao();
             mapAreas.put(label,pDivA);
             i++;
         }
@@ -125,25 +123,25 @@ public class GraficoProjetosBean implements Serializable {
         return model;        
     }
 
-    private void createGraficoProjetos() {
-        barChartProjetos = initBarModelProjetos();
-        barChartProjetos.setAnimate(true);
-        barChartProjetos.setLegendPosition("ne");
-        barChartProjetos.getAxis(AxisType.X).setTickAngle(-90);
-        Axis yAxis = barChartProjetos.getAxis(AxisType.Y);
+    private void createGraficoCapacidades() {
+        barChartCapacidades = initBarModelProjetos();
+        barChartCapacidades.setAnimate(true);
+        barChartCapacidades.setLegendPosition("ne");
+        barChartCapacidades.getAxis(AxisType.X).setTickAngle(-90);
+        Axis yAxis = barChartCapacidades.getAxis(AxisType.Y);
         yAxis.setMin(0);
         yAxis.setLabel("Pontos");
-        Axis xAxisProjetos = barChartProjetos.getAxis(AxisType.X);
+        //Axis xAxisProjetos = barChartCapacidades.getAxis(AxisType.X);
 //        xAxisProjetos.setLabel("id Projeto");
     }    
     private BarChartModel initBarModelProjetos() {
         BarChartModel model = new BarChartModel();
         ChartSeries projetos = new ChartSeries();            
-        projetos.setLabel("Projetos");        
+        projetos.setLabel("Capacidades");        
         
-        mapProjetos = getMapProjetosAreas();
+        mapCapacidades = getMapCapacidadesAreas();
         
-        projetos.setData(mapProjetos);
+        projetos.setData(mapCapacidades);
         model.addSeries(projetos);
         return model;        
     }
@@ -171,24 +169,24 @@ public class GraficoProjetosBean implements Serializable {
         return model;        
     }
     
-    //Consulta as Areas de pesquisa afins da capacidade selecionada - Ordem do id das áreas de pesquisa
-    public RelatorioCapacidadesAreas[] getArrayAreasCapacidadePorArea() {
-        return ejbRCAFacade.findAllAreasPorCapacidade(capacidade,"area");
+    //Consulta as Areas de pesquisa afins da projeto selecionada - Ordem do id das áreas de pesquisa
+    public RelatorioCapacidadesAreas[] getArrayCapacidades() {
+        return ejbRACFacade.findAllCapacidades();
     }   
     
     /**
      * @return the arrayProjetosAreasAux
      */
     //Consulta os Projetos afins  - Ordem do id dos projetos
-    public RelatorioAreasProjetos[] getArrayProjetosAreasAux() {
-        return ejbRAPFacade.findAllProjetosAreas();    
+    public RelatorioAreasProjetos[] getArrayAreasProjetos() {
+        return ejbRCAFacade.findAllAreasPorProjeto(projeto, "area"); 
     }
 
     /**
      * @return the arrayEmpresasAreasAux
      */
     //Array com todas as empresas relacionadas as áreas selecionadas
-    public RelatorioAreasEmpresas[] getArrayEmpresasAreasAux() {
+    public RelatorioAreasEmpresas[] getArrayEmpresasAreas() {
         return ejbRAEFacade.findAllEmpresasAreas();
     }
 
@@ -196,34 +194,34 @@ public class GraficoProjetosBean implements Serializable {
     /**
      * @return the mapProjetosAreas
      */
-    public Map<Object,Number> getMapProjetosAreas() {              
+    public Map<Object,Number> getMapCapacidadesAreas() {              
         // popula uma lista com os relacionamentos entre Capacidades Operativas e Areas de Pesquisa
-        RelatorioCapacidadesAreas[] areasArray = getArrayAreasCapacidadePorArea();
+        RelatorioCapacidadesAreas[] capacidadesArray = getArrayCapacidades();
         // popula uma lista com os relacionamentos entre Areas de Pesquisa e projetos do CTEx
-        RelatorioAreasProjetos[] projetosArray = getArrayProjetosAreasAux();
+        RelatorioAreasProjetos[] areasArray = getArrayAreasProjetos();
         
         // efetua uma relação de correspondencia direta entre os arrays e produz uma lista co o resultado
         // os projetos relacionados a áreas que não constem da lista Capacidade/Areas não são contados
         // cria uma lista com os projetos selecionadas 
-        ArrayList<RelatorioAreasProjetos> lista = new ArrayList<>();        
-        for(RelatorioAreasProjetos itemAP : projetosArray) {                
-            for(RelatorioCapacidadesAreas itemCA : areasArray) {            
+        ArrayList<RelatorioCapacidadesAreas> lista = new ArrayList<>();        
+        for(RelatorioCapacidadesAreas itemCA : capacidadesArray) {                
+            for(RelatorioAreasProjetos itemAP : areasArray) {            
                 if (itemAP.getArea_id()==itemCA.getArea_id()) {                    
-                    lista.add(itemAP);                    
+                    lista.add(itemCA);                    
                 }                
             }            
         }       
 
         // agrupa todas as contagens referentes as repetições dos projetos na lista,
         // desconsiderando o efeito das áreas de pesquisa (Não sei se é isto que deve ser feito!!!)
-        ArrayList<RelatorioAreasProjetos> listaProjetos = RelatorioAreasProjetos.agrupaProjetos(lista);
+        ArrayList<RelatorioCapacidadesAreas> listaCapacidades = RelatorioCapacidadesAreas.agrupaCapacidades(lista);
 
         // devolve um array com o resultado dos projetos resultantes da pesquisa 
         // com a Capacidade Operativa selecionada.
-        Map<Object,Number> mapProjetosAreas = RelatorioAreasProjetos.mapAreasProjetos(listaProjetos);
-        Map<Object,Number> mapPA = AreasProjetosSortByValue.sortByValue(mapProjetosAreas,"DESC");
+        Map<Object,Number> mapCapacidadesAreas = RelatorioCapacidadesAreas.mapCapacidadesAreas(listaCapacidades);
+        Map<Object,Number> mapCA =  MapSortByValue.sortByValue(mapCapacidadesAreas,"DESC");
         
-        return mapPA;
+        return mapCA;
     }
 
     /**
@@ -231,18 +229,18 @@ public class GraficoProjetosBean implements Serializable {
      */
     public Map<Object,Number> getMapEmpresasAreas() {
         // popula uma lista com os relacionamentos entre Capacidades Operativas e Areas de Pesquisa
-        RelatorioCapacidadesAreas[] areasArray = getArrayAreasCapacidadePorArea();
+        RelatorioAreasProjetos[] areasArray = getArrayAreasProjetos();
         
         // popula uma lista com os relacionamentos entre Areas de Pesquisa e empresas parceiras do CTEx
-        RelatorioAreasEmpresas[] empresasArray = getArrayEmpresasAreasAux();
+        RelatorioAreasEmpresas[] empresasArray = getArrayEmpresasAreas();
         
         // efetua uma relação de correspondencia direta entre os arrays e produz uma lista com o resultado
         // as empresas relacionadas a áreas que não constem da lista Capacidade/Areas não são contadas
         // cria uma lista com as empresas selecionadas 
         ArrayList<RelatorioAreasEmpresas> lista = new ArrayList<>();        
         for(RelatorioAreasEmpresas itemAE : empresasArray) {                
-            for(RelatorioCapacidadesAreas itemCA : areasArray) {            
-                if (itemAE.getArea_id()==itemCA.getArea_id()) {                    
+            for(RelatorioAreasProjetos itemAP : areasArray) {            
+                if (itemAE.getArea_id()==itemAP.getArea_id()) {                    
                     lista.add(itemAE);                    
                 }                
             }            
@@ -255,7 +253,7 @@ public class GraficoProjetosBean implements Serializable {
         // devolve um array com o resultado dos projetos resultantes da pesquisa 
         // com a Capacidade Operativa selecionada.
         Map<Object,Number> mapEmpresasAreas = RelatorioAreasEmpresas.mapAreasEmpresas(listaEmpresas);
-        Map<Object,Number> mapEA = AreasEmpresasSortByValue.sortByValue(mapEmpresasAreas,"DESC");
+        Map<Object,Number> mapEA = MapSortByValue.sortByValue(mapEmpresasAreas,"DESC");
         
         return mapEA;
     }
@@ -268,17 +266,17 @@ public class GraficoProjetosBean implements Serializable {
     }
 
     /**
-     * @return the capacidade
+     * @return the projeto
      */
-    public Capacidades getCapacidade() {
-        return capacidade;
+    public Projetos getProjeto() {
+        return projeto;
     }
 
     /**
-     * @param capacidade the capacidade to set
+     * @param projeto the projeto to set
      */
-    public void setCapacidade(Capacidades capacidade) {
-        this.capacidade = capacidade;
+    public void setProjeto(Projetos projeto) {
+        this.projeto = projeto;
     }
 
     public void itemAreaSelect(ItemSelectEvent event) {
@@ -297,15 +295,15 @@ public class GraficoProjetosBean implements Serializable {
         }        
     }
 
-    public void itemProjetoSelect(ItemSelectEvent event) {
+    public void itemCapacidadeSelect(ItemSelectEvent event) {
         String label = null;
-        ChartSeries cs = barChartProjetos.getSeries().get(event.getSeriesIndex());
+        ChartSeries cs = barChartCapacidades.getSeries().get(event.getSeriesIndex());
         Map<Object,Number> map = cs.getData();
         int i = 0;
         for (Map.Entry<Object, Number> entry : map.entrySet()) {
             if (i == event.getItemIndex()) {
                 label = (String) entry.getKey();
-                selectedProjetoPontos = (Integer) entry.getValue();
+                selectedCapacidadePontos = (Integer) entry.getValue();
                 setSelectedProjeto(Integer.parseInt(label));
                 break;
             }
@@ -358,31 +356,31 @@ public class GraficoProjetosBean implements Serializable {
     }
 
     /**
-     * @return the selectedProjeto
+     * @return the selectedCapacidade
      */
-    public Projetos getSelectedProjeto() {
-        return selectedProjeto;
+    public Capacidades getSelectedCapacidade() {
+        return selectedCapacidade;
     }
 
     /**
-     * @param selectedProjetoId
+     * @param selectedCapacidadeId
      */
-    public void setSelectedProjeto(Integer selectedProjetoId) {
-        selectedProjeto = ejbProjeto.find(selectedProjetoId);
+    public void setSelectedProjeto(Integer selectedCapacidadeId) {
+        selectedCapacidade = ejbCapacidade.find(selectedCapacidadeId);
     }
 
     /**
-     * @return the selectedProjetoPontos
+     * @return the selectedCapacidadePontos
      */
-    public Integer getSelectedProjetoPontos() {
-        return selectedProjetoPontos;
+    public Integer getSelectedCapacidadePontos() {
+        return selectedCapacidadePontos;
     }
 
     /**
-     * @param selectedProjetoPontos the selectedProjetoPontos to set
+     * @param selectedCapacidadePontos the selectedCapacidadePontos to set
      */
-    public void setSelectedProjetoPontos(Integer selectedProjetoPontos) {
-        this.selectedProjetoPontos = selectedProjetoPontos;
+    public void setSelectedCapacidadePontos(Integer selectedCapacidadePontos) {
+        this.selectedCapacidadePontos = selectedCapacidadePontos;
     }
 
     /**

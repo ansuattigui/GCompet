@@ -32,34 +32,34 @@ import org.primefaces.model.chart.ChartSeries;
  * @author ralfh
  */
 @SessionScoped
-@Named("graficoCapacidadesAreas")
-public class GraficoCapacidadesBean implements Serializable {
+@Named("graficoEmpresasAreas")
+public class GraficoEmpresasBean implements Serializable {
     
     private BarChartModel barChartAreas;
+    private BarChartModel barChartCapacidades;
     private BarChartModel barChartProjetos;
-    private BarChartModel barChartEmpresas;
-    private Capacidades capacidade;
+    private Empresas empresa;
     //Array para o Subrelatório Empresas
     private RelatorioAreasEmpresas[] arrayEmpresasAreas;
     
     private Map<Object,Number> mapAreas;
+    private Map<Object,Number> mapCapacidades;
     private Map<Object,Number> mapProjetos;
-    private Map<Object,Number> mapEmpresas;
     
     private Areas selectedArea;
     private Integer selectedAreaPontos;
+    private Capacidades selectedCapacidade;
+    private Integer selectedCapacidadePontos;
     private Projetos selectedProjeto;
     private Integer selectedProjetoPontos;
-    private Empresas selectedEmpresa;
-    private Integer selectedEmpresaPontos;
     
     @EJB private RelatorioAreasFacade ejbRCAFacade;
+    @EJB private RelatorioCapacidadesFacade ejbRACFacade;
     @EJB private RelatorioProjetosFacade ejbRAPFacade;
-    @EJB private RelatorioEmpresasFacade ejbRAEFacade;
     
     @EJB private AreasFacade ejbAreas;
-    @EJB private ProjetosFacade ejbProjeto;
-    @EJB private EmpresasFacade ejbEmpresas;
+    @EJB private CapacidadesFacade ejbCapacidade;
+    @EJB private ProjetosFacade ejbProjetos;
     
     /**
      * @return the barChartAreas
@@ -69,11 +69,11 @@ public class GraficoCapacidadesBean implements Serializable {
     }
 
     public BarChartModel getGraficoProjetos() {
-        return barChartProjetos;
+        return barChartCapacidades;
     }
 
     public BarChartModel getGraficoEmpresas() {
-        return barChartEmpresas;
+        return barChartProjetos;
     }
     
     /**
@@ -81,15 +81,15 @@ public class GraficoCapacidadesBean implements Serializable {
      */
     public String getGraficos() {
         createGraficoAreas();
+        createGraficoCapacidades();
         createGraficoProjetos();
-        createGraficoEmpresas();
         selectedArea = null;
         selectedAreaPontos = null;
-        selectedEmpresa = null;
-        selectedEmpresaPontos = null;
         selectedProjeto = null;
         selectedProjetoPontos = null;
-        return "/user/graficosnatela/capacidades/CapacidadesAreasGrafico";
+        selectedCapacidade = null;
+        selectedCapacidadePontos = null;
+        return "/user/graficosnatela/empresas/EmpresasAreasGrafico";
     }
     
     private void createGraficoAreas() {
@@ -100,7 +100,7 @@ public class GraficoCapacidadesBean implements Serializable {
         Axis yAxis = barChartAreas.getAxis(AxisType.Y);
         yAxis.setMin(0);
         yAxis.setLabel("Pontos");
-        Axis xAxisAreas = barChartAreas.getAxis(AxisType.X);
+        //Axis xAxisAreas = barChartAreas.getAxis(AxisType.X);
         //xAxisAreas.setLabel("id Area");
     }    
     private BarChartModel initBarModelAreas() {
@@ -108,18 +108,41 @@ public class GraficoCapacidadesBean implements Serializable {
         ChartSeries areas = new ChartSeries();            
         areas.setLabel("Areas de Pesquisa");        
         
-        RelatorioCapacidadesAreas[] rca = ejbRCAFacade.findAllAreasPorCapacidade(capacidade,"peso");
-        mapAreas = new LinkedHashMap<>(rca.length);
+        RelatorioAreasEmpresas[] rap = ejbRCAFacade.findAllAreasPorEmpresa(empresa,"peso");
+        mapAreas = new LinkedHashMap<>(rap.length);
         
         int i = 0;
-        while(i < rca.length) {
-            String label = rca[i].getArea_id().toString();
-            Integer pDivA = (int) rca[i].getAvaliacao();
+        while(i < rap.length) {
+            String label = rap[i].getArea_id().toString();
+            Integer pDivA = (int) rap[i].getAvaliacao();
             mapAreas.put(label,pDivA);
             i++;
         }
         areas.setData(mapAreas);
         model.addSeries(areas);        
+        return model;        
+    }
+
+    private void createGraficoCapacidades() {
+        barChartCapacidades = initBarModelCapacidades();
+        barChartCapacidades.setAnimate(true);
+        barChartCapacidades.setLegendPosition("ne");
+        barChartCapacidades.getAxis(AxisType.X).setTickAngle(-90);
+        Axis yAxis = barChartCapacidades.getAxis(AxisType.Y);
+        yAxis.setMin(0);
+        yAxis.setLabel("Pontos");
+        //Axis xAxisProjetos = barChartCapacidades.getAxis(AxisType.X);
+//        xAxisProjetos.setLabel("id Projeto");
+    }    
+    private BarChartModel initBarModelCapacidades() {
+        BarChartModel model = new BarChartModel();
+        ChartSeries projetos = new ChartSeries();            
+        projetos.setLabel("Capacidades");        
+        
+        mapCapacidades = getMapCapacidadesAreas();
+        
+        projetos.setData(mapCapacidades);
+        model.addSeries(projetos);
         return model;        
     }
 
@@ -136,77 +159,88 @@ public class GraficoCapacidadesBean implements Serializable {
     }    
     private BarChartModel initBarModelProjetos() {
         BarChartModel model = new BarChartModel();
-        ChartSeries projetos = new ChartSeries();            
-        projetos.setLabel("Projetos");        
+        ChartSeries empresas = new ChartSeries();            
+        empresas.setLabel("Projetos");        
         
         mapProjetos = getMapProjetosAreas();
         
-        projetos.setData(mapProjetos);
-        model.addSeries(projetos);
-        return model;        
-    }
-
-    private void createGraficoEmpresas() {
-        barChartEmpresas = initBarModelEmpresas();
-        barChartEmpresas.setAnimate(true);
-        barChartEmpresas.setLegendPosition("ne");
-        barChartEmpresas.getAxis(AxisType.X).setTickAngle(-90);
-        Axis yAxis = barChartEmpresas.getAxis(AxisType.Y);
-        yAxis.setMin(0);
-        yAxis.setLabel("Pontos");
-        Axis xAxisProjetos = barChartEmpresas.getAxis(AxisType.X);
-//        xAxisProjetos.setLabel("id Projeto");
-    }    
-    private BarChartModel initBarModelEmpresas() {
-        BarChartModel model = new BarChartModel();
-        ChartSeries empresas = new ChartSeries();            
-        empresas.setLabel("Empresas");        
-        
-        mapEmpresas = getMapEmpresasAreas();
-        
-        empresas.setData(mapEmpresas);
+        empresas.setData(mapProjetos);
         model.addSeries(empresas);
         return model;        
     }
     
-    //Consulta as Areas de pesquisa afins da capacidade selecionada - Ordem do id das áreas de pesquisa
-    public RelatorioCapacidadesAreas[] getArrayAreasCapacidadePorArea() {
-        return ejbRCAFacade.findAllAreasPorCapacidade(capacidade,"area");
+    //Consulta as Areas de pesquisa afins da empresa selecionada - Ordem do id das áreas de pesquisa
+    public RelatorioCapacidadesAreas[] getArrayCapacidades() {
+        return ejbRACFacade.findAllCapacidades();
     }   
     
     /**
      * @return the arrayProjetosAreasAux
      */
     //Consulta os Projetos afins  - Ordem do id dos projetos
-    public RelatorioAreasProjetos[] getArrayProjetosAreasAux() {
-        return ejbRAPFacade.findAllProjetosAreas();    
+    public RelatorioAreasEmpresas[] getArrayAreasEmpresas() {
+        return ejbRCAFacade.findAllAreasPorEmpresa(empresa, "area"); 
     }
 
     /**
      * @return the arrayEmpresasAreasAux
      */
     //Array com todas as empresas relacionadas as áreas selecionadas
-    public RelatorioAreasEmpresas[] getArrayEmpresasAreasAux() {
-        return ejbRAEFacade.findAllEmpresasAreas();
+    public RelatorioAreasProjetos[] getArrayProjetosAreas() {
+        return ejbRAPFacade.findAllProjetosAreas();
     }
 
 
     /**
      * @return the mapProjetosAreas
      */
-    public Map<Object,Number> getMapProjetosAreas() {              
+    public Map<Object,Number> getMapCapacidadesAreas() {              
         // popula uma lista com os relacionamentos entre Capacidades Operativas e Areas de Pesquisa
-        RelatorioCapacidadesAreas[] areasArray = getArrayAreasCapacidadePorArea();
+        RelatorioCapacidadesAreas[] capacidadesArray = getArrayCapacidades();
         // popula uma lista com os relacionamentos entre Areas de Pesquisa e projetos do CTEx
-        RelatorioAreasProjetos[] projetosArray = getArrayProjetosAreasAux();
+        RelatorioAreasEmpresas[] areasArray = getArrayAreasEmpresas();
         
         // efetua uma relação de correspondencia direta entre os arrays e produz uma lista co o resultado
         // os projetos relacionados a áreas que não constem da lista Capacidade/Areas não são contados
         // cria uma lista com os projetos selecionadas 
+        ArrayList<RelatorioCapacidadesAreas> lista = new ArrayList<>();        
+        for(RelatorioCapacidadesAreas itemCA : capacidadesArray) {                
+            for(RelatorioAreasEmpresas itemAE : areasArray) {            
+                if (itemAE.getArea_id()==itemCA.getArea_id()) {                    
+                    lista.add(itemCA);                    
+                }                
+            }            
+        }       
+
+        // agrupa todas as contagens referentes as repetições dos projetos na lista,
+        // desconsiderando o efeito das áreas de pesquisa (Não sei se é isto que deve ser feito!!!)
+        ArrayList<RelatorioCapacidadesAreas> listaCapacidades = RelatorioCapacidadesAreas.agrupaCapacidades(lista);
+
+        // devolve um array com o resultado dos projetos resultantes da pesquisa 
+        // com a Capacidade Operativa selecionada.
+        Map<Object,Number> mapCapacidadesAreas = RelatorioCapacidadesAreas.mapCapacidadesAreas(listaCapacidades);
+        Map<Object,Number> mapCA =  MapSortByValue.sortByValue(mapCapacidadesAreas,"DESC");
+        
+        return mapCA;
+    }
+
+    /**
+     * @return 
+     */
+    public Map<Object,Number> getMapProjetosAreas() {
+        // popula uma lista com os relacionamentos entre Capacidades Operativas e Areas de Pesquisa
+        RelatorioAreasEmpresas[] areasArray = getArrayAreasEmpresas();
+        
+        // popula uma lista com os relacionamentos entre Areas de Pesquisa e empresas parceiras do CTEx
+        RelatorioAreasProjetos[] projetosArray = getArrayProjetosAreas();
+        
+        // efetua uma relação de correspondencia direta entre os arrays e produz uma lista com o resultado
+        // as empresas relacionadas a áreas que não constem da lista Capacidade/Areas não são contadas
+        // cria uma lista com as empresas selecionadas 
         ArrayList<RelatorioAreasProjetos> lista = new ArrayList<>();        
         for(RelatorioAreasProjetos itemAP : projetosArray) {                
-            for(RelatorioCapacidadesAreas itemCA : areasArray) {            
-                if (itemAP.getArea_id()==itemCA.getArea_id()) {                    
+            for(RelatorioAreasEmpresas itemAE : areasArray) {            
+                if (itemAP.getArea_id()==itemAE.getArea_id()) {                    
                     lista.add(itemAP);                    
                 }                
             }            
@@ -215,47 +249,13 @@ public class GraficoCapacidadesBean implements Serializable {
         // agrupa todas as contagens referentes as repetições dos projetos na lista,
         // desconsiderando o efeito das áreas de pesquisa (Não sei se é isto que deve ser feito!!!)
         ArrayList<RelatorioAreasProjetos> listaProjetos = RelatorioAreasProjetos.agrupaProjetos(lista);
-
+        
         // devolve um array com o resultado dos projetos resultantes da pesquisa 
         // com a Capacidade Operativa selecionada.
         Map<Object,Number> mapProjetosAreas = RelatorioAreasProjetos.mapAreasProjetos(listaProjetos);
         Map<Object,Number> mapPA = MapSortByValue.sortByValue(mapProjetosAreas,"DESC");
         
         return mapPA;
-    }
-
-    /**
-     * @return 
-     */
-    public Map<Object,Number> getMapEmpresasAreas() {
-        // popula uma lista com os relacionamentos entre Capacidades Operativas e Areas de Pesquisa
-        RelatorioCapacidadesAreas[] areasArray = getArrayAreasCapacidadePorArea();
-        
-        // popula uma lista com os relacionamentos entre Areas de Pesquisa e empresas parceiras do CTEx
-        RelatorioAreasEmpresas[] empresasArray = getArrayEmpresasAreasAux();
-        
-        // efetua uma relação de correspondencia direta entre os arrays e produz uma lista com o resultado
-        // as empresas relacionadas a áreas que não constem da lista Capacidade/Areas não são contadas
-        // cria uma lista com as empresas selecionadas 
-        ArrayList<RelatorioAreasEmpresas> lista = new ArrayList<>();        
-        for(RelatorioAreasEmpresas itemAE : empresasArray) {                
-            for(RelatorioCapacidadesAreas itemCA : areasArray) {            
-                if (itemAE.getArea_id()==itemCA.getArea_id()) {                    
-                    lista.add(itemAE);                    
-                }                
-            }            
-        }       
-
-        // agrupa todas as contagens referentes as repetições dos projetos na lista,
-        // desconsiderando o efeito das áreas de pesquisa (Não sei se é isto que deve ser feito!!!)
-        ArrayList<RelatorioAreasEmpresas> listaEmpresas = RelatorioAreasEmpresas.agrupaEmpresas(lista);
-        
-        // devolve um array com o resultado dos projetos resultantes da pesquisa 
-        // com a Capacidade Operativa selecionada.
-        Map<Object,Number> mapEmpresasAreas = RelatorioAreasEmpresas.mapAreasEmpresas(listaEmpresas);
-        Map<Object,Number> mapEA = MapSortByValue.sortByValue(mapEmpresasAreas,"DESC");
-        
-        return mapEA;
     }
 
     /**
@@ -266,17 +266,17 @@ public class GraficoCapacidadesBean implements Serializable {
     }
 
     /**
-     * @return the capacidade
+     * @return the empresa
      */
-    public Capacidades getCapacidade() {
-        return capacidade;
+    public Empresas getEmpresa() {
+        return empresa;
     }
 
     /**
-     * @param capacidade the capacidade to set
+     * @param empresa the empresa to set
      */
-    public void setCapacidade(Capacidades capacidade) {
-        this.capacidade = capacidade;
+    public void setEmpresa(Empresas empresa) {
+        this.empresa = empresa;
     }
 
     public void itemAreaSelect(ItemSelectEvent event) {
@@ -295,15 +295,15 @@ public class GraficoCapacidadesBean implements Serializable {
         }        
     }
 
-    public void itemProjetoSelect(ItemSelectEvent event) {
+    public void itemCapacidadeSelect(ItemSelectEvent event) {
         String label = null;
-        ChartSeries cs = barChartProjetos.getSeries().get(event.getSeriesIndex());
+        ChartSeries cs = barChartCapacidades.getSeries().get(event.getSeriesIndex());
         Map<Object,Number> map = cs.getData();
         int i = 0;
         for (Map.Entry<Object, Number> entry : map.entrySet()) {
             if (i == event.getItemIndex()) {
                 label = (String) entry.getKey();
-                selectedProjetoPontos = (Integer) entry.getValue();
+                selectedCapacidadePontos = (Integer) entry.getValue();
                 setSelectedProjeto(Integer.parseInt(label));
                 break;
             }
@@ -313,13 +313,13 @@ public class GraficoCapacidadesBean implements Serializable {
 
     public void itemEmpresaSelect(ItemSelectEvent event) {
         String label = null;
-        ChartSeries cs = barChartEmpresas.getSeries().get(event.getSeriesIndex());
+        ChartSeries cs = barChartProjetos.getSeries().get(event.getSeriesIndex());
         Map<Object,Number> map = cs.getData();
         int i = 0;
         for (Map.Entry<Object, Number> entry : map.entrySet()) {
             if (i == event.getItemIndex()) {
                 label = (String) entry.getKey();
-                selectedEmpresaPontos = (Integer) entry.getValue();
+                selectedProjetoPontos = (Integer) entry.getValue();
                 setSelectedEmpresa(Integer.parseInt(label));
                 break;
             }
@@ -356,6 +356,34 @@ public class GraficoCapacidadesBean implements Serializable {
     }
 
     /**
+     * @return the selectedCapacidade
+     */
+    public Capacidades getSelectedCapacidade() {
+        return selectedCapacidade;
+    }
+
+    /**
+     * @param selectedCapacidadeId
+     */
+    public void setSelectedProjeto(Integer selectedCapacidadeId) {
+        selectedCapacidade = ejbCapacidade.find(selectedCapacidadeId);
+    }
+
+    /**
+     * @return the selectedCapacidadePontos
+     */
+    public Integer getSelectedCapacidadePontos() {
+        return selectedCapacidadePontos;
+    }
+
+    /**
+     * @param selectedCapacidadePontos the selectedCapacidadePontos to set
+     */
+    public void setSelectedCapacidadePontos(Integer selectedCapacidadePontos) {
+        this.selectedCapacidadePontos = selectedCapacidadePontos;
+    }
+
+    /**
      * @return the selectedProjeto
      */
     public Projetos getSelectedProjeto() {
@@ -363,10 +391,10 @@ public class GraficoCapacidadesBean implements Serializable {
     }
 
     /**
-     * @param selectedProjetoId
+     * @param selectedEmpresaId
      */
-    public void setSelectedProjeto(Integer selectedProjetoId) {
-        selectedProjeto = ejbProjeto.find(selectedProjetoId);
+    public void setSelectedEmpresa(Integer selectedProjetoId) {
+        selectedProjeto = ejbProjetos.find(selectedProjetoId);
     }
 
     /**
@@ -381,34 +409,6 @@ public class GraficoCapacidadesBean implements Serializable {
      */
     public void setSelectedProjetoPontos(Integer selectedProjetoPontos) {
         this.selectedProjetoPontos = selectedProjetoPontos;
-    }
-
-    /**
-     * @return the selectedEmpresa
-     */
-    public Empresas getSelectedEmpresa() {
-        return selectedEmpresa;
-    }
-
-    /**
-     * @param selectedEmpresaId
-     */
-    public void setSelectedEmpresa(Integer selectedEmpresaId) {
-        selectedEmpresa = ejbEmpresas.find(selectedEmpresaId);
-    }
-
-    /**
-     * @return the selectedEmpresaPontos
-     */
-    public Integer getSelectedEmpresaPontos() {
-        return selectedEmpresaPontos;
-    }
-
-    /**
-     * @param selectedEmpresaPontos the selectedEmpresaPontos to set
-     */
-    public void setSelectedEmpresaPontos(Integer selectedEmpresaPontos) {
-        this.selectedEmpresaPontos = selectedEmpresaPontos;
     }
     
 }

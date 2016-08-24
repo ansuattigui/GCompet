@@ -17,7 +17,7 @@ import java.util.Map;
  *
  * @author Ralfh
  */
-public class AreasProjetosSortByValue {
+public class MapSortByValue {
     
     public static Map sortByValue(Map map,String ord) {
         List list = new LinkedList(map.entrySet());

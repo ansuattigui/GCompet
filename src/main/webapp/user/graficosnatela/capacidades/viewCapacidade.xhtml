@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="CapacidadesViewDlg" widgetVar="CapacidadesViewDialog" modal="true" 
+            resizable="false" appendTo="@(body)" header="#{bundle.ViewCapacidadesTitle}">
+            <h:form id="CapacidadesViewForm">
+                <h:panelGroup id="display" >
+                    <p:panelGrid columns="2" rendered="#{graficoCapacidadesAreas.capacidade!= null}" style="width: 600px;">
+                        <h:outputText value="#{bundle.ViewCapacidadesLabel_num}"/>
+                        <h:outputText value="#{graficoCapacidadesAreas.capacidade.id}" title="#{bundle.ViewCapacidadesTitle_id}"/>
+                        <h:outputText value="#{bundle.ViewCapacidadesLabel_nome}"/>
+                        <h:outputText value="#{graficoCapacidadesAreas.capacidade.nome}" title="#{bundle.ViewCapacidadesTitle_nome}"/>
+                        <h:outputText value="#{bundle.ViewCapacidadesLabel_descricao}"/>
+                        <h:inputTextarea value="#{graficoCapacidadesAreas.capacidade.descricao}" title="#{bundle.ViewCapacidadesTitle_nome}" readonly="true" rows="5" style="width:500px;"/>
+                    </p:panelGrid>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>
