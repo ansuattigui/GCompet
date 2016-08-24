@@ -10,16 +10,16 @@
 
         <ui:define name="body">        
         
-            <h:form id="SelecionaProjetoForm" prependId="false">
+            <h:form id="SelecionaEmpresaForm" prependId="false">
                 <p:panel style="width: 100%;" class="ui-sem-borda">
 
                     <f:facet name="header" >
-                        <h:outputText value="#{bundle.RelatorioProjeto_Title}" style="font-size: 14px !important; font-variant-caps: small-caps; color: yellow !important;"/>
+                        <h:outputText value="#{bundle.GraficoEmpresa_Title}" style="font-size: 14px !important; font-variant-caps: small-caps; color: yellow !important;"/>
                     </f:facet>
                                         
-                    <p:dataTable id="datalist" value="#{projetosController.items}" var="item"
+                    <p:dataTable id="datalist" value="#{empresasController.items}" var="item"
                         selectionMode="single" 
-                        selection="#{graficoProjetosAreas.projeto}"
+                        selection="#{graficoEmpresasAreas.empresa}"
                         paginator="false" 
                         scrollable="true"
                         scrollHeight="375"
@@ -29,24 +29,24 @@
                         <p:ajax event="rowUnselect" update="viewButton"/>
                         
                         <f:facet name="header">
-                            <h:outputText id="associaHeader" value="#{bundle.ProjetosSelectOne}" />
+                            <h:outputText id="associaHeader" value="#{bundle.EmpresasSelectOne}" />
                         </f:facet>                        
                         <p:column style="width: 5%;">
                             <f:facet name="header">
-                                <h:outputText value="#{bundle.ListProjetosTitle_num}"/>
+                                <h:outputText value="#{bundle.ListEmpresasTitle_num}"/>
                             </f:facet>
                             <h:outputText value="#{item.id}"/>
                         </p:column>
                         <p:column>
                             <f:facet name="header">
-                                <h:outputText value="#{bundle.ListProjetosTitle_nome}"/>
+                                <h:outputText value="#{bundle.ListEmpresasTitle_nome}"/>
                             </f:facet>
                             <h:outputText value="#{item.nome}"/>
                         </p:column>
                         
                         <f:facet name="footer">
-                            <p:commandButton id="viewButton"  update=":ProjetosViewForm" icon="ui-icon-search" value="#{bundle.View}" oncomplete="PF('ProjetosViewDialog').show()" />
-                            <p:commandButton id="confirmaButton" icon="ui-icon-plus"   value="#{bundle.Select}" action="#{graficoProjetosAreas.getGraficos()}" update="SelecionaProjetoForm">
+                            <p:commandButton id="viewButton"  update=":EmpresasViewForm" icon="ui-icon-search" value="#{bundle.View}" oncomplete="PF('EmpresasViewDialog').show()" />
+                            <p:commandButton id="confirmaButton" icon="ui-icon-plus"   value="#{bundle.Select}" action="#{graficoEmpresasAreas.getGraficos()}" update="SelecionaEmpresaForm">
                                 <p:confirm header="Confirmação" message="Confirma a seleção desejada?" icon="ui-icon-alert" />
                             </p:commandButton>                                
                             <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">

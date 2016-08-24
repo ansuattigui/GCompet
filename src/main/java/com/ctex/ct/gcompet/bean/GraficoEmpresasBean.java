@@ -68,11 +68,11 @@ public class GraficoEmpresasBean implements Serializable {
         return barChartAreas;
     }
 
-    public BarChartModel getGraficoProjetos() {
+    public BarChartModel getGraficoCapacidades() {
         return barChartCapacidades;
     }
 
-    public BarChartModel getGraficoEmpresas() {
+    public BarChartModel getGraficoProjetos() {
         return barChartProjetos;
     }
     
@@ -304,14 +304,14 @@ public class GraficoEmpresasBean implements Serializable {
             if (i == event.getItemIndex()) {
                 label = (String) entry.getKey();
                 selectedCapacidadePontos = (Integer) entry.getValue();
-                setSelectedProjeto(Integer.parseInt(label));
+                setSelectedCapacidade(Integer.parseInt(label));
                 break;
             }
             i++;
         }        
     }
 
-    public void itemEmpresaSelect(ItemSelectEvent event) {
+    public void itemProjetoSelect(ItemSelectEvent event) {
         String label = null;
         ChartSeries cs = barChartProjetos.getSeries().get(event.getSeriesIndex());
         Map<Object,Number> map = cs.getData();
@@ -320,7 +320,7 @@ public class GraficoEmpresasBean implements Serializable {
             if (i == event.getItemIndex()) {
                 label = (String) entry.getKey();
                 selectedProjetoPontos = (Integer) entry.getValue();
-                setSelectedEmpresa(Integer.parseInt(label));
+                setSelectedProjeto(Integer.parseInt(label));
                 break;
             }
             i++;
@@ -365,7 +365,7 @@ public class GraficoEmpresasBean implements Serializable {
     /**
      * @param selectedCapacidadeId
      */
-    public void setSelectedProjeto(Integer selectedCapacidadeId) {
+    public void setSelectedCapacidade(Integer selectedCapacidadeId) {
         selectedCapacidade = ejbCapacidade.find(selectedCapacidadeId);
     }
 
@@ -391,9 +391,9 @@ public class GraficoEmpresasBean implements Serializable {
     }
 
     /**
-     * @param selectedEmpresaId
+     * @param selectedProjetoId
      */
-    public void setSelectedEmpresa(Integer selectedProjetoId) {
+    public void setSelectedProjeto(Integer selectedProjetoId) {
         selectedProjeto = ejbProjetos.find(selectedProjetoId);
     }
 

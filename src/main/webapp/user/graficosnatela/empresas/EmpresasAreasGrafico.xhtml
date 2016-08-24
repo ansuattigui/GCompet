@@ -14,18 +14,18 @@
             <p:panelGrid style="width:100%">
                 <f:facet name="header">
                     <p:row>
-                        <p:column>Avaliação de Projetos</p:column>
+                        <p:column>Avaliação de Empresas</p:column>
                     </p:row>
                     <p:row>
-                        <p:column class="ui-text-header">#{graficoProjetosAreas.projeto.nome}</p:column>
+                        <p:column class="ui-text-header">#{graficoEmpresasAreas.empresa.nome}</p:column>
                     </p:row>
                 </f:facet>
             </p:panelGrid>
             <p:tabView id="tvProjeto" class="ui-sem-borda" style="margin:4px 0 4px 0;" effect="fade">         
                 
                 <p:tab id="tabArea" title="Areas de Pesquisa">            
-                    <p:chart type="bar" model="#{graficoProjetosAreas.getGraficoAreas()}" style="width:100%;" responsive="true">
-                        <p:ajax event="itemSelect" listener="#{graficoProjetosAreas.itemAreaSelect}" update="tvProjeto:areaDetail"/> 
+                    <p:chart type="bar" model="#{graficoEmpresasAreas.getGraficoAreas()}" style="width:100%;" responsive="true">
+                        <p:ajax event="itemSelect" listener="#{graficoEmpresasAreas.itemAreaSelect}" update="tvProjeto:areaDetail"/> 
                     </p:chart>
 
                     <p:panelGrid id="areaDetail"  columns="2"  style="width: 100%; margin-top:10px;">
@@ -33,19 +33,19 @@
                             <p:outputLabel value="Area de Pesquisa - Detalhes"/>
                         </f:facet>
                         <h:outputText value="#{bundle.ViewAreasLabel_id}" styleClass="ui-widget-header"/>
-                        <h:outputText id="areaId" value="#{graficoProjetosAreas.selectedArea.id}" />
+                        <h:outputText id="areaId" value="#{graficoEmpresasAreas.selectedArea.id}" />
                         <h:outputText value="Pontos" styleClass="ui-widget-header"/>
-                        <h:outputText id="pontosArea" value="#{graficoProjetosAreas.selectedAreaPontos}"/>
+                        <h:outputText id="pontosArea" value="#{graficoEmpresasAreas.selectedAreaPontos}"/>
                         <h:outputText value="#{bundle.ViewAreasLabel_nome}" styleClass="ui-widget-header"/>
-                        <h:outputText id="areaNome"  value="#{graficoProjetosAreas.selectedArea.nome}" />
+                        <h:outputText id="areaNome"  value="#{graficoEmpresasAreas.selectedArea.nome}" />
                         <h:outputText value="#{bundle.ViewAreasLabel_descricao}" styleClass="ui-widget-header"/>
-                        <h:outputText id="areaDescricao"  value="#{graficoProjetosAreas.selectedArea.descricao}"/>
+                        <h:outputText id="areaDescricao"  value="#{graficoEmpresasAreas.selectedArea.descricao}"/>
                     </p:panelGrid>
                 </p:tab>
                 
                 <p:tab id="tabCapacidade" title="Capacidades do EB">
-                    <p:chart type="bar" model="#{graficoProjetosAreas.getGraficoProjetos()}" style="width:100%;" responsive="true">
-                        <p:ajax event="itemSelect" listener="#{graficoProjetosAreas.itemCapacidadeSelect}" update="tvProjeto:capacidadeDetail"/> 
+                    <p:chart type="bar" model="#{graficoEmpresasAreas.getGraficoCapacidades()}" style="width:100%;" responsive="true">
+                        <p:ajax event="itemSelect" listener="#{graficoEmpresasAreas.itemCapacidadeSelect}" update="tvProjeto:capacidadeDetail"/> 
                     </p:chart>
                     
                     <p:panelGrid id="capacidadeDetail"  columns="2"  style="width: 100%; margin-top:10px;">
@@ -53,29 +53,29 @@
                             <p:outputLabel value="Capacidade - Detalhes"/>
                         </f:facet>
                         <h:outputText value="#{bundle.ViewCapacidadesLabel_id}" styleClass="ui-widget-header"/>
-                        <h:outputText id="projetoId" value="#{graficoProjetosAreas.selectedCapacidade.id}" />
+                        <h:outputText id="capacidadeId" value="#{graficoEmpresasAreas.selectedCapacidade.id}" />
                         <h:outputText value="Pontos" styleClass="ui-widget-header"/>
-                        <h:outputText id="pontosProjeto" value="#{graficoProjetosAreas.selectedCapacidadePontos}"/>
+                        <h:outputText id="pontosCapacidade" value="#{graficoEmpresasAreas.selectedCapacidadePontos}"/>
                         <h:outputText value="#{bundle.ViewCapacidadesLabel_nome}" styleClass="ui-widget-header"/>
-                        <h:outputText id="projetoNome"  value="#{graficoProjetosAreas.selectedCapacidade.nome}" />
+                        <h:outputText id="capacidadeNome"  value="#{graficoEmpresasAreas.selectedCapacidade.nome}" />
                     </p:panelGrid>                    
                 </p:tab>
                 
-                <p:tab id="tabEmpresa" title="Empresas">
-                    <p:chart type="bar" model="#{graficoProjetosAreas.getGraficoEmpresas()}" style="width:100%;" responsive="true">
-                        <p:ajax event="itemSelect" listener="#{graficoProjetosAreas.itemEmpresaSelect}" update="tvProjeto:empresaDetail" /> 
+                <p:tab id="tabProjeto" title="Projetos">
+                    <p:chart type="bar" model="#{graficoEmpresasAreas.getGraficoProjetos()}" style="width:100%;" responsive="true">
+                        <p:ajax event="itemSelect" listener="#{graficoEmpresasAreas.itemProjetoSelect}" update="tvProjeto:projetoDetail" /> 
                     </p:chart>
                     
-                    <p:panelGrid id="empresaDetail"  columns="2"  style="width: 100%; margin-top:10px;">
+                    <p:panelGrid id="projetoDetail"  columns="2"  style="width: 100%; margin-top:10px;">
                         <f:facet name="header">
-                            <p:outputLabel value="Empresa - Detalhes"/>
+                            <p:outputLabel value="Projeto - Detalhes"/>
                         </f:facet>
-                        <h:outputText value="#{bundle.ViewEmpresasLabel_id}" styleClass="ui-widget-header"/>
-                        <h:outputText id="empresaId" value="#{graficoProjetosAreas.selectedEmpresa.id}" />
+                        <h:outputText value="#{bundle.ViewProjetosLabel_id}" styleClass="ui-widget-header"/>
+                        <h:outputText id="projetoId" value="#{graficoEmpresasAreas.selectedProjeto.id}" />
                         <h:outputText value="Pontos" styleClass="ui-widget-header"/>
-                        <h:outputText id="pontosEmpresa" value="#{graficoProjetosAreas.selectedEmpresaPontos}"/>
-                        <h:outputText value="#{bundle.ViewEmpresasLabel_nome}" styleClass="ui-widget-header"/>
-                        <h:outputText id="empresaNome"  value="#{graficoProjetosAreas.selectedEmpresa.nome}" />
+                        <h:outputText id="pontosProjeto" value="#{graficoEmpresasAreas.selectedProjetoPontos}"/>
+                        <h:outputText value="#{bundle.ViewProjetosLabel_nome}" styleClass="ui-widget-header"/>
+                        <h:outputText id="projetoNome"  value="#{graficoEmpresasAreas.selectedProjeto.nome}" />
                     </p:panelGrid>
                                         
                 </p:tab>
