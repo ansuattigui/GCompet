@@ -35,6 +35,7 @@ public class LoginController implements Serializable {
     private String senhaAtual;
     private String novaSenha;
     private String novaSenhaConfirma;
+    private Boolean novaSenhaOK;
  
     private static final long serialVersionUID = 1094801825228386363L;
     
@@ -158,17 +159,27 @@ public class LoginController implements Serializable {
     }
     
     public String confirmaSenhaAtual() {
-        
-        if (userLoggedIn.getSenha().equals(JsfUtil.encryptPassword(senhaAtual))) {
-            
-        } else {
-            
-                    
-            JsfUtil.addErrorMessage(null, ResourceBundle.getBundle("/Bundle").getString("SenhaInvalida"));
-        
+        novaSenhaOK = false;      
+        FacesContext context = FacesContext.getCurrentInstance();
 
+        if (userLoggedIn.getSenha().equals(JsfUtil.encryptPassword(senhaAtual))) {
+            if (novaSenha == null ? novaSenhaConfirma == null : novaSenha.equals(novaSenhaConfirma)) {
+                novaSenhaOK = true;
+                //context.getExternalContext().getFlash().setKeepMessages(true);
+                
+                ejbFacade.mudaSenha(novaSenha, userLoggedIn);                
+                context.addMessage(null, new FacesMessage(ResourceBundle.getBundle("/Bundle").getString("SenhaAlterada")));
+                this.logout();
+                
+            } else {
+                //context.getExternalContext().getFlash().setKeepMessages(true);
+                context.addMessage(null, new FacesMessage(ResourceBundle.getBundle("/Bundle").getString("SenhasDiferentes")));
+            }            
+        } else {
+            //context.getExternalContext().getFlash().setKeepMessages(true);
+            context.addMessage(null, new FacesMessage(ResourceBundle.getBundle("/Bundle").getString("SenhaInvalida")));
         }
-        return "passChange?faces-redirect=true";
+        return "/passChange?faces-redirect=true";            
     }
 
     /**
@@ -183,6 +194,20 @@ public class LoginController implements Serializable {
      */
     public void setSenhaAtual(String senhaAtual) {
         this.senhaAtual = senhaAtual;
+    }
+
+    /**
+     * @return the novaSenhaOK
+     */
+    public Boolean getNovaSenhaOK() {
+        return novaSenhaOK;
+    }
+
+    /**
+     * @param novaSenhaOK the novaSenhaOK to set
+     */
+    public void setNovaSenhaOK(Boolean novaSenhaOK) {
+        this.novaSenhaOK = novaSenhaOK;
     }
 
 }

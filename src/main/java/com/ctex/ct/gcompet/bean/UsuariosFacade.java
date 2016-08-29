@@ -11,6 +11,7 @@ import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 
 /**
@@ -43,5 +44,17 @@ public class UsuariosFacade extends AbstractFacade<Usuarios> {
             valido = null;
         }
         return valido;
+    }
+    
+    public Boolean mudaSenha(String novaSenha, Usuarios user) {
+        Integer result = 0;
+        
+        Query q = getEntityManager().createNativeQuery("UPDATE Usuarios SET senha = ? WHERE id = ?");
+        q.setParameter(1, JsfUtil.encryptPassword(novaSenha));
+        q.setParameter(2, user.getId());
+        
+        result = q.executeUpdate();
+        
+        return (result==1);
     }
 }

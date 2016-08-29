@@ -16,15 +16,13 @@
                             <p:outputLabel value="#{bundle.LoginGCompet_Usuario}" for="username" />
                             <p:inputText id="username" value="#{loginController.userLoggedIn.nomeUsuario}" title="#{bundle.LoginGCompet_Usuario}" required="false" readonly="true" />
                             <p:outputLabel value="#{bundle.LoginGCompet_Senha_Atual}" for="passwordCurrent" />
-                            <p:password id="passwordCurrent" value="#{loginController.senhaAtual}" title="#{bundle.LoginGCompet_Senha_Atual}" required="true" requiredMessage="Informe a senha atual">
-                                <p:ajax event="blur" listener="#{loginController.confirmaSenhaAtual}"/>
-                            </p:password>
+                            <p:password id="passwordCurrent" value="#{loginController.senhaAtual}" title="#{bundle.LoginGCompet_Senha_Atual}" required="true" requiredMessage="Informe a senha atual" />
                             <p:outputLabel value="#{bundle.LoginGCompet_Senha_Nova}" for="passwordNew" />
-                            <p:password id="passwordNew" value="#{loginController.senha}" title="#{bundle.LoginGCompet_Senha_Nova}" required="true" requiredMessage="Informe a nova senha"/>
+                            <p:password id="passwordNew" value="#{loginController.novaSenha}" title="#{bundle.LoginGCompet_Senha_Nova}" required="true" requiredMessage="Informe a nova senha"/>
                             <p:outputLabel value="#{bundle.LoginGCompet_Senha_Repetida}" for="passwordConfirm" />
-                            <p:password id="passwordConfirm" value="#{loginController.senha}" title="#{bundle.LoginGCompet_Senha_Repetida}" required="true" requiredMessage="Confirme a nova senha"/>
+                            <p:password id="passwordConfirm" value="#{loginController.novaSenhaConfirma}" title="#{bundle.LoginGCompet_Senha_Repetida}" required="true" requiredMessage="Confirme a nova senha"/>
                         </p:panelGrid>
-                        <p:commandButton action="#{loginController.login}" value="#{bundle.PasswChange_Confirmar}" update="display,:growl"/>
+                        <p:commandButton action="#{loginController.confirmaSenhaAtual}" value="#{bundle.PasswChange_Confirmar}" update="display,:growl"/>
                     </h:panelGroup>
                 </h:form>
             </p:panel>
