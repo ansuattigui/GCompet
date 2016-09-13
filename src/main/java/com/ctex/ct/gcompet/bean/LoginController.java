@@ -86,8 +86,16 @@ public class LoginController implements Serializable {
     public String logout() {    
         FacesContext context = FacesContext.getCurrentInstance();
         context.getExternalContext().getSessionMap().remove("usuarioLogado");
+        context.getExternalContext().invalidateSession();        
         return "/login?faces-redirect=true";
-    }    
+    }  
+    
+    public String senhaAterada() {
+        FacesContext context = FacesContext.getCurrentInstance();
+        context.getExternalContext().getSessionMap().remove("usuarioLogado");
+        context.getExternalContext().invalidateSession();        
+        return "/login_fail?faces-redirect=true";
+    }
     
     
 
@@ -158,28 +166,26 @@ public class LoginController implements Serializable {
         this.novaSenhaConfirma = novaSenhaConfirma;
     }
     
-    public String confirmaSenhaAtual() {
-        novaSenhaOK = false;      
+    public String confirmaSenhaAtual() throws InterruptedException {
         FacesContext context = FacesContext.getCurrentInstance();
 
         if (userLoggedIn.getSenha().equals(JsfUtil.encryptPassword(senhaAtual))) {
-            if (novaSenha == null ? novaSenhaConfirma == null : novaSenha.equals(novaSenhaConfirma)) {
-                novaSenhaOK = true;
-                //context.getExternalContext().getFlash().setKeepMessages(true);
-                
-                ejbFacade.mudaSenha(novaSenha, userLoggedIn);                
-                context.addMessage(null, new FacesMessage(ResourceBundle.getBundle("/Bundle").getString("SenhaAlterada")));
-                this.logout();
-                
+            if (novaSenha.equals(novaSenhaConfirma)) {
+                if (ejbFacade.mudaSenha(novaSenha, userLoggedIn)) {                
+                    context.addMessage(null, new FacesMessage(ResourceBundle.getBundle("/Bundle").getString("SenhaAlterada")));                    
+                    return this.senhaAterada();
+                } else {
+                    context.addMessage(null, new FacesMessage(ResourceBundle.getBundle("/Bundle").getString("SenhaNaoAlterada")));
+                    return "/user/passChange/passChange";
+                }
             } else {
-                //context.getExternalContext().getFlash().setKeepMessages(true);
                 context.addMessage(null, new FacesMessage(ResourceBundle.getBundle("/Bundle").getString("SenhasDiferentes")));
+                return "/user/passChange/passChange";
             }            
         } else {
-            //context.getExternalContext().getFlash().setKeepMessages(true);
             context.addMessage(null, new FacesMessage(ResourceBundle.getBundle("/Bundle").getString("SenhaInvalida")));
+            return "/user/passChange/passChange";
         }
-        return "/passChange?faces-redirect=true";            
     }
 
     /**

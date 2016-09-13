@@ -49,7 +49,7 @@ public class UsuariosFacade extends AbstractFacade<Usuarios> {
     public Boolean mudaSenha(String novaSenha, Usuarios user) {
         Integer result = 0;
         
-        Query q = getEntityManager().createNativeQuery("UPDATE Usuarios SET senha = ? WHERE id = ?");
+        Query q = getEntityManager().createNativeQuery("UPDATE usuarios SET senha = ? WHERE id = ?");
         q.setParameter(1, JsfUtil.encryptPassword(novaSenha));
         q.setParameter(2, user.getId());
         

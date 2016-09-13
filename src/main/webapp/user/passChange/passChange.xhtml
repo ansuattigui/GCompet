@@ -22,7 +22,7 @@
                             <p:outputLabel value="#{bundle.LoginGCompet_Senha_Repetida}" for="passwordConfirm" />
                             <p:password id="passwordConfirm" value="#{loginController.novaSenhaConfirma}" title="#{bundle.LoginGCompet_Senha_Repetida}" required="true" requiredMessage="Confirme a nova senha"/>
                         </p:panelGrid>
-                        <p:commandButton action="#{loginController.confirmaSenhaAtual}" value="#{bundle.PasswChange_Confirmar}" update="display,:growl"/>
+                        <p:commandButton action="#{loginController.confirmaSenhaAtual}" value="#{bundle.PasswChange_Confirmar}" update="display,:growl,:message"/>
                     </h:panelGroup>
                 </h:form>
             </p:panel>
